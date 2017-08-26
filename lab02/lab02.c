@@ -1,3 +1,13 @@
+/*
+  Nome: Matheus Esteves Zanoto,   RA: 184256
+
+  Objetivos:
+
+  Entradas:
+
+  Saídas
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -24,35 +34,35 @@ void inicializarLista(ListaLigada* lista){
   (lista)->tamanho = 0;
 }
 
-void inserirPacienteNoMeio(ListaLigada* lista, NoLista** noAnterior, Paciente paciente){
+void inserirPacienteNoMeio(ListaLigada** lista, NoLista** noAnterior, Paciente paciente){
   NoLista* noLista = (NoLista*)malloc(sizeof(NoLista));
   noLista->paciente = paciente;
   NoLista* aux = (NoLista*)malloc(sizeof(NoLista));
   aux = (*noAnterior)->prox;
   (*noAnterior)->prox = noLista;
   noLista->prox = aux;
-  (lista)->tamanho++;
+  (*lista)->tamanho++;
 }
 
-void removerPaciente(ListaLigada* lista, NoLista** noAnterior, NoLista** noAtual){
+void removerPaciente(ListaLigada** lista, NoLista** noAnterior, NoLista** noAtual){
   if (*noAnterior == NULL)
-    (lista)->inicio = (lista)->inicio->prox;
+    (*lista)->inicio = (*lista)->inicio->prox;
   else
     (*noAnterior)->prox = (*noAtual)->prox;
-  (lista)->tamanho--;
+  (*lista)->tamanho--;
 }
 
-void inserirPacienteNoInicio(ListaLigada* lista, Paciente paciente){
+void inserirPacienteNoInicio(ListaLigada** lista, Paciente paciente){
   NoLista* noLista = (NoLista*)malloc(sizeof(NoLista));
   noLista->paciente = paciente;
-  noLista->prox = (lista)->inicio;
-  (lista)->inicio = noLista;
-  (lista)->tamanho++;
+  noLista->prox = (*lista)->inicio;
+  (*lista)->inicio = noLista;
+  (*lista)->tamanho++;
 }
 
-void buscarPacienteOrdenadoDecrescente(ListaLigada* lista, Paciente paciente, NoLista** noAnterior, NoLista** noAtual){
+void buscarPacienteOrdenadoDecrescente(ListaLigada** lista, Paciente paciente, NoLista** noAnterior, NoLista** noAtual){
   *noAnterior = NULL;
-  *noAtual = (lista)->inicio;
+  *noAtual = (*lista)->inicio;
   while (*noAtual != NULL && ((*noAtual)->paciente).idade > paciente.idade){
     *noAnterior = *noAtual;
     *noAtual = (*noAtual)->prox;
@@ -63,80 +73,81 @@ int buscarPacientePorCodigo(ListaLigada** prioridadesUrgencia, int codigo, NoLis
   int prioridadeUrgencia,prioridadeIdade;
   for (prioridadeUrgencia = 0; prioridadeUrgencia < 5; prioridadeUrgencia++)
     for (prioridadeIdade = 0; prioridadeIdade < 2; prioridadeIdade++){
-      **lista = prioridadesUrgencia[prioridadeUrgencia][prioridadeIdade];
+      *lista = &prioridadesUrgencia[prioridadeUrgencia][prioridadeIdade];
       *noAnterior = NULL;
       *noAtual = (*lista)->inicio;
-      while (*noAtual != NULL && ((*noAtual)->paciente).codigo != codigo){
-        *noAnterior = *noAtual;
-        *noAtual = (*noAtual)->prox;
+      if (*noAtual != NULL){
+        while (*noAtual != NULL && ((*noAtual)->paciente).codigo != codigo){
+          *noAnterior = *noAtual;
+          *noAtual = (*noAtual)->prox;
+        }
+        if (noAtual != NULL)
+          if (((*noAtual)->paciente).codigo == codigo)
+            return prioridadeUrgencia;
       }
-      if (*noAtual != NULL)
-        return prioridadeUrgencia;
     }
 }
 
-Paciente removerPacientePorCodigo(ListaLigada** prioridadesUrgencia, int codigo, int* prioridadeUrgencia){
+Paciente removerPacientePorCodigo(ListaLigada*** prioridadesUrgencia, int codigo, int* prioridadeUrgencia){
   NoLista* noAtual = (NoLista*)malloc(sizeof(NoLista));
   NoLista* noAnterior = (NoLista*)malloc(sizeof(NoLista));
   ListaLigada* lista = (ListaLigada*)malloc(sizeof(ListaLigada));
   
-  *prioridadeUrgencia = buscarPacientePorCodigo(prioridadesUrgencia,codigo,&noAtual,&noAnterior,&lista);
-  removerPaciente(lista,&noAnterior,&noAtual);
+  *prioridadeUrgencia = buscarPacientePorCodigo(*prioridadesUrgencia,codigo,&noAtual,&noAnterior,&lista);
+  removerPaciente(&lista,&noAnterior,&noAtual);
 
   Paciente pacienteRemovido = noAtual->paciente;
-  lista->tamanho--;
 
   return pacienteRemovido;
 }
 
-Paciente chamarPaciente(ListaLigada** prioridadesUrgencia, int prioridadeUrgencia){
-  ListaLigada* pacientesDaPrioridade = (ListaLigada*)malloc(2*sizeof(ListaLigada));
-  pacientesDaPrioridade = prioridadesUrgencia[prioridadeUrgencia];
+Paciente chamarPaciente(ListaLigada*** prioridadesUrgencia, int prioridadeUrgencia){
   Paciente pacienteChamado;
-  if (pacientesDaPrioridade[0].tamanho > 0)
-    pacienteChamado = pacientesDaPrioridade[0].inicio->paciente;
+  if ((*prioridadesUrgencia)[prioridadeUrgencia][0].tamanho > 0)
+    pacienteChamado = (*prioridadesUrgencia)[prioridadeUrgencia][0].inicio->paciente;
   else
-  	pacienteChamado = pacientesDaPrioridade[1].inicio->paciente;
-  removerPacientePorCodigo(prioridadesUrgencia,pacienteChamado.codigo,&prioridadeUrgencia);
+  	pacienteChamado = (*prioridadesUrgencia)[prioridadeUrgencia][1].inicio->paciente;
 
-  free(pacientesDaPrioridade);
+  ListaLigada** aux = *prioridadesUrgencia;
+  removerPacientePorCodigo(&aux,pacienteChamado.codigo,&prioridadeUrgencia);
 
   return pacienteChamado;
 }
 
 void inserirPacienteOrdenadoDecrescente(ListaLigada* lista, Paciente paciente){
   if ((lista)->tamanho == 0)
-    inserirPacienteNoInicio(lista,paciente);
+    inserirPacienteNoInicio(&lista,paciente);
   else{
     NoLista* noAnterior = (NoLista*)malloc(sizeof(NoLista));
     NoLista* noAtual = (NoLista*)malloc(sizeof(NoLista));
-    buscarPacienteOrdenadoDecrescente(lista,paciente,&noAnterior,&noAtual);
+    buscarPacienteOrdenadoDecrescente(&lista,paciente,&noAnterior,&noAtual);
     if (noAnterior == NULL)
-      inserirPacienteNoInicio(lista,paciente);
+      inserirPacienteNoInicio(&lista,paciente);
     else
-      inserirPacienteNoMeio(lista,&noAnterior,paciente);
+      inserirPacienteNoMeio(&lista,&noAnterior,paciente);
   }
 }
 
-void inserirPacienteComPrioridade(ListaLigada** prioridadesUrgencia, Paciente paciente, int prioridadeUrgencia){  
+void inserirPacienteComPrioridade(ListaLigada*** prioridadesUrgencia, Paciente paciente, int prioridadeUrgencia){  
   int prioridadeIdade;
   int idade = paciente.idade;
   if (idade <= 3 || idade >= 65)
     prioridadeIdade = 0;
   else
-    prioridadeIdade = 1;
+    prioridadeIdade = 1; 
 
-  inserirPacienteOrdenadoDecrescente(&(prioridadesUrgencia[prioridadeUrgencia][prioridadeIdade]),paciente);
+  inserirPacienteOrdenadoDecrescente(&((*prioridadesUrgencia)[prioridadeUrgencia][prioridadeIdade]),paciente);
 }
 
-Paciente mudarPrioridade(ListaLigada** prioridadesUrgencia, int codigo, int novaPrioridadeUrgencia){
+Paciente mudarPrioridade(ListaLigada*** prioridadesUrgencia, int codigo, int novaPrioridadeUrgencia){
   NoLista* noAtual = (NoLista*)malloc(sizeof(NoLista));
   NoLista* noAnterior = (NoLista*)malloc(sizeof(NoLista));
   ListaLigada* lista = (ListaLigada*)malloc(sizeof(ListaLigada));
-  int prioridadeAntiga = buscarPacientePorCodigo(prioridadesUrgencia,codigo,&noAtual,&noAnterior,&lista);
+  int prioridadeAntiga = buscarPacientePorCodigo(*prioridadesUrgencia,codigo,&noAtual,&noAnterior,&lista);
   Paciente pacienteAlterado = noAtual->paciente;
-  inserirPacienteComPrioridade(prioridadesUrgencia,pacienteAlterado,novaPrioridadeUrgencia);
-  removerPaciente(lista,&noAnterior,&noAtual);
+  ListaLigada** aux = *prioridadesUrgencia;
+  inserirPacienteComPrioridade(&aux,pacienteAlterado,novaPrioridadeUrgencia);
+  removerPaciente(&lista,&noAnterior,&noAtual);
 
   return pacienteAlterado;
 }
@@ -156,18 +167,14 @@ void imprimirLista(ListaLigada* lista, int prioridadeUrgencia){
 }
 
 void imprimirPacientesComPrioridadeIdade(ListaLigada** prioridadesUrgencia, int prioridadeUrgencia){
-  ListaLigada* pacientesDaPrioridade = (ListaLigada*)malloc(2*sizeof(ListaLigada));
-  pacientesDaPrioridade = prioridadesUrgencia[prioridadeUrgencia];
-  ListaLigada pacientesEspeciais = pacientesDaPrioridade[0];
-  ListaLigada pacientesGerais = pacientesDaPrioridade[1];
+  ListaLigada pacientesEspeciais = prioridadesUrgencia[prioridadeUrgencia][0];
+  ListaLigada pacientesGerais = prioridadesUrgencia[prioridadeUrgencia][1];
   if (pacientesEspeciais.tamanho == 0 && pacientesGerais.tamanho == 0)
     printf("Nenhum paciente na categoria %d\n",prioridadeUrgencia);
   else{
     imprimirLista(&pacientesEspeciais,prioridadeUrgencia);
     imprimirLista(&pacientesGerais,prioridadeUrgencia);
   }
-
-  free(pacientesDaPrioridade);
 }
 
 ListaLigada agruparPacientes(ListaLigada* pacientesDaPrioridade){
@@ -204,11 +211,13 @@ void imprimirPacientes(ListaLigada** prioridadesUrgencia, int numeroPacientes){
   for (prioridadeUrgencia = 0; prioridadeUrgencia < 5 && pacientesImprimidos < numeroPacientes; prioridadeUrgencia++){
     pacientesDaPrioridade = prioridadesUrgencia[prioridadeUrgencia];
     ListaLigada pacientes = agruparPacientes(pacientesDaPrioridade);
-    noAtual = pacientes.inicio;
-    while (noAtual != NULL && pacientesImprimidos < numeroPacientes){
-      imprimirNo(noAtual,prioridadeUrgencia);
-      noAtual = noAtual->prox;
-      pacientesImprimidos++;
+    if (pacientes.tamanho > 0){
+      noAtual = pacientes.inicio;
+      while (noAtual != NULL && pacientesImprimidos < numeroPacientes){
+        imprimirNo(noAtual,prioridadeUrgencia);
+        noAtual = noAtual->prox;
+        pacientesImprimidos++;
+      }
     }
   }
 }
@@ -237,61 +246,63 @@ int main(){
     inicializarLista(&prioridadesUrgencia[i][1]);
   }
 
-  char operacoes[30];
-  while (gets(operacoes) != EOF){
-    char operacao = strtok(operacoes," ")[0];
+  int operacao;
+  while (scanf("%d",&operacao) != EOF){
     switch (operacao){
-      case '1':{
-        int codigo = atoi(strtok(NULL," "));
-        int prioridade = atoi(strtok(NULL," "));
-        int idade = atoi(strtok(NULL," "));
+      case 1:{
+        int codigo, prioridade, idade;
+        scanf("%d %d %d",&codigo,&prioridade,&idade);
         Paciente paciente;
         paciente.codigo = codigo;
         paciente.idade = idade;
-        inserirPacienteComPrioridade(prioridadesUrgencia,paciente,prioridade);
+        inserirPacienteComPrioridade(&prioridadesUrgencia,paciente,prioridade);
         printf("Paciente %d (idade %d) adicionado com sucesso na lista de prioridade %d!\n",codigo,idade,prioridade);
       } break;
-      case '2':{
-        int codigo = atoi(strtok(NULL," "));
-        int* prioridadeUrgencia;
-        Paciente pacienteRemovido = removerPacientePorCodigo(prioridadesUrgencia,codigo,prioridadeUrgencia); 
+      case 2:{
+        int codigo;
+        scanf("%d",&codigo);
+        int prioridadeUrgencia;
+        Paciente pacienteRemovido = removerPacientePorCodigo(&prioridadesUrgencia,codigo,&prioridadeUrgencia); 
         printf("Paciente %d (idade %d) removido com sucesso na lista de prioridade %d!\n",
           pacienteRemovido.codigo,
           pacienteRemovido.idade,
-          *prioridadeUrgencia
+          prioridadeUrgencia
         );
       } break;
-      case '3':{
-        int prioridade = atoi(strtok(NULL," "));
-        Paciente pacienteChamado = chamarPaciente(prioridadesUrgencia,prioridade);
+      case 3:{
+        int prioridade;
+        scanf("%d",&prioridade);
+        Paciente pacienteChamado = chamarPaciente(&prioridadesUrgencia,prioridade);
         printf("Paciente %d (idade %d) da categoria de prioridade %d chamado para atendimento!\n",
           pacienteChamado.codigo,
           pacienteChamado.idade,
           prioridade
         );
       } break;
-      case '4':{
-        int codigo = atoi(strtok(NULL," "));
-        int novaPrioridade = atoi(strtok(NULL," "));
-        Paciente pacienteAlterado = mudarPrioridade(prioridadesUrgencia,codigo,novaPrioridade);
+      case 4:{
+        int codigo, novaPrioridade;
+        scanf("%d %d",&codigo,&novaPrioridade);
+        Paciente pacienteAlterado = mudarPrioridade(&prioridadesUrgencia,codigo,novaPrioridade);
         printf("Paciente %d (idade %d) mudou para a categoria de prioridade %d!\n",
           pacienteAlterado.codigo,
           pacienteAlterado.idade,
           novaPrioridade
         );
       } break;
-      case '5':{
-        int prioridade = atoi(strtok(NULL," "));
+      case 5:{
+        int prioridade;
+        scanf("%d",&prioridade);
         imprimirPacientesComPrioridadeIdade(prioridadesUrgencia,prioridade);
       } break;
       default:{
-        int numeroPacientes = atoi(strtok(NULL," "));
+        int numeroPacientes;
+        scanf("%d",&numeroPacientes);
         imprimirPacientes(prioridadesUrgencia,numeroPacientes);
       }
     } 
   }
 
-  liberarListas(prioridadesUrgencia);
+  //liberarListas(prioridadesUrgencia);
 
   return 0;
 }
