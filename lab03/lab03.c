@@ -4,9 +4,9 @@
 
 typedef struct{
   int codigo;
-  char[] nomẽ;
   int telefone;
   int preferido;
+  char nome[30];
 } Contato;
 
 struct No{
@@ -28,7 +28,15 @@ void init_lista(Lista* lista){
 }
 
 void liberarLista(Lista* lista){
-  
+   No* atual = lista->sel;
+   if (atual != NULL && atual->ant == NULL)
+     free(atual);
+   else{
+     while (atual != NULL){
+       free(atual->ant);
+       atual = atual->prox;
+     }
+   }
 }
 
 void init_no(No** no, Contato contato){
@@ -38,28 +46,23 @@ void init_no(No** no, Contato contato){
   (*no)->contato = contato;
 }
 
-void inserirContato(Lista* lista, int codigo, char* nome, int telefone){
-  Contato contato;
-  contato.codigo = codigo;
-  strcpy(contato.nome,nome);
-  contato.telefone = telefone;
-  contato.preferido = 0;
-
+void inserirContato(Lista* lista, Contato contato){
   No* novoNo;
   No* aux;
   init_no(&novoNo,contato);
   if (lista->sel == NULL)
     lista->sel = novoNo;
   else{
-  	aux = lista->sel->prox;
+  	if (lista->sel->prox == NULL)
+  	  aux = lista->sel;
+  	else
+      aux = lista->sel->prox;
     lista->sel->prox = novoNo;
     novoNo->ant = lista->sel;
+    novoNo->prox = aux;
+    aux->ant = novoNo;
   }
-  
-  if (lista->sel->ant == NULL)
-    aux = lista->sel;
-  novoNo->prox = aux;
-  aux->ant = novoNo;
+
   lista->tamanho++;
 }
 
@@ -90,10 +93,12 @@ Contato* removerContato(Lista* lista, int codigo){
     }
   }
 
-  Contato contatoRemovido = atual->contato;
+  Contato c;
+  Contato* contatoRemovido = &c;
+  *contatoRemovido = atual->contato;
   free(atual);
   lista->tamanho--;
-  return &contatoRemovido;
+  return contatoRemovido;
 }
 
 Contato* efetuarLigacao(Lista* lista, int telefone){
@@ -109,7 +114,11 @@ Contato* efetuarLigacao(Lista* lista, int telefone){
 
   if (atual != lista->sel)
     lista->sel = atual;
-  return &(atual->contato);
+  
+  Contato c;
+  Contato* contatoLigado = &c;
+  *contatoLigado = atual->contato;
+  return contatoLigado;
 }
 
 Contato* avancar(Lista* lista, int n){
@@ -129,7 +138,11 @@ Contato* avancar(Lista* lista, int n){
     atual = lista->sel;
   else
     lista->sel = atual;
-  return &(atual->contato);
+
+  Contato c;
+  Contato* contatoAvancado = &c;
+  *contatoAvancado = atual->contato;
+  return contatoAvancado;
 }
 
 Contato* retroceder(Lista* lista, int n){
@@ -149,7 +162,11 @@ Contato* retroceder(Lista* lista, int n){
     atual = lista->sel;
   else
   	lista->sel = atual;
-  return &(atual->contato);
+  
+  Contato c;
+  Contato* contatoRetrocedido = &c;
+  *contatoRetrocedido = atual->contato;
+  return contatoRetrocedido;
 }
 
 Contato* assinalarPreferido(Lista* lista, char* nome){
@@ -157,31 +174,35 @@ Contato* assinalarPreferido(Lista* lista, char* nome){
   if (atual == NULL)
     return NULL;
   
-  while (strcmp(nome,(atual->contato).nome) != 1){
+  while (strcmp(nome,(atual->contato).nome) != 0){
   	atual = atual->prox;
   	if (atual == NULL || atual == lista->sel)
   	  return NULL;
   }
-
   (atual->contato).preferido = 1;
-  return &(atual->contato);
+
+  Contato c;
+  Contato* contatoPreferido = &c;
+  *contatoPreferido = atual->contato;
+  return contatoPreferido;
 }
 
 void imprimirContatos(Lista* lista, char letra){
-  printf("[CONTATOS​ COM​ INICIAL​ %c]\n",letra);
+  printf("[CONTATOS COM INICIAL %c]\n",letra);
   int n = 0;
   No* atual = lista->sel;
   do{
   	Contato contato = atual->contato;
     if ((contato.nome)[0] == letra){
       n++;
-      char* preferido;
+      char preferido[13];
       if (contato.preferido == 1)
         strcpy(preferido,"PREFERIDO");
       else
         strcpy(preferido,"N_PREFERIDO");
-      printf("Contato​ %s (telefone​ %d) codigo:​ %d [%s]\n",contato.nome,contato.telefone,contato.codigo,preferido);
+      printf("Contato %s (telefone %d) codigo: %d [%s]\n",contato.nome,contato.telefone,contato.codigo,preferido);
     }
+    atual = atual->prox;
   }
   while (atual != NULL && atual != lista->sel);
 
@@ -191,14 +212,15 @@ void imprimirContatos(Lista* lista, char letra){
 
 void imprimirPreferidos(Lista* lista){
   printf("[CONTATOS PREFERIDOS]\n");
-  int n = 0
+  int n = 0;
   No* atual = lista->sel;
   do{
     Contato contato = atual->contato;
     if (contato.preferido == 1){
       n++;
-      printf("Contato​ %s (telefone​ %d) codigo:​ %d\n",contato.nome,contato.telefone,contato.codigo);
+      printf("Contato %s (telefone %d) codigo: %d\n",contato.nome,contato.telefone,contato.codigo);
     }
+    atual = atual->prox;
   }
   while (atual != NULL && atual != lista->sel);
 
@@ -214,68 +236,69 @@ int main(){
   while (scanf("%d",&operacao) != EOF){
     switch (operacao){
       case 1:{
-        int codigo,telefone;
-        char* nome;
-        scanf("%d %s %d",&codigo,nome,&telefone);
-        inserirContato(&lista,codigo,nome,telefone);
-        printf("Contato​ %s (telefone​ %d) adicionado​​ na​ agenda\n",nome,telefone);
+        Contato contato;
+        scanf("%d %s %d",&contato.codigo,contato.nome,&contato.telefone);
+        inserirContato(&contatos,contato);
+        printf("Contato %s (telefone %d) adicionado na agenda\n",contato.nome,contato.telefone);
       } break;
       case 2:{
         int codigo;
         scanf("%d",&codigo);
-        Contato* contatoRemovido = removerContato(&lista,codigo);
+        Contato* contatoRemovido = removerContato(&contatos,codigo);
         if (contatoRemovido != NULL)
-          printf("Contato​ %s (telefone​ %d) removido da​ agenda\n",contatoRemovido.nome,contatoRemovido.telefone);
+          printf("Contato %s (telefone %d) removido da agenda\n",contatoRemovido->nome,contatoRemovido->telefone);
         else
           printf("Contato nao existe\n");
       } break;
       case 3:{
         int codigo;
         scanf("%d",&codigo);
-        Contato* contatoLigado = efetuarLigacao(&lista,codigo);
+        Contato* contatoLigado = efetuarLigacao(&contatos,codigo);
         if (contatoLigado != NULL)
-          printf("Ligando para %s (telefone​ %d)\n",contatoLigado.nome,contatoLigado.telefone);
+          printf("Ligando para %s (telefone %d)\n",contatoLigado->nome, contatoLigado->telefone);
         else
           printf("Contato nao existe\n");
       } break;
       case 4:{
         int n;
         scanf("%d",&n);
-        Contato* contatoSelecionado = avancar(&lista,n);
+        Contato* contatoSelecionado = avancar(&contatos,n);
         if (contatoSelecionado != NULL)
-          printf("Contato​ %s (telefone​ %d) selecionado\n",contatoSelecionado.nome,contatoSelecionado.telefone);
+          printf("Contato %s (telefone %d) selecionado\n",contatoSelecionado->nome,contatoSelecionado->telefone);
         else
           printf("Agenda vazia\n");
       } break;
       case 5:{
         int n;
         scanf("%d",&n);
-        Contato* contatoSelecionado = retroceder(&lista,n);
+        Contato* contatoSelecionado = retroceder(&contatos,n);
         if (contatoSelecionado != NULL)
-          printf("Contato​ %s (telefone​ %d) selecionado\n",contatoSelecionado.nome,contatoSelecionado.telefone);
+          printf("Contato %s (telefone %d) selecionado\n",contatoSelecionado->nome,contatoSelecionado->telefone);
         else
           printf("Agenda vazia\n");
       } break;
       case 6:{
-        char* nome;
+        char nome[30];
         scanf("%s",nome);
-        Contato* contatoAssinalado = assinalarPreferido(&lista,nome);
-        if (contatoSelecionado != NULL)
-          printf("Contato​ %s (telefone​ %d) assinalado como preferido\n",contatoAssinalado.nome,contatoAssinalado.telefone);
+        Contato* contatoAssinalado = assinalarPreferido(&contatos,nome);
+        if (contatoAssinalado != NULL)
+          printf("Contato %s (telefone %d) assinalado como preferido\n",contatoAssinalado->nome,contatoAssinalado->telefone);
         else
           printf("Contato nao existe\n");
       } break;
       case 7:{
         char letra;
+        scanf("%c",&letra);	
         scanf("%c",&letra);
-        imprimirContatos(&lista,letra);
+        imprimirContatos(&contatos,letra);
       } break;
       default:{
-        imprimirPreferidos(&lista);
+        imprimirPreferidos(&contatos);
       }
     }
-    liberarLista(&lista);
   }
+
+  //liberarLista(&contatos);
 
   return 0;
 }
