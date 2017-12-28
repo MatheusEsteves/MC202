@@ -1,0 +1,29 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0">
+	
+	<template selector="#content-info">
+		<h3>Cadastro de Jogos</h3>
+	</template>
+	
+	<template selector="#content-details">
+		<form id="login">
+			<fieldset>
+				<ul>
+					<li>
+						<label for="txtUsuario">Usuário</label>
+						<input type="text" id="txtUsuario" />
+					</li>
+					<li>
+						<label for="txtSenha">Senha</label>
+						<input type="text" id="txtSenha" />
+					</li>
+				</ul>		
+				<div class="buttons">
+					<input type="button" class="btGo" value="Ok" />
+				</div>
+			</fieldset>
+		</form>	
+	</template>
+	<script>
+		$('#login').form();
+	</script>
+</engine>

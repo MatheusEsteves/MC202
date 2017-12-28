@@ -1,0 +1,3133 @@
+/* ########################### */ /* ########################### */
+/* ########## COMUM ########## */
+.year_selector{
+  width:214%;
+  height:35%;
+  font-size:13px;
+}
+
+.txt_nome{
+  font-size:13px;	
+  width:22%;
+}
+
+.btn_filtrar_campeonatos{
+  margin-left:8%;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    font-size:11px;
+    color: #fff;
+    text-align: center;
+    margin-top:30%;
+    padding: 5px 0;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+body {
+	background: #f5f5f5;
+	color: #484848;
+	font-family: arial, sans-serif;
+}
+
+.clearfix {
+	clear: both;
+}
+
+#header {
+	position: absolute;
+	top: 20px;
+	left: 20px;
+	width: 190px;
+	z-index: 99;
+}
+
+#main {
+	margin: 10px 20px 0 230px;
+	/*	overflow: hidden;*/
+}
+
+.filtro-operadora-novo {
+	max-width: 140px;
+}
+
+.separador {
+	height: 100%;
+	width: 1px;
+	background: #c9c9c9;
+	border-right: 1px solid #fff;
+	display: inline-block;
+	vertical-align: top;
+	*display: inline;
+	*zoom: 1;
+}
+
+/* ########################### */ /* ########################### */
+/* ########## CRUD ########### */
+label {
+	font-size: 13px;
+}
+
+input {
+	border: 1px solid #c9d0d4;
+	height: 24px;
+	padding: 0 5px;
+	font-size: 13px;
+}
+
+.forms input:disabled {
+	background: none;
+	border: none;
+}
+
+input.search {
+	border-radius: 12px;
+	padding: 0 14px;
+	min-width: 250px;
+}
+
+input[type="radio"], input[type="checkbox"] {
+	width: 13px;
+	height: 13px;
+	margin: 0 5px 0 0;
+	padding: 0;
+}
+
+input[type="checkbox"] {
+	cursor: pointer;
+}
+
+input[type="radio"]+label, input[type="checkbox"]+label {
+	margin: 0 20px 0 0;
+}
+
+input[type="button"], .button {
+	background-image: url("../images/repeaters.png");
+	background-position: 0 -377px;
+	height: 42px;
+	padding: 0 20px;
+	border: 1px solid #c9c9c9;
+	border-bottom-width: 3px;
+	box-shadow: inset 0 1px 0 0 #fff;
+	display: inline-block;
+	*display: inline;
+	*zoom: 1;
+	vertical-align: top;
+	font-size: 14px;
+	cursor: pointer;
+	color: #484848;
+}
+
+a.button {
+	height: 26px;
+	text-decoration: none;
+	padding-top: 12px;
+}
+
+input[type="button"]:hover, .button:hover {
+	background: #f2f2f2;
+	color: #204052;
+}
+
+input[type="button"]:active, .button:active {
+	background: #e0e0e0;
+}
+
+a.button.azul, input[type="button"].azul {
+	margin-right: 3px;
+	background-position: 0 -335px;
+	box-shadow: inset 0 1px 0 0 #96e9ff;
+	border-color: #6694ae;
+}
+
+input[type="button"].azul:hover, .button.azul:hover {
+	background: #86d1fa;
+}
+
+input[type="button"].azul:active, .button.azul:active {
+	background: #6aa7c9;
+}
+
+a.button.small, input[type="button"].small {
+	background-position: 0 -244px;
+	height: 30px;
+	font-size: 12px;
+}
+
+a.button.small {
+	padding: 8px 20px 0 20px;
+	height: 18px;
+}
+
+a.edit {
+	background: url("../images/page_white_edit.png");
+	display: inline-block;
+	*display: inline;
+	*zoom: 1;
+	vertical-align: top;
+	font-size: 0;
+	height: 16px;
+	width: 16px;
+}
+
+a.add-channel {
+	background: url("../images/add-channel.png");
+	display: inline-block;
+	*display: inline;
+	*zoom: 1;
+	vertical-align: top;
+	font-size: 0;
+	height: 16px;
+	width: 16px;
+}
+
+a.delete {
+	background: url("../images/page_white_delete.png");
+	display: inline-block;
+	*display: inline;
+	*zoom: 1;
+	vertical-align: top;
+	font-size: 0;
+	height: 16px;
+	width: 16px;
+}
+
+a.conf {
+	background: url("../images/page_white_conf.png");
+	display: inline-block;
+	*display: inline;
+	*zoom: 1;
+	vertical-align: top;
+	font-size: 0;
+	height: 16px;
+	width: 16px;
+}
+
+a.finalizar {
+	background: url("../images/4-Finalizado.png");
+	display: inline-block;
+	*display: inline;
+	*zoom: 1;
+	vertical-align: top;
+	font-size: 0;
+	height: 16px;
+	width: 16px;
+}
+
+#imgAdicionar {
+	vertical-align: middle;
+}
+
+.forms div.readOnly-field {
+	height: 24px;
+	padding: 4px;
+	display: inline-block;
+	line-height: 24px;
+}
+
+.forms input[type=text] {
+	width: 200px;
+}
+
+.forms input[type=file], #login .forms input[type=text] {
+	width: auto;
+}
+
+/* ########################## */
+/* ########################## */
+/* ########## MENU ########## */
+#header ul.menu-principal>li {
+	background: #d9d9d9;
+	background-image: url("../images/repeaters.png");
+	background-position: 0 -63px;
+	border: 1px solid #acacac;
+	box-shadow: inset 0 1px 0 0 #f5f5f5;
+	text-align: center;
+	border-top: none;
+	font-size: 0;
+	cursor: pointer;
+}
+
+#header ul.menu-principal>li.logo {
+	background-position: 0 0;
+	height: 58px;
+	padding: 0;
+	border-top: 1px solid #acacac;
+}
+
+#header ul.menu-principal>li.logo span.logo-globosat {
+	background: url("../images/sprite.png");
+	font-size: 0;
+	display: block;
+	height: 18px;
+	width: 150px;
+	margin: 20px auto 0;
+}
+
+#header ul.menu-principal>li.logo span.versao-globosat {
+	display: block;
+	font-size: 10px;
+	margin-left: auto;
+	margin-right: auto;
+	overflow: hidden;
+	text-align: center;
+	width: 70px;
+}
+
+div form div.logo span.logo-globosat {
+	background: url("../images/sprite.png");
+	font-size: 0;
+	display: block;
+	height: 18px;
+	width: 150px;
+	margin: 5px auto 0;
+}
+
+#header ul.menu-principal>li.selected {
+	background-position: 0 -116px;
+	border-color: #6694ae;
+	box-shadow: inset 0 1px 0 0 #96e9ff;
+}
+
+#header ul.menu-principal>li:first-child {
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+}
+
+#header ul.menu-principal>li:last-child {
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+}
+
+#header ul.menu-principal>li.head {
+	font-size: 15px;
+	text-align: left;
+	padding: 10px 0 0 0;
+}
+
+#header ul.menu-principal>li.head .titulo {
+	display: block;
+	height: 38px;
+	margin: 0 0 0 10px;
+}
+
+.menu-principal .head span.icone {
+	background: url("../images/sprite.png");
+	background-position: 0 109px;
+	display: inline-block;
+	*display: inline;
+	*zoom: 1;
+	vertical-align: top;
+	height: 25px;
+	width: 27px;
+}
+
+#header ul.menu-principal>li.head .titulo .texto {
+	display: inline-block;
+	padding: 5px 0 0 8px;
+}
+
+.menu-principal .perfil span.icone {
+	background: url("../images/menu-perfil.png");
+	background-position: 0 0;
+}
+
+.menu-principal .cadastros span.icone {
+	background-position: 0 109px;
+}
+
+.menu-principal .cadastros.selected span.icone {
+	background-position: -35px 109pxt;
+}
+
+.menu-principal .distribuicao span.icone {
+	background-position: 0 211px;
+}
+
+.menu-principal .distribuicao.selected span.icone {
+	background-position: -35px 211px;
+}
+
+.menu-principal .operadora span.icone {
+	background-position: 1px 40px;
+}
+
+.menu-principal .operadora.selected span.icone {
+	background-position: -35px 39px;
+}
+
+#header ul.submenu {
+	display: block;
+	font-size: 12px;
+	background: #aec4d1;
+}
+
+#header ul.submenu .titulo {
+	display: none !important;
+}
+
+#header ul.submenu>li {
+	display: block;
+	border-bottom: 1px solid #95abb7;
+	cursor: default;
+}
+
+#header ul.submenu>li:first-child {
+	border-top: 1px solid #95abb7;
+}
+
+#header ul.submenu a {
+	text-decoration: none;
+	display: block;
+	padding: 10px;
+	color: #335669;
+}
+
+#header ul.submenu a:hover {
+	text-decoration: underline;
+}
+
+#header ul.submenu li.selected {
+	background: #cbe5f4;
+}
+
+#header .operadora ul.submenu, #header .operadora ul.submenu li:last-child
+	{
+	border-radius: 0 0 9px 9px;
+}
+
+#header .botao-retrair {
+	background: #F5F5F5;
+	border-top: 1px solid #ACACAC;
+	border-left: 1px solid #ACACAC;
+	border-right: 1px solid #ACACAC;
+	border-radius: 10px 10px 0px 0px;
+	color: #616161;
+	cursor: pointer;
+	font-size: 11px;
+	font-weight: bold;
+	height: 15px;
+	line-height: 17px;
+	position: absolute;
+	right: 8px;
+	text-align: center;
+	top: -15px;
+	width: 20px;
+}
+
+#header a.botao-sair {
+	font-size: 13px;
+	text-decoration: none;
+	display: block;
+	text-align: center;
+	margin: 10px 0 0 0;
+	color: #484646;
+}
+
+#header a.botao-sair:hover {
+	text-decoration: underline;
+}
+
+#header a.botao-sair span.icone {
+	background: url("../images/sprite.png");
+	background-position: -70px 31px;
+	height: 16px;
+	width: 19px;
+	display: inline-block;
+	*display: inline;
+	*zoom: 1;
+}
+
+#header a.botao-sair span.texto {
+	display: inline-block;
+	*display: inline;
+	*zoom: 1;
+	vertical-align: top;
+	margin: 3px 0 0 2px;
+}
+
+/* ################################ */
+/* ################################ */
+/* ######## MENU PEQUENO ########## */
+#header.menu-pequeno {
+	width: 70px;
+}
+
+#header.menu-pequeno ul.menu-principal>li.head .titulo .texto {
+	display: none;
+}
+
+#header.menu-pequeno ul.menu-principal>li.head .titulo .icone {
+	margin: 0 0 0 10px;
+}
+
+#header.menu-pequeno ul.menu-principal>li.logo span.logo-globosat {
+	background-position: -101px 0;
+	height: 17px;
+	margin: 22px 0 0 4px;
+	width: 49px;
+}
+
+#header.menu-pequeno .menu-principal>li {
+	position: relative;
+}
+
+#header.menu-pequeno .menu-principal ul.submenu {
+	border-left: 1px solid #95ABB7;
+	border-right: 1px solid #95ABB7;
+	display: none;
+	left: 69px;
+	position: absolute;
+	top: 0;
+	width: 250px;
+	z-index: 100;
+}
+
+#header.menu-pequeno .menu-principal ul.submenu li.titulo {
+	display: block !important;
+	background-image: url("../images/repeaters.png");
+	background-position: 0 -116px;
+	border-color: #6694ae;
+	box-shadow: inset 0 1px 0 0 #96e9ff;
+	height: 32px;
+	font-size: 15px;
+	padding: 15px 15px 0 15px;
+}
+
+#header.menu-pequeno .menu-principal li.head:hover ul.submenu {
+	display: block;
+}
+
+ul.data-filtro li label{
+	display: block;
+    margin: 10px 10px 5px 0;
+    text-align: left;
+    width: 100%;
+}
+
+.tecnologias ul li {
+	display: block;
+    margin: 10px;
+    text-align: left;
+    width: 100%;
+}
+
+.tecnologias ul li label {
+    width: 25px;
+}
+
+#main.menu-pequeno {
+	margin-left: 110px;
+}
+
+#header.menu-pequeno .menu-selecionado {
+	background: #358;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	z-index: 10;
+	opacity: 0.2;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+	filter: alpha(opacity = 20);
+}
+
+#header.menu-pequeno .operadora .menu-selecionado {
+	border-radius: 0 0 9px 9px;
+}
+
+#header.menu-pequeno .operadora ul.submenu, #header.menu-pequeno .operadora ul.submenu li:last-child
+	{
+	border-radius: 0;
+}
+/* ######### FIM PEQUENO ########## */
+/* ################################ */
+/* ################################ */
+
+/* ############################ */
+/* ############################ */
+/* ########## FILTRO ########## */
+.filtro {
+	background: #e9f0f5;
+	border: 1px solid #c9d0d4;
+	border-top: none;
+	padding: 10px;
+}
+
+.filtro input {
+	border: 1px solid #c9d0d4;
+	padding: 0 5px;
+	/*height: 24px;*/
+	font-size: 13px;
+}
+
+.filtro button {
+	padding: 0 5px;
+	margin: 0 0 0 20px;
+	font-size: 13px;
+}
+
+.filtro .fechar {
+	font-weight: bold;
+	font-size: 10px;
+	float: right;
+	background: #a5acb0;
+	border-radius: 30px;
+	height: 15px;
+	width: 20px;
+	text-align: center;
+	padding: 5px 0 0 0;
+	color: #e9f0f5;
+	cursor: pointer;
+	margin: 3px 0 0 0;
+}
+
+.filtro .caixa-de-busca input {
+	border-radius: 15px;
+	padding: 0 15px;
+	width: 250px;
+}
+
+.filtro .seletor-de-data {
+	margin: 0 0 0 20px;
+}
+
+.filtro .seletor-de-data input {
+	width: 90px;
+}
+
+.filtro .seletor-de-data .icone-data {
+	background: url("../images/sprite.png");
+	height: 14px;
+	width: 13px;
+	display: inline-block;
+	background-position: -72px 50px;
+	margin: 0px 10px 0 0;
+}
+
+.filtro label {
+	margin: 0 3px 0 10px;
+	font-size: 12px;
+}
+
+.filtro label:first-child {
+	margin-left: 0;
+}
+
+.checkbox-picker {
+	position: relative;
+	display: inline-block;
+	vertical-align: middle;
+	*display: inline;
+	*zoom: 1;
+	margin: 0 0 0 20px;
+	cursor: pointer;
+}
+
+.checkbox-picker>span {
+	background: url("../images/repeaters.png");
+	background-position: 0 -630px;
+	height: 18px;
+	padding: 6px 10px 0 10px;
+	display: block;
+	font-size: 11px;
+	text-transform: uppercase;
+	font-weight: bold;
+	border: 1px solid #6694ae;
+	box-shadow: inset 0 1px 0 0 #96e9ff;
+}
+
+.checkbox-picker ul {
+	display: none;
+	position: absolute;
+	background: red;
+	padding: 10px;
+	min-width: 100px;
+	background: white;
+	border: 1px solid #dfdfdf;
+	z-index: 99;
+}
+
+.checkbox-picker:hover ul {
+	display: block;
+}
+
+.checkbox-picker ul li {
+	padding-bottom: 2px;
+	text-align: left;
+	vertical-align: middle;
+	white-space: nowrap;
+}
+
+/* ################################## */
+/* ################################## */
+/* ########## DISTRIBUICAO ########## */
+.topo-abas {
+	width: 100%;
+	display: block;
+	clear: both;
+}
+
+.topo-abas table {
+	width: 100%;
+}
+
+.topo-abas table td {
+	background-image: url('../images/repeaters.png');
+	background-position: 0 -169px;
+	box-shadow: inset 0 1px 0 0 #ffffff;
+	height: 40px;
+	border: 1px solid #c9c9c9;
+}
+
+.topo-abas table td.selected {
+	background: #E9F0F5;
+	border-color: #C9D0D4;
+	border-bottom: none;
+}
+
+.topo-abas table td a {
+	text-transform: uppercase;
+	color: #616161;
+	font-weight: bold;
+	padding: 13px 15px 0 15px;
+	font-size: 14px;
+	text-decoration: none;
+	display: inline-block;
+}
+
+table.lista-de-jogos-distribuicao {
+	width: 100%;
+	font-size: 14px;
+	background: white;
+	border: 1px solid #dfdfdf;
+	border-top: none;
+}
+
+table.lista-de-jogos-distribuicao td {
+	border-right: 1px solid #dfdfdf;
+	border-bottom: 1px solid #dfdfdf;
+	padding: 5px;
+	position: relative;
+	vertical-align: middle;
+	text-align: center;
+}
+
+table.lista-de-jogos-distribuicao .mandante, table.lista-de-jogos-distribuicao .visitante
+	{
+	margin: 0;
+	text-align: center;
+	width: 26%;
+}
+
+table.lista-de-jogos-distribuicao td>span img {
+	display: block;
+	padding-left: 18px;
+}
+
+table.lista-de-jogos-distribuicao td span.versus {
+	padding: 0 20px;
+}
+
+table.lista-de-jogos-distribuicao td.canal {
+	width: 160px;
+}
+
+table.lista-de-jogos-distribuicao td.times {
+	width: 260px;
+}
+
+table.lista-de-jogos-distribuicao td.campeonato {
+	text-align: left;
+}
+
+table.lista-de-jogos-distribuicao tr:hover {
+	background: #e9f0f5;
+}
+
+table.lista-de-jogos-distribuicao tr:hover>td.campeonato>.acoes, table.lista-de-jogos-distribuicao tr:hover>td.evento>.acoes
+	{
+	display: block;
+}
+
+table.lista-de-jogos-distribuicao td>.acoes {
+	background: url("../images/repeaters.png");
+	background-position: 0 -630px;
+	border: 1px solid #6694ae;
+	bottom: 0px;
+	box-shadow: inset 0 1px 0 0 #96e9ff;
+	display: none;
+	font-size: 11px;
+	font-weight: bold;
+	height: 18px;
+	margin: auto 0;
+	padding: 6px 10px 0 10px;
+	position: absolute;
+	right: 5px;
+	top: 0px;
+	text-transform: uppercase;
+	white-space: nowrap;
+}
+
+table.lista-de-jogos-distribuicao td.campeonato .acoes a, table.lista-de-jogos-distribuicao td.evento .acoes a
+	{
+	color: #484848;
+	padding: 0 5px;
+	text-decoration: none;
+}
+
+table.lista-de-jogos-distribuicao td.campeonato .acoes a:hover, table.lista-de-jogos-distribuicao td.evento .acoes a:hover
+	{
+	text-decoration: underline;
+}
+
+table.medium-table {
+	width: 80%;
+	background-color: white;
+	margin-left: 20px;
+}
+
+table.medium-table td a.cancel {
+	width: 12px;
+	height: 12px;
+}
+
+table.small-table {
+	width: 50% !important;
+	background-color: white;
+	margin-left: 20px;
+}
+
+table.small-table td a.cancel {
+	width: 12px;
+	height: 12px;
+}
+
+div.lista-de-operadoras ul li {
+	float: none;
+}
+
+/* ############################## */
+/* ############################## */
+/* ########## CADASTRO ########## */
+.crud input {
+	width: 130px;
+}
+
+.crud input[type="checkbox"] {
+	width: auto;
+	margin-right: 120px;
+}
+
+.crud select {
+	width: 140px;
+}
+
+.topo {
+	background: #ebebeb;
+	background-image: url('../images/repeaters.png');
+	background-position: 0 -169px;
+	box-shadow: inset 0 1px 0 0 #ffffff;
+	height: 40px;
+	border: 1px solid #c9c9c9;
+	font-size: 0;
+}
+
+.topo .titulo {
+	font-size: 16px;
+	display: inline-block;
+	vertical-align: top;
+	*display: inline;
+	*zoom: 1;
+	text-transform: uppercase;
+	color: #616161;
+	font-weight: bold;
+	padding: 13px 15px 0 15px;
+	font-size: 14px;
+}
+
+.topo .acoes {
+	margin: 0 0 0 20px;
+	display: inline-block;
+	*display: inline;
+	*zoom: 1;
+	font-size: 12px;
+}
+
+.topo .acoes .acao {
+	background: url("../images/repeaters.png");
+	background-position: 0 -244px;
+	display: inline-block;
+	height: 19px;
+	margin: 6px 10px 0 0;
+	padding: 7px 7px 0 7px;
+	border: 1px solid #b1b1b1;
+	font-size: 12px;
+	color: #484848;
+	text-decoration: none;
+	box-shadow: inset 0 1px 0 0 #ffffff;
+}
+
+.topo .acoes .acao:hover {
+	background: #f2f2f2;
+}
+
+.topo .acoes .acao.selected {
+	background: url("../images/repeaters.png");
+	background-position: 0 -275px;
+	box-shadow: none;
+	color: #204052;
+	border: 1px solid #6694ae;
+}
+
+.topo .acoes .acao:active {
+	background: #d9d9d9;
+	box-shadow: none;
+}
+
+.lista-de-jogos {
+	background: white;
+	border-top: none;
+}
+
+.lista-de-jogos .separador-data, table.tabular .separador-data {
+	display: block;
+	background: #e9f0f5;
+	background-image: url("../images/repeaters.png");
+	background-position: 0 -214px;
+	box-shadow: inset 0 1px 0 0 #82cffa;
+	border: 1px solid #6694ae;
+	border-left: none;
+	border-right: none;
+	height: 20px;
+	font-size: 14px;
+	text-transform: uppercase;
+	font-weight: bold;
+	color: #204052;
+	padding: 5px 0 0 15px;
+}
+
+table.tabular .separador-data-td {
+	border-bottom: 1px solid #C9D0D4;
+	padding: 15px 0px;
+}
+
+.lista-de-jogos table {
+	width: 100%;
+	font-size: 14px;
+}
+
+.lista-de-jogos .tabela-popup {
+	margin-left: -100px;
+    width: 350px;
+}
+
+.lista-de-jogos tr>td:last-child {
+	border-right: none;
+}
+
+.lista-de-jogos table td {
+	border-right: 1px solid #dfdfdf;
+	border-bottom: 1px solid #dfdfdf;
+	padding: 15px;
+	vertical-align: middle;
+}
+
+.lista-de-jogos table td.jogo {
+	font-size: 0;
+	width: 235px;
+}
+
+.tglPkList {
+	height: 270px;
+}
+
+.mandante, .visitante {
+	width: 90px;
+	display: inline-block;
+	*display: inline;
+	*zoom: 1;
+	text-align: center;
+	font-size: 12px;
+}
+
+.carregando {
+	margin: 12px 15px 0;
+	width: 100%;
+	display: inline-block;
+	*display: inline;
+	*zoom: 1;
+	text-align: center;
+	padding-bottom: 10px;
+	font-weight: bold;
+}
+
+.versus-x {
+	display: inline-block;
+	*display: inline;
+	zoom: 1;
+	font-size: 14px;
+	font-weight: bold;
+	height: 5px;
+	margin: 12px 15px 0;
+	vertical-align: top;
+}
+
+.visitante {
+	text-align: left;
+}
+
+.mandante {
+	text-align: right;
+}
+
+.lista-de-exibicao-operadora {
+	background: white;
+	border: 1px solid #dfdfdf;
+	border-top: none;
+	padding: 10px;
+	position: relative;
+}
+
+/* ############################### */
+/* ############################### */
+/* ########## OPERADORA ########## */
+.lista-de-exibicao {
+	background: white;
+	border: 1px solid #dfdfdf;
+	border-top: none;
+	padding: 10px;
+	position: relative;
+}
+
+.lista-de-exibicao .container-table-fixa { /*position: absolute;
+	top: 0;
+	left: 0;
+	width: 500px;*/
+	*width: 500px;
+	float: left;
+}
+
+.lista-de-exibicao .container-table-fixa table {
+	width: 500px;
+}
+
+.lista-de-exibicao .datatable tr .lastCell {
+	border-bottom: 1px solid #c9d0d4 !important;
+}
+
+.tabelaDupla {
+	max-height: 400px;
+	overflow-y: scroll;
+}
+
+.lista-de-exibicao table th {
+	background: #e9f0f5;
+	background-image: url("../images/repeaters.png");
+	background-position: 0 -214px;
+	box-shadow: inset 0 1px 0 0 #82cffa;
+	border: 1px solid #6694ae;
+	height: 18px;
+	font-size: 12px;
+	text-transform: uppercase;
+	font-weight: bold;
+	color: #204052;
+	padding: 3px 0 0 15px;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.lista-de-exibicao .dateContainer {
+	background: #e9f0f5;
+	background-image: url("../images/repeaters.png");
+	background-position: 0 -214px;
+	box-shadow: inset 0 1px 0 0 #82cffa;
+	border: 1px solid #6694ae;
+	height: 18px;
+	font-size: 12px;
+	text-transform: uppercase;
+	font-weight: bold;
+	color: #204052;
+	padding: 3px 0 0 15px;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.lista-de-exibicao .container-table-fixa table tbody tr {
+	border-bottom: 1px solid #C9D0D4;
+}
+
+.lista-de-exibicao .container-table-fixa table tr>th:last-child {
+	border-right: 3px solid #6694ae;
+}
+
+.lista-de-exibicao table tr.even {
+	background: #fafafa;
+}
+
+.lista-de-exibicao table.tabela-distribuicao-operadora tr td:hover {
+	background: #a0d8f8;
+	cursor: pointer;
+}
+
+.lista-de-exibicao table td {
+	color: #484848;
+	font-size: 12px;
+	text-align: left;
+	padding: 10px;
+	border-left: 1px solid #c9d0d4;
+	border-bottom: 1px solid #c9d0d4;
+	white-space: nowrap;
+	overflow: hidden;
+	max-width: 175px;
+}
+
+.lista-de-exibicao table td.canal_num{
+	max-width: 260px;
+	padding: 3px;
+}
+
+td.canal_num table td{
+	border: 1px solid #c9d0d4;
+	padding: 3px;
+	width: 90px;
+}
+
+
+.lista-de-exibicao .operadoras ul li {
+	width: 400px;
+}
+
+/* ######################### */ /* ######################### */
+/* ######### POPUP #########*/
+#popup fieldset li {
+	background-color: #F0F0F0;
+	cursor: pointer;
+	float: left;
+	font-size: 11px;
+	margin: 5px 5px 5px 0px;
+	width: auto;
+}
+
+#popup #frmNovaComutacao fieldset li {
+	background-color: #FFF;
+	cursor: pointer;
+	float: left;
+	font-size: 11px;
+	margin-left: 19px;
+	width: auto;
+}
+
+#popup #frmNovaComutacao ul li label {
+    text-align: right;
+    margin: 0 3px;
+}
+
+#popup #frmNovaComutacao ul.ul-cadastro {
+    display: inline-flex;
+}
+
+#popup #frmNovaComutacao .selecionar-ao-vivo {
+	display:none;	
+}
+
+#extraInfo fieldset li {
+	float: none;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.dialog h4 {
+	border-bottom: 2px solid #0073CE;
+	padding: 10px 0;
+	font-size: 18px;
+	letter-spacing: -0.3px;
+	color: #0073CE;
+	margin-bottom: 20px;
+}
+
+.dialog h6 {
+	padding: 10px 0;
+	font-size: 14px;
+	font-weight: bold;
+	letter-spacing: -0.3px;
+	color: #0073CE;
+}
+
+.dialog li {
+	font-size: 14px;
+	letter-spacing: -0.3px;
+	margin-left: 15px;
+}
+
+.dialog .confronto, .dialog .evento {
+	text-align: center;
+	width: auto;
+}
+
+.dialog .confronto span.time {
+	width: 130px;
+	padding-top: 35px;
+	background-position: top center;
+	background-repeat: no-repeat;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+.confronto .time, .confronto .versus {
+	display: inline-block;
+	zoom: 1;
+	*display: inline;
+	vertical-align: middle;
+}
+
+div#selecao-jogos ul li.confronto.ao-vivo{
+	height: 90px;	
+}
+
+.div-selecao-ao-vivo {
+	display: block;
+    line-height: normal;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+/* #########################*/ /* #########################*/
+/* ######### GERAL #########*/
+#div-status .statusDistribuicao {
+	margin-bottom: 10px;
+	font-weight: bold;
+}
+
+#div-status .statusAlteracao .aprovado, #div-status .statusDistribuicao .liberada-parcialmente
+	{
+	color: goldenrod !important;
+}
+
+#div-status .statusAlteracao .pendente, #div-status .statusDistribuicao .nao-liberado,
+	.container-table-fixa table tr td.liberado.false {
+	color: #bd5b5b !important;
+}
+
+#div-status .statusAlteracao .aprovado, #div-status .statusDistribuicao .liberada,
+	.container-table-fixa table tr td.liberado.true {
+	color: green !important;
+}
+
+#content #content-info .data-selecionada {
+	position: absolute;
+	width: 560px;
+	top: 65px;
+	right: 20px;
+	text-align: right;
+	font-size: 0;
+}
+
+#content #content-info .data-selecionada h4 {
+	display: inline-block;
+	margin: 0 10px;
+	vertical-align: middle;
+	*display: inline;
+	zoom: 1;
+}
+
+#content #content-info .data-selecionada div {
+	display: inline-block;
+	*display: inline;
+	zoom: 1;
+	margin: 0 10px;
+	vertical-align: middle;
+	width: 112px;
+	font-size: 20px;
+	height: 26px;
+	color: #fff;
+	letter-spacing: -1px;
+	text-align: center;
+}
+
+#content #content-info .data-selecionada input {
+	display: block;
+	border: none;
+	background: transparent;
+	font: normal 20px Arial, Helvetica, sans-serif;
+	line-height: 26px;
+	height: 26px;
+	letter-spacing: -1px;
+	color: #fff;
+	text-align: center;
+	padding: 0;
+	width: 112px;
+}
+
+#content #content-info .data-selecionada .data {
+	background: url("../images/icone-calendario.png") no-repeat 0 0;
+	padding: 8px 0 4px 47px;
+	line-height: 26px;
+}
+
+#content #content-info .data-selecionada .hora {
+	background: url("../images/icone-relogio.png") no-repeat 0 0;
+	padding: 8px 0 6px 36px;
+}
+
+#content #content-info .data-selecionada .hora select {
+	width: 80px;
+	display: none;
+	vertical-align: middle;
+	margin: 0;
+}
+
+#content #content-info .data-selecionada .hora span {
+	line-height: 27px;
+}
+
+div.filtro>div.data.data-selecionada.seletor-de-data>input[disabled=disabled]
+	{
+	background: #EEE;
+}
+
+#footer {
+	width: 600px;
+	margin: 0px auto;
+}
+
+.ui-datepicker {
+	font-size: 13px;
+}
+
+.selectall {
+	text-align: right;
+	padding-top: 30px;
+}
+
+.center {
+	text-align: center;
+}
+
+.right {
+	text-align: right;
+}
+
+.filtro input.data {
+	width: 80px;
+}
+
+.tabular input[type=text].data {
+	width: 73px;
+}
+
+.tabular input[type=text].hora {
+	width: 36px;
+}
+
+.lista-de-exibicao table td.tabular {
+	padding: 2px;
+	vertical-align: middle;
+}
+
+.lista-de-exibicao table td.checkbox {
+	width: 25px;
+}
+
+.lista-de-exibicao table td.checkbox>input[type=checkbox] {
+	width: auto;
+}
+
+.lista-de-exibicao table th.checkbox {
+	width: 25px
+}
+
+.lista-de-exibicao table td.tabular.menor_tamanho input {
+	width: 35px;
+}
+
+table.tabular td.tabular>input, table.tabular select, table.tabular textarea
+	{
+	width: 120px;
+}
+
+table.tabular input[type=checkbox] {
+	width: auto;
+}
+
+div.lista-de-exibicao div.fixa-tabular { /*width: 650px;*/
+	
+}
+
+.lista-de-exibicao .container-table-fixa table.tabular {
+	width: 650px;
+}
+
+div.jogosList {
+	width: auto;
+	max-width: 730px;
+	min-width: 350px;
+}
+
+#jogosDialog li, .dialog ul.estados li, #horariosCanalDialog ul.grade li
+	{
+	float: left;
+	background-color: #f0f0f0;
+	margin: 10px 0 0 10px;
+	padding: 10px;
+	font-size: 11px;
+	cursor: pointer;
+	width: 310px;
+}
+
+
+#jogosDialog .jogosAoVivo {
+	width:670px;
+  	max-height:550px;  	
+  	overflow:auto;	
+}
+
+#jogosDialog li:hover, #jogosOperadoraDialog li:hover, #estadosDialog li:hover,
+	ul.display-canais-mosaico li:hover {
+	background-color: #ccc;
+}
+
+#jogosDialog li span.time {
+	font-size: 11px;
+	line-height: 12px;
+	width: 100px;
+}
+
+#jogosDialog .confronto .versus {
+	line-height: 20px;
+}
+
+#listItemProgramacaoAlternativa {
+	white-space: nowrap;
+}
+
+.estadosList {
+	width: 560px;
+}
+
+.hidden {
+	display: none;
+}
+
+.alterado {
+	background-color: #ddf6d1;
+}
+
+.hora {
+	padding: 5px;
+}
+
+#divTblJogosTabular .hora {
+	text-align: center;
+}
+
+#editar-campeonato {
+	width: 500px;
+}
+
+#frmEditarInformacoesBasicas fieldset, #frmEditarInformacoesTecnicas fieldset
+	{
+	margin: 25px 10px 10px 10px;
+}
+
+#frmEditarInformacoesBasicas, #frmEditarInformacoesTecnicas {
+	width: 830px;
+}
+
+#frmEditarInformacoesBasicas ul, #frmEditarInformacoesTecnicas ul {
+	float: left;
+	width: 355px;
+	margin: 10px;
+}
+
+#frmEditarInformacoesBasicas label {
+	width: 100px;
+}
+
+#frmEditarInformacoesTecnicas label {
+	display: inline-block;
+	margin: 0 4px;
+	width: 100px !important;
+}
+
+#txtEditarDataInicio, #txtEditarDataFim {
+	width: 80px;
+}
+
+div.right a#btnRealizarEdicao.button.small.azul, div.right a#btnCancelarEdicao.button.small.azul
+	{
+	background-position: 0 -347px;
+}
+
+input.url {
+	width: 470px;
+}
+
+#popup li.estado {
+	text-align: center;
+	width: 49px;
+}
+
+#popup li.estado.selecionado {
+	background-color: #DDF6D1;
+}
+
+.tabela-distribuicao-operadora {
+	margin: 0px auto;
+}
+
+.tabela-distribuicao-operadora tbody tr {
+	height: 35px;
+	overflow: hidden;
+}
+
+.tabela-distribuicao-operadora td.confronto {
+	text-align: center;
+	vertical-align: top;
+}
+
+.tabela-distribuicao-operadora td.confronto.ppv {
+	
+}
+
+.tabela-distribuicao-operadora td.confronto.distribuicaoconflito {
+	color: red;
+}
+
+.tabela-distribuicao-operadora td.confronto.ppv.ppv-pronto {
+	background-color: #ddf6d1;
+}
+
+.tabela-distribuicao-operadora td.confronto.ppv.ppv-pendente {
+	background-color: #e8eca5;
+}
+
+.tabela-distribuicao-operadora td.confronto.ppv.disponivel {
+	font-weight: bold;
+	opacity: 0.5;
+}
+
+.tabela-distribuicao-operadora td.confronto.ppv.selecionado {
+	opacity: 1;
+}
+
+.tabela-distribuicao-operadora td.confronto.ppv {
+	opacity: 1;
+}
+
+div#programacaoAlternativa form#frmAlternativo ul li label {
+	display: inline;
+}
+
+div#programacaoAlternativa form#frmAlternativo ul li {
+	margin: 40px 0 0 175px;
+}
+
+div#selecao-jogos-operadora ul li, div#selecao-jogos ul li, ul.display-canais-mosaico li
+	{
+	background-color: #f0f0f0;
+	border-radius: 10px;
+	cursor: pointer;
+	float: left;
+	font-size: 11px;
+	margin: 0 0 5px 5px;
+	padding: 5px;
+	width: 310px;
+}
+
+div#selecao-jogos ul li {
+	height: 80px;
+	line-height: 80px;
+}
+
+#listItemProgramacaoAlternativa {
+	width: 93%;
+}
+
+#listItemProgramacaoAlternativa input {
+	width: 70%;
+}
+
+div#selecao-jogos-operadora li#listItemProgramacaoAlternativaOperadora {
+	margin: 15px 0 0 0px;
+	padding: 10px;
+	width: 97%;
+}
+
+div#selecao-jogos-operadora li#listItemProgramacaoAlternativaOperadora input
+	{
+	width: 80%;
+}
+
+div#selecaoCanalDialogTabular ul li {
+	background-color: #F0F0F0;
+	cursor: pointer;
+	float: left;
+	font-size: 11px;
+	margin: 5px 0 0 5px;
+	padding: 5px 0 0 5px;
+	width: 190px;
+}
+
+div#selecaoCanalDialogTabular ul li.selecionado {
+	background-color: #ddf6d1;
+}
+
+div#selecaoCanalDialogTabular ul li .canal {
+	background: none no-repeat scroll center top transparent;
+	display: inline-block;
+	margin-bottom: 3px;
+	padding-top: 38px;
+	white-space: nowrap;
+	width: 120px;
+}
+
+div#selecaoCanalDialogTabular ul li {
+	text-align: center;
+}
+
+div#divTblJogosTabular div.topo div.acoes input {
+	border-radius: 0px;
+	height: 24px;
+	padding: 0 5px;
+	font-size: 13px;
+}
+
+div#selecaoCanalDialogTabular div.botoes-canais {
+	text-align: right;
+}
+
+/*///// Component - Dialog /////*/
+.dialogBox {
+	box-shadow: 0px 0px 10px #333;
+	border-radius: 10px 10px 10px 10px;
+}
+
+.dialogBox .close {
+	box-shadow: 0px 0px 10px #333;
+	top: -30px;
+	right: 10px;
+	border-radius: 10px 10px 0px 0px;
+}
+
+.dialogBox .close:hover {
+	background: #FFF;
+	color: #000;
+}
+
+.dialogBox>h3 {
+	font: normal 22px Arial, Helvetica, sans-serif;
+	padding: 0 5px 5px 5px;
+	margin: 0 0 15px 0;
+	color: #23557E;
+	border-bottom: 1px solid #B5D4DF;
+}
+
+.dialogBox>h3 span {
+	color: #587391;
+	font-size: 22px;
+}
+
+#content-details .tituloPickList {
+	color: #555555;
+	font-weight: bold;
+	margin-bottom: 5px;
+	font-size: 20px;
+	clear: both;
+	padding-top: 12px;
+}
+
+.pkOperadoras.picklist select {
+	height: 142px;
+}
+
+#content-details .picklist br.clear {
+	clear: both;
+}
+
+#content-details div.picklistDiv {
+	margin-left: 10px;
+}
+
+#content-details div.picklistDiv #picklistOperadora {
+	margin-top: 10px;
+}
+
+#picklistOperadoraConsulta {
+	margin: 0 20px;
+}
+
+.consulta-operadoras {
+	
+}
+
+.message li {
+	margin: 3px 15px;
+	padding: 3px 5px 3px 25px;
+}
+
+.messagePopUp .error {
+	box-shadow: 0 0 3px 0px #D8000C;
+	background-image: url('theme/imgs/msg/error.png');
+	background-position: 5px center;
+	background-repeat: no-repeat;
+	margin: 3px 15px;
+	padding: 3px 5px 3px 25px;
+}
+
+.message .error {
+	box-shadow: 0 0 3px 0px #D8000C;
+	background-image: url('theme/imgs/msg/error.png');
+	background-position: 5px center;
+	background-repeat: no-repeat;
+}
+
+.message .success {
+	box-shadow: 0 0 3px 0px #4F8A10;
+	background-image: url('theme/imgs/msg/success.png');
+	background-position: 5px center;
+	background-repeat: no-repeat;
+}
+
+.message .info {
+	box-shadow: 0 0 3px 0px #00529B;
+	background-image: url('theme/imgs/msg/info.png');
+	background-position: 5px center;
+	background-repeat: no-repeat;
+}
+
+.message .warning {
+	box-shadow: 0 0 3px 0px #9F6000;
+	background-image: url('theme/imgs/msg/warning.png');
+	background-position: 5px center;
+	background-repeat: no-repeat;
+}
+
+div.titulosPickList {
+	width: 800px;
+	margin-top: 15px;
+}
+
+div.fst-title {
+	float: left;
+	width: 200px;
+	text-align: center;
+}
+
+div.scnd-title {
+	float: left;
+	width: 248px;
+	text-align: center;
+}
+
+div.pkOperadoras {
+	float: left;
+}
+
+form#formConfigCampeonato fieldset {
+	border: 1px solid #DDD;
+}
+
+.clear {
+	clear: both;
+}
+
+a.delete {
+	background: url("../images/page_white_delete.png");
+	display: inline-block;
+	*display: inline;
+	*zoom: 1;
+	vertical-align: top;
+	font-size: 0;
+	height: 16px;
+	width: 16px;
+}
+
+a.cancel {
+	background: url("../images/cancel.png");
+	display: inline-block;
+	*display: inline;
+	*zoom: 1;
+	vertical-align: top;
+	font-size: 0;
+	height: 12px;
+	width: 12px;
+}
+
+span.okay, a.okay {
+	background: url("../images/ok.png");
+	display: inline-block;
+	*display: inline;
+	*zoom: 1;
+	vertical-align: top;
+	font-size: 0;
+	padding-top: -4px;
+	height: 14px;
+	width: 14px;
+}
+
+.tabela-distribuicao-operadora th a.editar-ppv.okay {
+	visibility: hidden;
+	margin: -5px 2px 2px;
+	border: 1px solid transparent;
+}
+
+.tabela-distribuicao-operadora th:hover a.editar-ppv.okay {
+	visibility: visible;
+}
+
+.tabela-distribuicao-operadora th a.editar-ppv.okay:hover {
+	border: 1px solid green;
+	margin: -5px 2px 2px;
+}
+
+.tabela-distribuicao-operadora tr td a.remover-distribuicao.cancel {
+	visibility: hidden;
+	margin: 1px;
+}
+
+.tabela-distribuicao-operadora tr td:hover a.remover-distribuicao.cancel
+	{
+	visibility: visible;
+}
+
+.tabela-distribuicao-operadora tr td a.remover-distribuicao.cancel:hover
+	{
+	border: 1px solid red;
+	margin: 0px;
+}
+
+.tabela-distribuicao-operadora th a.remover-distribuicao.cancel {
+	visibility: hidden;
+	margin: 1px;
+}
+
+.tabela-distribuicao-operadora th:hover a.remover-distribuicao.cancel {
+	visibility: visible;
+}
+
+.tabela-distribuicao-operadora th a.remover-distribuicao.cancel:hover {
+	border: 1px solid red;
+	margin: 0px;
+}
+
+.lista-conflitos-importacao table th {
+	-moz-border-bottom-colors: none;
+	-moz-border-image: none;
+	-moz-border-left-colors: none;
+	-moz-border-right-colors: none;
+	-moz-border-top-colors: none;
+	background: url("../images/repeaters.png") repeat scroll 0 -132px
+		#E9F0F5;
+	border-color: #6694AE -moz-use-text-color #6694AE #6694AE;
+	border-style: solid none solid solid;
+	border-width: 1px medium 1px 1px;
+	box-shadow: 0 1px 0 0 #82CFFA inset;
+	color: #204052;
+	font-size: 12px;
+	font-weight: bold;
+	height: 18px;
+	padding: 0px;
+	text-transform: uppercase;
+}
+
+div.table-historico table th {
+	-moz-border-bottom-colors: none;
+	-moz-border-image: none;
+	-moz-border-left-colors: none;
+	-moz-border-right-colors: none;
+	-moz-border-top-colors: none;
+	background: url("../images/repeaters.png") repeat scroll 0 -132px
+		#E9F0F5;
+	border-color: #6694AE -moz-use-text-color #6694AE #6694AE;
+	border-style: solid none solid solid;
+	border-width: 1px medium 1px 1px;
+	box-shadow: 0 1px 0 0 #82CFFA inset;
+	color: #204052;
+	font-size: 12px;
+	font-weight: bold;
+	height: 18px;
+	padding: 2px;
+	text-transform: uppercase;
+	vertical-align: middle;
+}
+
+div.table-historico table th.canal {
+	min-width: 150px;
+}
+
+div.table-historico table.distribuicao-operadoras.datatable td.confronto span.time
+	{
+	width: 45%;
+}
+
+fieldset#historico table.distribuicao-operadoras.datatable {
+	margin: 0px;
+}
+
+table.distribuicao-operadoras.datatable td.confronto {
+	width: 130px;
+}
+
+table.distribuicao-operadoras.datatable td.confronto span.time {
+	margin: 0px;
+	text-align: center;
+	width: 25%;
+}
+
+.divCabecalho {
+	width: 130px;
+}
+
+.listaCanais {
+	display: inline-block;
+}
+
+div#historico-operadora table.historico.datatable th {
+	-moz-border-bottom-colors: none;
+	-moz-border-image: none;
+	-moz-border-left-colors: none;
+	-moz-border-right-colors: none;
+	-moz-border-top-colors: none;
+	background: url("../images/repeaters.png") repeat scroll 0 -132px
+		#E9F0F5;
+	border-color: #6694AE -moz-use-text-color #6694AE #6694AE;
+	border-style: solid none solid solid;
+	border-width: 1px medium 1px 1px;
+	box-shadow: 0 1px 0 0 #82CFFA inset;
+	color: #204052;
+	font-size: 12px;
+	font-weight: bold;
+	height: 18px;
+	padding: 2px;
+	text-transform: uppercase;
+	vertical-align: middle;
+}
+
+div#historico-operadora table.historico.datatable td {
+	width: 33%;
+}
+
+div#historico-operadora table.historico.datatable td div.confronto div.time
+	{
+	word-wrap: no-break;
+}
+
+div#historico-operadora .colCanal {
+	width: 140px;
+}
+
+div#historico-operadora .canal {
+	margin: 30px;
+}
+
+div#historico-operadora div.img {
+	width: auto;
+}
+
+div#historico-operadora div.confronto div.time {
+	margin: 10px;
+	text-align: center;
+	width: 150px;
+}
+
+div#historico-operadora div.confronto div.time span {
+	width: 100%;
+	display: block;
+}
+
+#txtJustificativa {
+	width: 400px;
+	height: 150px;
+}
+
+#login button {
+	float: right;
+}
+
+#popup fieldset li.file, .forms ul li.file {
+	width: 460px;
+}
+
+.forms ul li.file input {
+	display: inline;
+}
+
+#popup img.logo, .forms img.logo {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.filtro .data.data-selecionada {
+	float: left;
+}
+
+.filtro .status {
+	float: right;
+}
+
+.filtro .status .aprovado {
+	color: green;
+	font-weight: bold;
+}
+
+.filtro .status .rejeitado {
+	color: red;
+	font-weight: bold;
+}
+
+.filtro .status .pendente {
+	color: #acaa00;
+	font-weight: bold;
+}
+
+.filtro .status .nova {
+	color: green;
+	font-weight: bold;
+}
+
+.alteracao-operadora {
+	display: inline-block;
+	padding-bottom: 30px;
+}
+
+.alteracao-operadora li {
+	background: #ccc;
+	float: left;
+	height: 310px;
+	margin: 15px 0 0 15px;
+	padding: 2px;
+	position: relative;
+	width: 200px;
+}
+
+.alteracao-operadora li.disponivel {
+	background: #6699DD;
+	opacity: 0.3;
+}
+
+.alteracao-operadora.disponivel-alteracao li.disponivel {
+	cursor: pointer;
+}
+
+.alteracao-operadora li div.canal {
+	background: #e5e5e5;
+	font-size: 0;
+	height: 298px;
+	padding: 6px 0;
+}
+
+.alteracao-operadora li.disponivel div.canal {
+	background: #DDF6D1;
+}
+
+.alteracao-operadora.ppv-pronto li.disponivel div.canal {
+	background: #B6CAAC;
+}
+
+.alteracao-operadora.ppv-pendente li.disponivel div.canal {
+	background: #e8eca5;
+}
+
+.alteracao-operadora li.disponivel.selecionado {
+	opacity: 1;
+}
+
+.alteracao-operadora li div.canal h6 {
+	color: #666666;
+	font: 10px Arial, Helvetica, sans-serif;
+	background: no-repeat scroll center 0 transparent;
+	padding-top: 40px;
+	text-align: center;
+	text-transform: uppercase;
+	height: 20px;
+}
+
+.alteracao-operadora li div.canal .jogo-container {
+	display: inline-block;
+	margin: 11px 0 0 0;
+	padding: 5px;
+	width: 190px;
+}
+
+.alteracao-operadora li div.canal .jogo-container .jogo {
+	padding: 1px;
+	background-color: #fff;
+}
+
+.alteracao-operadora li div.canal .jogo-container .jogo .confronto {
+	height: 170px;
+	line-height: 65px;
+	padding: 6px 0;
+	text-align: center;
+}
+
+.alteracao-operadora li div.canal .jogo-container .jogo .time {
+	background-repeat: no-repeat;
+	color: #666666;
+	display: inline-block;
+	font: 13px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	letter-spacing: -1px;
+	vertical-align: middle;
+	text-align: center;
+}
+
+.alteracao-operadora li div.canal .jogo-container .jogo .escudo {
+	background-position: center center;
+	background-repeat: no-repeat;
+	height: 30px;
+	margin: 0 auto;
+	width: 30px;
+}
+
+.alteracao-operadora li div.canal .jogo-container .jogo .versus {
+	background: url("../images/confronto-versus.png") no-repeat scroll
+		center center transparent;
+	border-radius: 0 0 0 0 !important; /* evitar $...corner(); */
+	color: #666666;
+	display: block;
+	font: bold 23px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	height: 30px;
+	overflow: hidden;
+	text-indent: -9999px;
+	vertical-align: middle;
+}
+
+.alteracao-operadora li div.canal .jogo-container .jogo.programa {
+	font-size: 16px;
+	line-height: 220px;
+	height: 220px;
+	text-align: center;
+}
+
+.alteracao-operadora li div.canal .jogo-container .jogo.programa span,
+	.alteracao-operadora li div.canal .jogo-container .jogo.programa b {
+	display: inline-block;
+	text-align: center;
+	line-height: 20px;
+	vertical-align: middle;
+}
+
+.alteracao-operadora li div.canal .jogo-container .jogo .torneio,
+	.alteracao-operadora li div.canal .jogo-container  .jogo .local {
+	background-color: #ccc;
+	color: #fff;
+	font-size: 16px;
+	letter-spacing: -1px;
+	padding: 2px;
+	text-align: center;
+}
+
+.alteracao-operadora li div.canal .jogo-container .jogo .confronto .eventoalternativo
+	{
+	font-size: 12px;
+}
+
+.alteracao-operadora li.disponivel div.canal .jogo-container .jogo .torneio,
+	.alteracao-operadora li.disponivel div.canal .jogo-container  .jogo .local
+	{
+	background-color: #6699DD;
+}
+
+.data-selecionada .hora select {
+	display: none;
+}
+
+.data-selecionada .hora {
+	display: inline-block;
+	cursor: pointer;
+}
+
+.data-selecionada .hora:hover span {
+	font-weight: bold;
+}
+
+.criterios span {
+	font-weight: bold;
+}
+
+.criterios {
+	padding: 10px;
+}
+
+.legenda {
+	background-color: #FFFFFF;
+	border: 3px solid #CCCCCC;
+	margin: 15px;
+	max-width: 960px;
+}
+
+.legenda div.box {
+	width: 20px;
+	height: 20px;
+	float: left;
+}
+
+.legenda div.box.aberto-fechado {
+	background-color: #e5e5e5;
+	border: 2px solid #CCC;
+}
+
+.legenda div.box.ppv-pendente-disponivel {
+	background-color: #E8ECA5;
+	border: 2px solid #6699DD;
+	opacity: 0.3;
+}
+
+.legenda div.box.ppv-pendente-selecionado {
+	background-color: #E8ECA5;
+	border: 2px solid #6699DD;
+}
+
+.legenda div.box.ppv-pronto-disponivel {
+	background-color: #DDF6D1;
+	border: 2px solid #6699DD;
+	opacity: 0.5;
+}
+
+.legenda div.box.ppv-pronto-selecionado {
+	background-color: #B6CAAC;
+	border: 2px solid #6699DD;
+}
+
+.legenda span {
+	float: left;
+	padding-left: 5px;
+}
+
+.legenda li {
+	padding: 5px;
+}
+
+.floatscroll {
+	position: fixed;
+	bottom: 10px;
+	right: 25px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	background: url("../images/repeaters.png") repeat scroll 0 -63px #D9D9D9;
+	border: 1px solid #ACACAC;
+	box-shadow: 0 1px 0 0 #F5F5F5 inset;
+	width: 80px;
+	height: 20px;
+	padding: 3px 5px 0px 7px;
+}
+
+.floatscroll a {
+	width: 47%;
+	display: inline-block;
+	color: #484848;
+	font-weight: bold;
+	text-decoration: none;
+	font-size: 16px;
+}
+
+.floatscroll a.next {
+	text-align: right;
+}
+
+#frmFinalizar .listacanais {
+	max-height: 250px;
+	overflow-y: auto;
+	width: 425px;
+	margin: 20px;
+}
+
+.tabular .cancel {
+	vertical-align: middle;
+	margin: 1px;
+}
+
+.tabular .cancel:hover {
+	margin: 0px;
+	border: 1px solid red;
+}
+
+div#jogos ul li, div#selecao-jogos-operadora ul li {
+	min-height: 46px;
+}
+
+#tblCanaisCadastrados:hover {
+	cursor: pointer;
+}
+
+#div-filtro span.horarioselecionado {
+	margin-right: 10px;
+}
+
+.listacanais fieldset ul li label.evento {
+	text-align: left;
+	width: 300px;
+}
+
+.listacanais fieldset ul li .numerocanal {
+	width: 50px;
+}
+
+.ui-autocomplete {
+	*height: 200px;
+	max-height: 200px;
+	overflow: hidden;
+}
+
+#abasLiberacaoDistribuicao .abas td {
+	cursor: pointer;
+}
+
+/* css tela de distribuicao operadora */
+#content-details .operadoras {
+	height: 550px;
+}
+
+.tabela {
+	background-color: #FFF;
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+}
+
+.tabela-geral {
+    background-color: #fff;
+    box-sizing: border-box;
+    overflow: hidden;
+    padding: 5px;
+    position: relative;
+    width: 100%;
+}
+
+.tabela-fixa, .tabela-dinamica {
+	position: relative;
+	float: left;
+	overflow: hidden;
+	padding-top: 19px;
+	border-top: 1px solid #6694ae;
+}
+
+.tabela-dinamica {
+	border-right: 1px solid #6694ae;
+	float: left;
+	height: 476px;
+	width: 654px;
+}
+
+.tabela-fixa {
+	border-bottom: 1px solid #DDD;
+	height: 464px;
+	width: 680px;
+}
+
+#tabelaConsultaOperadora .tabela-geral {
+	border-bottom: 1px solid #DDD;
+	position: relative;
+	float: left;
+	overflow: hidden;
+	padding-top: 19px;
+	border-top: 1px solid #6694ae;
+	height: 70%;
+	width: 100%;
+}
+
+#tabelaConsultaOperadora .tabela-fixa {
+	width: 403px;
+}
+
+.scroll-pane {
+	height: 100%;
+}
+
+.tabela-cabecalho {
+	color: #FFF;
+	position: absolute;
+	top: 0;
+}
+
+.tabela-cabecalho>div, .tabela-coluna {
+	border-right: 1px solid #DDD;
+	float: left;
+	width: 105px;
+	line-height: 20px;
+}
+
+.tabela-geral .tabela-coluna {
+	text-align: center;
+	white-space: nowrap;
+	font-size: 12px;
+	overflow: hidden;
+}
+
+.tabela-geral .tabela-coluna.nome-operadora {
+	width: 240px;
+}
+
+.tabela-cabecalho>div.fc {
+	border-left: 1px solid #6694ae;
+}
+
+.tabela-coluna.fc {
+	border-left: 1px solid #DDD;
+}
+
+.tabela-cabecalho>div, .tabela-coluna>div {
+	border-bottom: 1px solid #DDD;
+	font-size: 12px;
+	overflow: hidden;
+	position: relative;
+	text-align: center;
+	white-space: nowrap;
+}
+
+.tabela-cabecalho>div {
+	background: #e9f0f5;
+	background-image: url("../images/repeaters.png");
+	background-position: 0 -214px;
+	box-shadow: inset 0 1px 0 0 #82cffa;
+	border: 1px solid #6694ae;
+	border-right: none;
+	height: 18px;
+	font-weight: bold;
+	color: #204052;
+	text-transform: uppercase;
+	white-space: nowrap;
+}
+
+.tabela-coluna>div {
+	color: #484848;
+	height: 30px;
+	line-height: 30px;
+	padding: 0 5px;
+}
+
+.resizable-helper {
+	border-right: 2px dotted #111;
+}
+
+.tabela-coluna>div:hover {
+	background: #a0d8f8;
+	cursor: pointer;
+}
+
+.tabela-coluna>div.ui-resizable-e {
+	border: none;
+	cursor: e-resize;
+	padding: 0;
+	height: 100%;
+	position: absolute;
+}
+
+/* larguras especificas para colunas */
+.tabela-cabecalho>div.status, .tabela-coluna.status {
+	width: 55px;
+}
+
+.tabela-coluna>.status, .tabular.status {
+	width: 45px;
+	font-size: 0px;
+}
+
+.tabela-coluna>.status .icone-status {
+	display: inline-block;
+	*display: inline;
+	*zoom: 1;
+	vertical-align: middle;
+	font-size: 0;
+	height: 16px;
+	width: 16px;
+}
+
+.tabular.status .icone-status, #nova-tabela .icone-status {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	vertical-align: middle;
+	font-size: 0;
+	height: 16px;
+	width: 16px;
+}
+
+.tabela-coluna>.status .icone-status.nao-liberado, .tabular.status .icone-status.NAO_LIBERADA,
+	#nova-tabela .icone-status.nao-liberado, #nova-tabela .icone-status.NAO_LIBERADA
+	{
+	background: url("../images/1-NaoLiberado.png");
+}
+
+.tabela-coluna>.status .icone-status.PENDENTE, #nova-tabela .icone-status.PENDENTE
+	{
+	background: url("../images/3-Pendente.png");
+}
+
+.tabela-coluna>.status .icone-status.LIBERADA, .tabular.status .icone-status.LIBERADA,
+	#nova-tabela .icone-status.LIBERADA {
+	background: url("../images/2-Liberado.png");
+}
+
+.tabela-coluna>.status .icone-status.FINALIZADA, .tabular.status .icone-status.FINALIZADA,
+	#nova-tabela .icone-status.FINALIZADA {
+	background: url("../images/4-Finalizado.png");
+}
+
+.tabela-coluna>.status .icone-status.PARCIALMENTE_LIBERADA, .tabular.status .icone-status.PARCIALMENTE_LIBERADA,
+	#nova-tabela .icone-status.PARCIALMENTE_LIBERADA {
+	background: url("../images/5-Parcialmente-Liberada.png");
+}
+
+.tabela-coluna>.status .icone-status.REJEITADO, #nova-tabela .icone-status.REJEITADO
+	{
+	background: url("../images/6-Rejeitado.png");
+}
+
+.tabela-coluna>.status .icone-status.ACEITO, #nova-tabela .icone-status.ACEITO
+	{
+	background: url("../images/7-Aprovado.png");
+}
+
+.tabela-cabecalho>div.headend, #conteudoFixo .headend {
+	width: 85px;
+}
+
+#conteudoFixo .tabela-coluna>.headend {
+	width: 75px;
+}
+
+.tabela-cabecalho>div.UF, #conteudoFixo .UF {
+	width: 30px;
+}
+
+#conteudoFixo .tabela-coluna>.UF {
+	width: 20px;
+}
+
+.tabela-cabecalho>div.distanciaCapital, #conteudoFixo .distanciaCapital,
+	.tabela-cabecalho>div.numeroPPV, #conteudoFixo .numeroPPV {
+	width: 40px;
+}
+
+#conteudoFixo .tabela-coluna>.distanciaCapital, #conteudoFixo .tabela-coluna>.numeroPPV
+	{
+	width: 30px;
+}
+
+#conteudoDinamico .ppv {
+	background-color: #DDF6D1;
+}
+
+#conteudoDinamico .ppv.pronto {
+	background-color: #DDF6D1;
+}
+
+#conteudoDinamico .ppv.pendente {
+	background-color: #E8ECA5;
+}
+
+#conteudoDinamico .ppv.disponivel {
+	font-weight: bold;
+	opacity: 0.5;
+}
+
+#conteudoDinamico .ppv.selecionado {
+	opacity: 1;
+}
+
+/* acoes de distribuicao operadora */
+.tabela-coluna a.remover-distribuicao.cancel {
+	right: 5px;
+	top: 9px;
+	visibility: hidden;
+	position: absolute;
+}
+
+#headerDinamico .tabela-coluna a.remover-distribuicao.cancel {
+	top: 3px;
+}
+
+#headerDinamico .tabela-coluna:hover a.remover-distribuicao.cancel,
+	.tabela-coluna div:hover a.remover-distribuicao.cancel {
+	visibility: visible;
+}
+
+#headerDinamico .tabela-coluna:hover a.editar-ppv.okay, .tabela-coluna div:hover a.editar-ppv.okay
+	{
+	visibility: visible;
+}
+
+.tabela-coluna a.remover-distribuicao.cancel:hover {
+	border: 1px solid red;
+	top: 8px;
+	right: 4px;
+}
+
+#headerDinamico .tabela-coluna a.remover-distribuicao.cancel:hover {
+	top: 2px;
+	right: 4px;
+}
+
+#selecao-jogos .confronto.evento-selecionado, #selecao-jogos .evento.evento-selecionado {
+	background-color: #DDF6D1;
+}
+
+.tabela-coluna a.editar-ppv.okay {
+	visibility: hidden;
+	border: 1px solid transparent;
+}
+
+.tabela-coluna th:hover a.editar-ppv.okay {
+	visibility: visible;
+}
+
+.tabela-coluna th a.editar-ppv.okay:hover {
+	border: 1px solid green;
+}
+
+td.processando a {
+	cursor: progress !important;
+	color: #ccc !important;
+}
+
+.consulta-operadoras .forms fieldset {
+	display: inline-block;
+	float: left;
+	margin: 5px;
+	height: 195px;
+}
+
+.consulta-operadoras div.titulosPickList {
+	width: auto;
+}
+
+.consulta-operadoras .tglPkList {
+	height: auto;
+}
+
+span.required {
+	color: #C00;
+}
+
+/* correcao de bordas execivas em dialogs */
+.dialog>.tab .forms fieldset, .dialog .forms .lista-de-exibicao, .dialog .forms.lista-de-exibicao
+	{
+	border: none;
+}
+
+.dialog .forms .titulosPickList {
+	width: auto;
+}
+
+.dialog .forms #listItemProgramacaoAlternativa>label {
+	display: block;
+}
+
+#btnRecuperarSenha {
+	float: left;
+}
+
+#consultar-distribuicao-paginacao {
+	text-align: center;
+	display: none;
+}
+
+.paginacao-botoes {
+	margin: 0.5em;
+}
+
+.paginacao-botoes-selected {
+	font-weight: bold;
+}
+
+.paginacao-botoes-link {
+	cursor: pointer;
+}
+
+.paginacao-botoes-link:hover {
+	color: blue;
+}
+
+.pointer {
+	cursor: pointer;
+}
+
+/* ########################### MOSAICO ####################### */
+.lista-canais-mosaico {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+input.editar-canais-mosaico {
+	vertical-align: middle;
+}
+
+ul.display-canais-mosaico li {
+	box-sizing: border-box;
+	min-height: 100px;
+	position: relative;
+}
+
+.display-canais-mosaico, .seleciona-canal-list {
+	display: inline-block;
+	max-width: 635px;
+}
+
+.seleciona-canal-mosaico {
+	margin-bottom: 5px;
+	display: none;
+}
+
+.display-canais-mosaico .canal {
+	bottom: 0;
+	height: 55px;
+	left: 0;
+	margin: auto 0;
+	position: absolute;
+	right: 0;
+	text-align: center;
+	top: 0;
+}
+
+.seleciona-canal-list li {
+	float: left;
+	padding: 3px 0;
+	text-transform: uppercase;
+	width: 300px;
+}
+
+.seleciona-canal-list li input {
+	vertical-align: bottom;
+}
+
+.subtitulo-canal-mosaico {
+	font-size: 11pt;
+	margin-bottom: 5px;
+	margin-left: 6px;
+}
+
+ul.display-canais-mosaico li.selected {
+	background-color: #ddf6d1;
+	border: 1px solid #aaa;
+}
+
+.lista-canais-mosaico li {
+	border-bottom: 1px solid #aaa;
+	margin-right: 5px;
+	padding: 1px 0;
+}
+
+.lista-canais-mosaico li:last-child {
+	border-bottom: none;
+}
+
+.icone-mosaico {
+	display: block;
+	margin: 1px auto;
+}
+
+.detalhe-visualizacao-mosaico {
+	font-size: 14px;
+	margin-bottom: 3px;
+	margin-left: 7px;
+}
+
+.detalhe-visualizacao-mosaico.ultimo {
+	margin-bottom: 20px;
+}
+
+.evento-canal-mosaico {
+	margin-top: 5px;
+	font-weight: bold;
+}
+
+/* ########################### Nova tabela distribuicao operadora ####################### */
+.operadoras #nova-tabela th {
+	background:
+		url("../images/repeaters.png") repeat
+		scroll 0 -214px #e9f0f5;
+	border: 1px solid #999;
+	box-shadow: 0 1px 0 0 #82cffa inset;
+	color: #204052;
+	font-size: 12px;
+	font-weight: bold;
+	padding-top: 3px;
+	padding-bottom: 2px;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+.operadoras #nova-tabela td {
+	color: #484848;
+	cursor: default;
+	font-size: 12px;
+	overflow: hidden;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	text-align: center;
+	text-overflow: ellipsis;
+	max-width: 100px;
+}
+
+.operadoras #nova-tabela td.canal {
+	position: relative;
+	min-width: 100px;
+}
+
+#nova-tabela td.canal a {
+	display: none;
+	position: absolute;
+	right: 2px;
+}
+
+.operadoras #nova-tabela td.conflito_nesse_item {
+	background-color: #ddf6d1;
+	position: relative;
+	min-width: 100px;
+	color: #ff0000
+}
+
+.operadoras #nova-tabela td.conflito_nesse_item_desativado {
+	opacity: 0.5;
+	background-color: #FFFF66;
+}
+
+.operadoras #nova-tabela td.conflito_nesse_item:hover {
+	background-color: #a0d8f8;
+}
+
+.operadoras #nova-tabela td.conflito_nesse_item_resolvido {
+	background-color: #ddf6d1;
+	position: relative;
+	min-width: 100px;
+	color: #0000FF
+}
+
+.operadoras #nova-tabela td.conflito_nesse_item_resolvido_desativado {
+	opacity: 0.5;
+	background-color: #FFFF66;
+}
+
+.operadoras #nova-tabela td.conflito_nesse_item_resolvido:hover {
+	background-color: #a0d8f8;
+}
+
+.operadoras #nova-tabela td.ppv {
+	background-color: #ddf6d1
+}
+
+.operadoras #nova-tabela td.ppv_desativado {
+	opacity: 0.5;
+	background-color: #FFFF66;
+}
+
+#nova-tabela td:hover, #nova-tabela td.ppv:hover {
+	background-color: #a0d8f8;
+}
+
+#nova-tabela td.canal:hover a {
+	display: inline-block;
+}
+
+#nova-tabela td, #nova-tabela th {
+	border-left: 1px solid #ddd;
+	border-top: 1px solid #ddd;
+	white-space: nowrap;
+	vertical-align: middle;
+}
+
+.DTFC_LeftBodyLiner {
+	overflow-x: hidden;
+}
+
+.DTFC_LeftBodyLiner td {
+	background-color: #f5f5f5;
+}
+
+.category, .item, .chzn-container-single .chzn-single {
+	font-family: sans-serif
+}
+
+.category {
+	font-weight: bold
+}
+
+.chzn-results li.item {
+	padding-left: 25px;
+}
+
+.chzn-results li.item {
+	margin-left: 15px !important;
+}
+
+.chzn-results li.category {
+	margin-left: 0px !important;
+}
+
+.chzn-container ul li {
+	clear: both;
+	white-space: nowrap;
+}
+
+.chzn-container .chzn-drop {
+	width: auto
+}
+
+.chzn-container .chzn-drop .chzn-search input[type=text] {
+	width: 100%
+}
+
+.datatable .template-row {
+	display: none;
+}
+
+.oper {
+	margin-bottom: 5px;
+}
+
+.oper .header {
+	padding: 5px 10px;
+	border: 1px solid #BBB;
+	background: url('images/arrow-accordion.png') no-repeat 99% 10px;
+	color: #6694ae;
+	cursor: pointer;
+	font-size: 14px
+}
+
+.oper.active .header {
+	background: #EEE url('images/arrow-accordion.png') no-repeat 99% -8px;
+	font-weight: bold;
+	color: #6694ae;
+	cursor: default;
+}
+
+.oper .content {
+	height: 0;
+	overflow: hidden;
+}
+
+.oper .content .edicao_lineup_distribuicao{
+  position : relative;
+  top : 40%;
+  height: 40px;
+}
+
+.oper .content .edicao_lineup_distribuicao .checkboxDistribuicao{
+  margin-top: 1.5%;
+}
+
+.oper.active .content {
+	height: 100%;
+	overflow-y: auto;
+	padding-bottom: 5px;
+}
+
+.oper table {
+	width: 100%;
+	margin: 0 auto;
+	border: 1px solid #DDD;
+	overflow: auto;
+	overflow-x: hidden;
+	border-collapse: collapse;
+}
+
+.oper table td.hour{
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.oper table th {
+	background: #e9f0f5;
+	background-image: url("../images/repeaters.png");
+	background-position: 0 -214px;
+	box-shadow: inset 0 1px 0 0 #82cffa;
+	border: 1px solid #6694ae;
+	height: 15px;
+	font-size: 12px;
+	text-transform: uppercase;
+	font-weight: bold;
+	color: #204052;
+	padding: 3px 0 0 15px;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.oper tr:nth-child(even) td {
+	background: #eeeeee;
+}
+
+.oper table td {
+	text-transform: capitalize;
+	background: #F6F6F6;
+	font-size: 12px;
+	font-weight: normal;
+	border-bottom: 1px solid #DDD;
+	border-right: 1px solid #DDD;
+}
+
+.oper table td a {
+	text-decoration: none;
+	padding-left: 20px;
+}
+
+.oper table td.associate a {
+	background: url('images/associate-event.png') no-repeat left center;
+	color: #3898ce;
+	font-weight: 600;
+}
+
+.oper table td.edit a {
+	background: url('images/edit-event.png') no-repeat left center;
+	color: #FAA703;
+	font-weight: 600;
+	margin: 10px 5px;
+	display: inline-block;
+}
+
+.oper table th, .oper table td {
+	padding: 5px;
+	font-size: 12px;
+	vertical-align: middle;
+}
+
+.oper table td.edit, .oper table td.associate {
+	width: 180px;
+}
+
+
+.abas {
+    background-color: #fff;
+    border-color: #dfdfdf;
+    border-style: none solid solid;
+    border-width: medium 1px 1px;
+    padding: 10px;
+}
+
+.abas .aba-button-container {
+    border-bottom: 1px solid #dfdfdf;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.abas .aba-button-container > .aba-button {
+    border-color: #dfdfdf;
+    border-style: solid solid none;
+    border-width: 1px 1px medium;
+    display: inline-block;
+    padding: 10px;
+    background-color: #EfEfEf;
+    color: #777;
+    cursor: pointer;
+}
+
+.abas .aba-button-container > .aba-button.active {
+	background-color: #FFFFFF;
+    color: #484848;
+}
+
+.abas .aba-content-container > .aba-content {
+	display:none;
+}
+
+.abas .aba-content-container > .aba-content.active {
+	display:block;
+}
+
+#visao-geral-table {
+	width: 100%;
+	margin: 0 auto;
+	border: 1px solid #DDD;
+	overflow: auto;
+	overflow-x: hidden;
+	border-collapse: collapse;
+}
+
+#visao-geral-table tbody tr:nth-child(2n) td{
+	background: none repeat scroll 0 0 #eeeeee;
+}
+#visao-geral-table tbody tr td.hour{
+	font-size: 16px;
+	font-weight: bold;
+}
+#visao-geral-table tbody td.edit a {
+    padding-left: 20px;
+    text-decoration: none;
+}
+
+#visao-geral-table tbody td.edit a.adicionar{
+    background: url("images/associate-event.png") no-repeat scroll left center rgba(0, 0, 0, 0);
+    color: #3898ce;
+    font-weight: 600;
+}
+
+#visao-geral-table tbody td.edit a.editar, #visao-geral-table tbody td.edit a.mudarNumCanal  {
+    background: rgba(0, 0, 0, 0) url("images/edit-event.png") no-repeat scroll left center;
+    color: #faa703;
+    display: inline-block;
+    font-weight: 600;
+    margin: 5px 0;
+}
+#visao-geral-table tbody td {
+    white-space: normal;
+    word-wrap: break-word;
+}
+
+#visao-geral-table tbody tr.sem-evento td.evento {
+    color: #777;
+}
+
+#frmNovaComutacao ul.ul-cadastro { 
+	display: inline-flex; 
+}
+
+#popup .ul-popup-selecao-ao-vivo li{
+	display: inline-grid;	
+}
+
+#popup .btn-cancelar:hover {
+		
+	border:1px solid #6694ae; 
+	border-bottom:2px solid #6694ae; 
+}
+
+
+.forms select.selecaoCanal {
+	width: 210px;
+	
+}
+
+.liquidForm ul li.li-botao-distribuicao-tabular {
+	margin-left: 20px;
+    bottom: 10px;
+    position: relative;
+}
+
+.forms textarea.text-area-mensagem {
+	height: 200px;
+	width: 400px;	
+}
+
+div.nomeMatriz { 
+	width: 100%;
+    padding: 5px;
+}
+
+div.nomeMatriz span{
+	margin-right: 20px;
+}
+
+.lista-de-jogos div .listagem, .lista-de-exibicao div .listagem {
+	width: 100%;
+}
+
+.listagem input[type="checkbox"].selecionado, .listagem input[type="checkbox"].selecionadoAlt {
+	margin: 0;
+}

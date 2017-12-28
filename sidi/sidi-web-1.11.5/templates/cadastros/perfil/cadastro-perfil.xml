@@ -1,0 +1,152 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector=".message">
+	</template>
+
+	<template selector="#content-details">
+		<div class="topo" id="topo">
+	      <div class="titulo">${i18n.get('cadastro-de-perfis')}</div>
+	      <div class="separador"></div>
+	      <div class="acoes">
+	        <a href="javascript:void(0)" id="btnListaDePerfis" class="acao selected">${i18n.get('lista-de-perfis')}</a>
+	        <a href="javascript:void(0)" id="btnCadastrarPerfil" class="acao">${i18n.get('novo-perfil')}</a>
+	      </div>
+	    </div>
+
+		<div id="divNovo">
+			<div id="divNovoPerfil" class="lista-de-exibicao" hidden="true">
+				<div class="content">
+					<form id="frmNovoPerfil">
+						<fieldset>
+							<ul>
+								<li class="required">
+									<label for="txtNomePerfil"><span class="required">*</span>${i18n.get('nome')}: </label>
+									<input type="text" name="nome" id="txtNomePerfil"></input>
+								</li>
+							</ul>
+							<div id="tglPkPerfis" class="lista-de-jogos tglPkList clearfix">
+								<div class="pkPerfisDiv" id="pkPerfis">
+									<div class="titulosPickList">
+					    				<div class="fst-title">
+					        				<h3>${i18n.get('disponiveis')}</h3>
+					    				</div>
+					    				<div class="scnd-title">
+					        				<h3>${i18n.get('selecionados')}</h3>
+					    				</div>
+					    				<br class="clear" />
+									</div>
+									<div id="pickListFuncionalidades">
+										<select id="funcDisponiveis">
+										</select>
+		
+										<select id="funcSelecionadas">
+										</select>
+									</div>
+								</div>
+							</div>
+						</fieldset>
+					</form>
+					<a id="btnNovoPerfil" class="button azul">${i18n.get('cadastrar')}</a>
+				</div>
+			</div>
+		</div>
+		<div id="divLista">
+	    	<div class="lista-de-exibicao" id="divPerfisCadastrados">
+			    <table id="tblPerfisCadastrados" class="small-table">
+			    	<thead>
+							<th scope="col">${i18n.get('nome')}</th>
+						<th scope="col">${i18n.get('acoes')}</th>
+			    	</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+
+	</template>
+
+	<script>
+		$('#content-info').html('');
+		$('#tglPkPerfis').togglePanel();
+		$('#frmNovoPerfil').form({ liquid: true });
+		$('#frmNovoPerfil [title]').tipsy({trigger: 'focus', gravity: 'w', fade: true});
+
+		$('input:text').setMask();
+		$('#tblPerfisCadastrados').datatable();
+
+		var perfis = this.perfis;
+		var funcionalidades = this.funcionalidades;
+
+		$('#pkPerfis').picklist();
+
+		$(document).ready(function(){
+			$.getJSON("../sidi/perfil/buscarPerfis",function(perfis) {
+				$.holy("../templates/cadastros/perfil/perfis-cadastrados.xml", {'perfis':perfis,'funcionalidades':funcionalidades});
+			});
+		});
+
+		var funcionalidades = this.funcionalidades;
+
+		$("#divNovo").hide();
+		$("#divLista").show();
+
+
+		<![CDATA[
+		$('#btnNovoPerfil').click(function(){
+			var funcs = [];
+			$('#funcSelecionadas option').each(function(index){
+				funcs[index] = $(this).val();
+			});
+
+			if(utils.validate($('#frmNovoPerfil')) && funcs.length > 0)	{
+				var nome = $('#txtNomePerfil').val();
+				var novoPerfil = {
+					'nome' : nome
+				};
+
+				$.postJSON("../sidi/perfil/novoPerfil",[novoPerfil,funcs],function(){
+					$('.message').message(i18n.get('sucesso-cadastrar-perfil'), 'success', true);
+					$('html, body').animate({scrollTop:0}, 'fast');
+					utils.clear($('#frmNovoPerfil'));
+					$('#btnListaDePerfis').click();
+				});
+			} else {
+				$('.message').message(i18n.get('falha-cadastrar-perfil'), 'error', true);
+				$('html, body').animate({scrollTop:0}, 'fast');
+			}
+		});
+
+		$('#btnCadastrarPerfil').click(function(){
+			$('#btnListaDePerfis').removeClass('selected');
+			$('#funcSelecionadas option').remove();
+			$('#funcDisponiveis option').remove();
+			for (var i in funcionalidades) {
+				var o = $("<option/>");
+				var f = funcionalidades[i];
+				o.attr("value", f);
+				o.text(f);
+				o.appendTo("#funcDisponiveis");
+			}
+			$('#divNovoPerfil').show();
+			$('#divPerfisCadastrados').hide();
+			$('#btnCadastrarPerfil').addClass('selected');
+			$('#frmNovoPerfil').form();
+
+			$("#divNovo").show();
+			$("#divLista").hide();
+		});
+
+		$('#btnListaDePerfis').click(function(){
+			$.getJSON("../sidi/perfil/buscarPerfis",function(perfis) {
+				$.holy("../templates/cadastros/perfil/perfis-cadastrados.xml", {'perfis':perfis,'funcionalidades':funcionalidades});
+			});
+			$('#btnListaDePerfis').addClass('selected');
+			$('#btnCadastrarPerfil').removeClass('selected');
+			$('#divNovoPerfil').hide();
+			$('#divPerfisCadastrados').show();
+			$("#divNovo").hide();
+			$("#divLista").show();
+		});
+		]]>
+	</script>
+</engine>

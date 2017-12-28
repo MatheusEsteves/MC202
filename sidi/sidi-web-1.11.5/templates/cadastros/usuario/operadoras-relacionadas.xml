@@ -1,0 +1,42 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector=".small-table:visible tbody">
+	{for operadora in operadorasRelacionadas}
+		<tr>
+			<td>${operadora.nome}</td>
+			<td class="action">
+				{if sidi.possuiAutorizacao('GERENCIAR_OPERADORAS')}
+				<a href="javascript:void(0)" class="cancel ttip" id="remover_operadora_${operadora.id}" title="${i18n.get('remover-operadora-tabela')}">${i18n.get('excluir')}</a>
+				{/if}
+			</td>
+		</tr>
+	{forelse}
+		<tr>
+			<td colspan="2">${i18n.get('nenhum-registro-encontrado')}</td>
+		</tr>
+	{/for}
+	</template>
+	<script>
+		$('a.btaction').tipsy({trigger: 'focus', gravity: 'w', fade: true});
+		$('.ttip').tipsy();
+		
+		var operadorasRelacionadas = this.operadorasRelacionadas;
+		var usuario = this.usuario;
+		$(document).data('sidi.operadorasRelacionadas' + usuario.id, operadorasRelacionadas);
+		$.each(operadorasRelacionadas, function(idx, operadora) {
+
+			$('#remover_operadora_'+ operadora.id).click(function() {
+				operadorasRelacionadas = utils.remove(operadorasRelacionadas, idx);
+				usuario.operadoras = operadorasRelacionadas;
+
+				var hints = $(".tipsy");
+				if (hints.length) {
+					hints.fadeOut("fast", function() {
+						$(this).remove();
+					});
+				}
+
+				$.holy("../templates/cadastros/usuario/operadoras-relacionadas.xml", {'operadorasRelacionadas' : operadorasRelacionadas, 'usuario' : usuario});
+			})
+		});
+	</script>
+</engine>

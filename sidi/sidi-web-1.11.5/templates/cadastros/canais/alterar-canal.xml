@@ -1,0 +1,180 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector="#popup">
+		<ul class="message mensagemPopup" id="mensagemPopup"></ul>
+		<h4>${i18n.get('alterar-canal')}</h4>
+		
+		<div class="topo-abas">
+			<table class="abas">
+				<tbody>
+					<tr>
+						<td id="info-canais" class="selected"><a href="javascript:void(0)">${i18n.get('informacoes-canal')}</a></td>
+						<td id="info-tecnicas"><a href="javascript:void(0)">${i18n.get('informacoes-tecnicas')}</a></td>
+					</tr>
+				</tbody>
+			</table>
+			
+	        <div id="informacoesBasicas">
+					<form id="frmEditarInformacoesBasicas" method="POST" enctype="multipart/form-data" action="upload">
+				<fieldset>
+					<legend>${canal.nome}</legend>
+						<![CDATA[
+						<img class="logo" src="../imagens/canal?id=${canal.id}&t=${new Date().getTime()}" />
+						]]>
+						<input type="hidden" value="${canal.id}" id="idCanal"></input>
+						<ul>
+							<li class="required">
+								<label><span class="required">*</span>${i18n.get('nome')}</label>
+								<input type="text" id="txtEditarNome" name="nome" value="${canal.nome}" maxlength="40"/>
+							</li>
+							<li class="required">
+								<label>MediaId</label>
+								<input type="text" id="mediaId" name="mediaId" value="${canal.mediaId}" maxlength="10"/> 
+							</li>	
+							<li class="required">
+								<label>ChannelCod</label>
+								<input type="text" id="channelCod" name="channelCod" value="${canal.channelCod}" maxlength="4"/> 
+							</li>	
+							<li class="required">
+								<label>Fallback Transmission Id</label>
+								<input type="text" id="fallbackTransmissionId" name="fallbackTransmissionId" value="${canal.fallbackTransmissionId}" maxlength="20"/> 
+							</li>	
+							<li class="required">
+								<label>Ingest Point Name</label>
+								<input type="text" id="ingestPointName" name="ingestPointName" value="${canal.ingestPointName}" maxlength="20"/> 
+							</li>															
+							<li class="required">
+								<label><span class="required">*</span>${i18n.get('tipo-canal')}</label>
+								<select id="sltEditarTiposCanais" name="tipoCanal">
+									{for tipoCanal in tiposCanais}
+										{if canal.tipoCanal == tipoCanal}
+											<option value="${tipoCanal}" selected="selected">${tipoCanal}</option>
+										{else}
+											<option value="${tipoCanal}">${tipoCanal}</option>
+										{/if}
+									{/for}
+								</select>
+							</li>
+							<li class="">
+								<label>Canal Relacionado</label>
+								<select id="sltRelacionado" name="relacionado">
+								<option >Selecione</option>
+									{for canalRel in canais}
+										{if canal.relacionado != null}
+											{if  canal.relacionado.id == canalRel.id}
+												<option value="${canalRel.id}" selected="selected">${canalRel.nome}</option>
+											{else}
+												<option value="${canalRel.id}" >${canalRel.nome}</option>
+											{/if}
+										{else}
+											<option value="${canalRel.id}" >${canalRel.nome}</option>
+										{/if}
+									{/for}
+								</select>
+							</li>
+							<li class="file">
+								<label>${i18n.get('logo')}</label>
+								<input type="file" id="fileLogo" name="logo" /> 
+							</li>
+						</ul>
+						<ul>
+							<li>
+								<label>${i18n.get('temporario')}</label>
+								{if canal.temporario}
+									<input type="checkbox" id="ckEditarTemporario" name="temporario" checked="checked" />
+								{else}
+									<input type="checkbox" id="ckEditarTemporario" name="temporario" />
+								{/if}
+							</li>
+							{if canal.temporario}
+								<li id="intervalo">
+									<label>${i18n.get('intervalo-duracao')}</label>
+									<input type="text" class="data" alt="date" id="txtEditarDataInicio" name="dataInicio" value="${date.dateToString(canal.dataInicio)}" />
+									<input type="text" class="data" alt="date" id="txtEditarDataFim" name="dataFim" value="${date.dateToString(canal.dataFim)}" />	
+								</li>
+							{else}
+								<li id="intervalo" class="hidden">
+									<label>${i18n.get('intervalo-duracao')}</label>
+									<input type="text" class="data" alt="date" id="txtEditarDataInicio" name="dataInicio" value="${date.dateToString(canal.dataInicio)}" />
+									<input type="text" class="data" alt="date" id="txtEditarDataFim" name="dataFim" value="${date.dateToString(canal.dataFim)}" />	
+								</li>
+							{/if}
+						</ul>
+				</fieldset>
+					</form>
+			</div>
+			<div id="informacoesTecnicas" class="hidden">
+					<form id="frmEditarInformacoesTecnicas">
+				<fieldset>
+					<legend>${canal.nome}</legend>
+						<ul>
+							<li>
+								<label for="txtEditarSatelite">${i18n.get('satelite')}</label>
+								<input type="text" id="txtEditarSatelite" name="satelite" value="${canal.satelite}"></input>
+							</li>
+							<li>
+								<label for="txtEditarTransponder">${i18n.get('transponder')}</label>
+								<input type="text" id="txtEditarTransponder" name="transponder" value="${canal.transponder}"></input>
+							</li>
+							<li>
+								<label for="txtEditarPolarizacao">${i18n.get('polarizacao')}</label>
+								<input type="text" id="txtEditarPolarizacao" name="polarizacao" value="${canal.polarizacao}"></input>
+							</li>
+							<li>
+								<label for="txtEditarFreqDownlink">${i18n.get('freqDownlink')}</label>
+								<input type="text" id="txtEditarFreqDownlink" name="freqDownlink" value="${canal.freqDownlink}"></input>
+							</li>
+							
+							<li>
+								<label for="txtEditarBandaL">${i18n.get('bandaL')}</label>
+								<input type="text" id="txtEditarBandaL" name="bandaL" value="${canal.bandaL}"></input>
+							</li>
+								
+							<li>
+								<label for="txtEditarFec">${i18n.get('fec')}</label>
+								<input type="text" id="txtEditarFec" name="fec" value="${canal.fec}"></input>
+							</li>
+							
+							<li>
+								<label for="txtEditarSr">${i18n.get('sr')}</label>
+								<input type="text" id="txtEditarSr" name="sr" value="${canal.sr}"></input>
+							</li>
+						</ul>
+						<ul>
+							<li>
+								<label for="txtEditarNetworkId">${i18n.get('networkId')}</label>
+								<input type="text" id="txtEditarNetworkId" name="networkId" value="${canal.networkId}"></input>
+							</li>
+							<li>
+								<label for="txtEditarCanalVirtual">${i18n.get('canalVirtual')}</label>
+								<input type="text" id="txtEditarCanalVirtual" name="canalVirtual" value="${canal.canalVirtual}"></input>
+							</li>
+							<li>
+								<label for="txtEditarVideo">${i18n.get('video')}</label>
+								<input type="text" id="txtEditarVideo" name="video" value="${canal.video}"></input>
+							</li>
+							<li>
+								<label for="txtEditarAudio1e2">${i18n.get('audio1e2')}</label>
+								<input type="text" id="txtEditarAudio1e2" name="audio1e2" value="${canal.audio1e2}"></input>
+							</li>
+							<li>	
+								<label for="txtEditarAudio3e4">${i18n.get('audio3e4')}</label>
+								<input type="text" id="txtEditarAudio3e4" name="audio3e4" value="${canal.audio3e4}"></input>
+							</li>
+							<li>
+								<label for="txtEditarAudioMpeg">${i18n.get('audioMpeg')}</label>
+								<input type="text" id="txtEditarAudioMpeg" name="audioMpeg" value="${canal.audioMpeg}"></input>
+							</li>
+							<li>
+								<label for="txtEditarAudioDolby">${i18n.get('audioDolby')}</label>
+								<input type="text" id="txtEditarAudioDolby" name="audioDolby" value="${canal.audioDolby}"></input>
+							</li>
+						</ul>
+				</fieldset>	
+					</form>
+			</div>
+		</div>
+	
+		<a href="javascript:void(0);" id="btnCancelarEdicao" class="button azul">${i18n.get('cancelar')}</a>
+		<a href="javascript:void(0);" id="btnRealizarEdicao" class="button azul">${i18n.get('confirmar')}</a>
+	</template>
+</engine>

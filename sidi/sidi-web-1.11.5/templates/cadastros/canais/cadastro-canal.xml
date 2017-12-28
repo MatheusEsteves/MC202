@@ -1,0 +1,123 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector="#divNovo">
+			<div id="divNovoCanal">
+				<div class="content lista-de-exibicao">
+					<form id="frmNovoCanal" method="POST" enctype="multipart/form-data" action="upload">
+						<fieldset>
+							<ul>
+								<li class="required">
+									<label><span class="required">*</span>Nome</label>
+									<input type="text" id="txtNome" name="nome" maxlength="40"/>
+								</li>
+								<li class="">
+									<label>${i18n.get('logo')}</label>
+									<input type="file" id="fileLogo" name="logo" />
+								</li>
+								<li class="required">
+									<label><span class="required">*</span>MediaId</label>
+									<input type="text" id="txtMediaId" name="mediaId"  maxlength="10"/>
+								</li>
+								<li class="required">
+									<label><span class="required">*</span>ChannelCod</label>
+									<input type="text" id="txtChannelCod" name="channelCod"  maxlength="4"/>
+								</li>
+								<li class="required">
+									<label><span class="required">*</span>Fallback Transmission Id</label>
+									<input type="text" id="txtFallbackTransmissionId" name="fallbackTransmissionId"  maxlength="20"/>
+								</li>
+								<li class="required">
+									<label><span class="required">*</span>Ingest Point Name</label>
+									<input type="text" id="txtIngestPointName" name="ingestPointName"  maxlength="20"/>
+								</li>
+								<li class="required">
+									<label><span class="">*</span>Tipo canal</label>
+									<select id="sltTiposCanais" name="tipoCanal">
+										{for tipoCanal in tiposCanais}
+											<option value="${tipoCanal}">${tipoCanal}</option>
+										{/for}
+									</select>
+								</li>
+								<li class="required">
+									<label>Temporário</label>
+									<input type="checkbox" id="ckTemporario" name="temporario" />
+								</li>
+								<li id="intervaloDoCanal">
+									<label>Intervalo de Duração</label>
+									<input type="text" class="data" alt="date" id="txtDataInicio" name="dataInicio" />
+									<input type="text" class="data" alt="date" id="txtDataFim" name="dataFim" />
+								</li>
+							</ul>
+						</fieldset>
+					</form>
+				</div>
+
+				<div id="divInformacoesTecnicas" class="lista-de-jogos">
+					<h3>
+						<span class="separador-data">${i18n.get('informacoes-tecnicas')}</span>
+					</h3>
+					<div class="content">
+						<form id="frmInformacoesTecnicas">
+						<fieldset>
+							<ul>
+								<li>
+									<label for="txtSatelite">${i18n.get('satelite')}</label>
+									<input type="text" id="txtSatelite" name="satelite"></input>
+
+									<label for="txtTransponder">${i18n.get('transponder')}</label>
+									<input type="text" id="txtTransponder" name="transponder"></input>
+
+									<label for="txtPolarizacao">${i18n.get('polarizacao')}</label>
+									<input type="text" id="txtPolarizacao" name="polarizacao"></input>
+								</li>
+
+								<li>
+									<label for="txtFreqDownlink">${i18n.get('freqDownlink')}</label>
+									<input type="text" id="txtFreqDownlink" name="freqDownlink"></input>
+
+									<label for="txtBandaL">${i18n.get('bandaL')}</label>
+									<input type="text" id="txtBandaL" name="bandaL"></input>
+
+									<label for="txtFec">${i18n.get('fec')}</label>
+									<input type="text" id="txtFec" name="fec"></input>
+								</li>
+
+								<li>
+									<label for="txtSr">${i18n.get('sr')}</label>
+									<input type="text" id="txtSr" name="sr"></input>
+
+									<label for="txtNetworkId">${i18n.get('networkId')}</label>
+									<input type="text" id="txtNetworkId" name="networkId"></input>
+
+									<label for="txtCanalVirtual">${i18n.get('canalVirtual')}</label>
+									<input type="text" id="txtCanalVirtual" name="canalVirtual"></input>
+								</li>
+
+								<li>
+									<label for="txtVideo">${i18n.get('video')}</label>
+									<input type="text" id="txtVideo" name="video"></input>
+
+									<label for="txtAudio1e2">${i18n.get('audio1e2')}</label>
+									<input type="text" id="txtAudio1e2" name="audio1e2"></input>
+
+									<label for="txtAudio3e4">${i18n.get('audio3e4')}</label>
+									<input type="text" id="txtAudio3e4" name="audio3e4"></input>
+								</li>
+
+								<li>
+									<label for="txtAudioMpeg">${i18n.get('audioMpeg')}</label>
+									<input type="text" id="txtAudioMpeg" name="audioMpeg"></input>
+
+									<label for="txtAudioDolby">${i18n.get('audioDolby')}</label>
+									<input type="text" id="txtAudioDolby" name="audioDolby"></input>
+								</li>
+							</ul>
+							</fieldset>
+						</form>
+					</div>
+					<br></br>
+
+					<a id="btnNovoCanal" class="button azul">${i18n.get('cadastrar')}</a>
+				</div>
+			</div>
+	</template>
+</engine>

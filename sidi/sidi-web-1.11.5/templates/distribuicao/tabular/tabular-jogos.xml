@@ -1,0 +1,94 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+<template selector="#divTblJogosTabular">
+	<div class="lista-de-exibicao">
+		{for dataDistribuicao in dataDistribuicoes}
+			{var dataLong = parseInt(dataDistribuicao_index)}
+			<div id="distDate_${dataLong}">
+				<div class="dateContainer">
+					${date.dateToWeek(dataLong)} - ${date.getDayFromDate(dataLong)} ${i18n.get('de')} ${date.getMonthFromDate(dataLong)}
+				</div>
+				<div>
+					<table class="tabular">
+						<thead>
+							<tr>
+								<th>${i18n.get('acoes')}</th>
+								<th>${i18n.get('data')}</th>
+								<th>${i18n.get('hora')}</th>
+								<th>${i18n.get('campeonato')}</th>
+								<th>${i18n.get('evento')}</th>
+								<th>${i18n.get('estadio')}</th>
+								<th>${i18n.get('canal')}</th>
+								<th class="checkbox">${i18n.get('pfi')}</th>
+								<th class="checkbox">${i18n.get('hd')}</th>
+							</tr>
+						</thead>
+						<tbody>
+							{for distribuicao in dataDistribuicao}
+							<tr class="jogo-tabular-${distribuicao.evento.id} {if distribuicao.evento.alterado} alterado{/if}">
+								<td class="tabular acoes">
+									{if sidi.possuiAutorizacao('GERENCIAR_DISTRIBUICAO_TABULAR')}
+										{if distribuicao.evento.tipoEvento != 'MOSAICO'}
+										<a href="javascript:void(0)" id="adicionar_canal_${distribuicao.evento.id}" original-title="${i18n.get('alterar-canais-jogo')}" class="add-channel ttip"></a>
+										{/if}
+										<a href="javascript:void(0)" id="editar_${distribuicao.evento.id}" original-title="${i18n.get('alterar-evento-icon')}" class="edit ttip"></a>
+										{if distribuicao.evento.tipoEvento != 'JOGO'}
+											<a id="apagar_evento_${distribuicao.evento.id}" class="cancel ttip" href="javascript:void(0)" 
+											title="${i18n.get('excluir-evento-ttip')}">${i18n.get('excluir')}</a>
+										{/if}
+									{/if}
+								</td>
+								<td class="data tabular">
+									${date.dateToString(distribuicao.evento.data)}
+								</td>
+								<td class="hora tabular">
+									${date.dateToHourString(distribuicao.evento.data)}
+								</td>
+								<td class="campeonato tabular">
+									{if distribuicao.evento.tipoEvento == 'JOGO'}
+										${distribuicao.evento.fase.campeonato.nome}
+									{/if}
+								</td>
+								<td class="tabular evento">
+									{if distribuicao.evento.tipoEvento == 'JOGO'}
+										${distribuicao.evento.mandante.apelido} X ${distribuicao.evento.visitante.apelido}
+									{else}
+										${distribuicao.evento.nome}
+									{/if}
+								</td>
+								<td class="estadio tabular">
+									{if distribuicao.evento.tipoEvento == 'JOGO'}
+										{if distribuicao.evento.estadio != null}${distribuicao.evento.estadio.nomePopular}{/if}
+									{/if}
+								</td>
+								<td class="action tabular">
+									{for canal in distribuicao.canais}
+										<div class="canal">
+											${canal.nome}
+										</div>
+									{/for}
+								</td>
+								<td class="tabular pfi">
+									{if distribuicao.evento.pfi}
+									<span id="pfi_${distribuicao.evento.id}" class="okay"></span>
+									{/if}
+								</td>
+								<td class="tabular hd">
+									{if distribuicao.evento.hd}
+									<span id="pfi_${distribuicao.evento.hd}" class="okay"></span>
+									{/if}
+								</td>
+							</tr>
+							{/for}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		{forelse}
+			<div>
+				${i18n.get('nenhum-registro-encontrado')}
+			</div>
+		{/for}
+	</div>
+	<div id="selecaoCanalDialogTabular" class="dialog"></div>
+</template>
+</engine>

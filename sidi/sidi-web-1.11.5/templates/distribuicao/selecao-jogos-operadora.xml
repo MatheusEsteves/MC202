@@ -1,0 +1,128 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0"
+	cacheable="true">
+	<template selector="#popup">
+		<div id="jogosDialog">
+			<div id="selecao-jogos">
+				<ul>
+					<h4>${i18n.get('distribuicao.operadora.alterar.evento')}</h4>
+				</ul>
+				<ul>
+					{for dist in distsDisponiveis}
+					<li id="jogo_disponivel_${dist.id}" class="evento  {if dist.id == distPrincId } evento-selecionado{/if}"
+						data-evento-descricao="${dist.evento.descricaoEventoAbreviado}"
+						data-evento-id="${dist.evento.id}"
+						data-dist-principal-id="${dist.id}">
+						<div class="versus">
+							<span class="hora">${date.dateToHourString(dist.evento.data)}</span>
+							{if dist.evento.tipoEvento == 'JOGO'}
+								<span>${dist.evento.mandante.apelido} X ${dist.evento.visitante.apelido}</span>
+							{else}
+								<span>${dist.evento.descricaoEvento}</span>
+							{/if}
+						</div>
+					</li>
+					{forelse}
+						${i18n.get('sem-jogos-disponiveis')}
+					{/for}
+				</ul>
+			</div>
+		</div>
+		<div class="clear"></div>
+		<div class="buttons right">
+			{if sidi.possuiAutorizacao('CONSULTAR_DISTRIBUICAO', 'GERENCIAR_DISTRIBUICAO', 'LIBERAR_DISTRIBUICAO_OPERADORAS')}
+				<input id="remover" class="button" type="button" value="${i18n.get('remover-jogo-abrev')}" />
+			{/if}
+			<input id="salvar" class="button" type="button" value="${i18n.get('salvar')}" />
+		</div>
+	</template>
+	<script>
+		<![CDATA[   
+			var self = this;
+			var canalId = this.canalId;
+			var operadoraId = this.operadoraId;
+			var distsDisponiveis = this.distsDisponiveis;
+			var distOperadoraId = this.distOperadoraId;
+			var horario = this.horario;
+			var distPrincId = this.distPrincId;
+			
+			var eventoId = this.eventoId;
+			$(this).css('z-index',10);
+			
+			$('#popup ul li').corner();
+			$('#popup').xdialog({
+				overlay: '#333',
+				alpha: '3',
+				width: '655px'
+			});
+			
+			
+			$('.evento').click( function(){
+				$('.evento-selecionado').removeClass('evento-selecionado');
+				$(this).addClass('evento-selecionado');
+				eventoId = $(this).data('eventoId');
+				distPrincId = $(this).data('dist-principal-id');
+			});
+			
+			$('#salvar').click( function(){
+				if(!self.confirmCallback){
+					$.postJSON("../sidi/distribuicao-operadora/alterarDistribuicao", [distOperadoraId, distPrincId, operadoraId, horario], function(resp) {
+						$('.oper.oper'+operadoraId).find('.canal_'+canalId).find('.canal_nome_'+horario).text(resp.canal.nome);
+						
+						$('.oper.oper'+operadoraId).find('.canal_'+canalId).find('.evento_'+horario).text(resp.evento.descricaoEvento);
+		
+						if(resp.evento.fase) {
+							$('.oper.oper'+operadoraId).find('.canal_'+canalId).find('.campeonato_'+horario).text(resp.evento.fase.campeonato.nome);
+						} else {
+							$('.oper.oper'+operadoraId).find('.canal_'+canalId).find('.campeonato_'+horario).text('-');
+						}
+						
+						if(resp.inicioTransmissao)
+							$('.oper.oper'+operadoraId).find('.canal_'+canalId).find('.data_inicio_'+horario).text(resp.inicioTransmissao ? date.dateToHourString(resp.inicioTransmissao) : '-');
+							
+						if(resp.terminoTransmissao)
+							$('.oper.oper'+operadoraId).find('.canal_'+canalId).find('.data_fim_'+horario).text(resp.terminoTransmissao ? date.dateToHourString(resp.terminoTransmissao) : '-');
+						
+						var $linkMudar = $('.oper.oper'+operadoraId).find('.canal_'+canalId+'.horario_'+horario).find('.mudarEvento_limitada');
+						$linkMudar.closest("td").removeClass('associate').addClass("edit");
+						$linkMudar.text(i18n.get('distribuicao.operadora.alterar.evento'));
+						$linkMudar.data('dist-operadora', resp.distribuicaoOperadora.id);
+						$linkMudar.data('evento', resp.evento.id);
+						$('#popup').xundialog();
+					});
+				}else{
+					var eventoSelecionado;
+					var distSelecionada;
+					for(var i=0; i< self.distsDisponiveis.length; i++){
+						var dist = self.distsDisponiveis[i];
+						if(distPrincId == dist.id){
+							eventoSelecionado = dist.evento;
+							distSelecionada = dist;
+							break;
+						}
+					}
+					self.confirmCallback(self.distVO, eventoSelecionado, distSelecionada);
+				}
+			});
+			
+			$('#remover').click( function(){
+				
+				if(distOperadoraId){
+					$.postJSON("../sidi/distribuicao-operadora/removerDistribuicaoOperadora", [distOperadoraId], function() {
+						$('.oper.oper'+operadoraId).find('.canal_'+canalId).find('.evento_'+horario).text('-');
+						$('.oper.oper'+operadoraId).find('.canal_'+canalId).find('.campeonato_'+horario).text('-');
+						$('.oper.oper'+operadoraId).find('.canal_'+canalId).find('.data_inicio_'+horario).text('-');
+						$('.oper.oper'+operadoraId).find('.canal_'+canalId).find('.data_fim_'+horario).text('-');
+						var $linkMudar = $('.oper.oper'+operadoraId).find('.canal_'+canalId+'.horario_'+horario).find('.mudarEvento_limitada');
+						$linkMudar.closest("td").removeClass('edit').addClass("associate");
+						$linkMudar.text(i18n.get('distribuicao.operadora.associar.evento'));
+						$linkMudar.data('dist-operadora', '');
+						$linkMudar.data('evento', '');
+						$('#popup').xundialog();
+					});
+				}else{
+					self.removeEvento(self.distVO);
+				}
+			});
+		]]>
+	</script>
+</engine>

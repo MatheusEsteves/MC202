@@ -1,0 +1,124 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector="#content-info">
+		<div class="topo" id="topo">
+			<div class="titulo">${i18n.get('cadastro-de-horarios')}</div>
+			<div class="separador"></div>
+			<div class="acoes">
+				<a href="javascript:void(0)" id="listaHorarios" class="acao selected">${i18n.get('lista-horarios')}</a>
+				<a href="javascript:void(0)" id="novoHorario" class="acao">${i18n.get('novo-horario')}</a>
+			</div>
+		</div>
+	</template>
+	<template selector="#content-details">
+		<div class="lista-de-exibicao listagemhorarios">
+			<table id="tblHorarios" class="datatable">
+				<thead>
+					<th scope="col">${i18n.get('horario')}</th>
+					<th scope="col">${i18n.get('inicio')}</th>
+					<th scope="col">${i18n.get('fim')}</th>
+					<th scope="col">${i18n.get('acoes')}</th>
+				</thead>
+				{for h in horarios}
+				<tr>
+					<td>
+						${date.dateUTCToHourString(h.horario)}
+					</td>
+					<td>
+						${date.dateUTCToHourString(new Date(h.inicio))}
+					</td>
+					<td>
+						${date.dateUTCToHourString(new Date(h.fim))}
+					</td>
+					<td class="action">
+						<a id="editarHorario_${h_index}" class="edit ttip" title="${i18n.get('alterar')}"></a>
+						<a id="apagarHorario_${h_index}" class="delete ttip" title="${i18n.get('apagar')}"></a>
+					</td>
+				</tr>
+				{forelse}
+					<tr>
+						<td colspan="4">${i18n.get('nenhum-registro-encontrado')}</td>
+					</tr>
+				{/for}
+			</table>
+		</div>
+		<div id="deletedialog" class="dialog">
+			<h4>${i18n.get("apagar-horario")}</h4>
+			<p style="margin:15px 0;">${i18n.get("deseja-realmente-apagar-o-horario")}</p>
+			<a href="javascript:void(0);" id="btnCancelarExclusao" class="button azul">${i18n.get('cancelar')}</a>
+			<a href="javascript:void(0);" id="btnConfirmarExclusao" class="button azul">${i18n.get('confirmar')}</a>
+		</div>
+	</template>
+	<script>
+		<![CDATA[
+			$("#deletedialog").hide();
+			var horarios = this.horarios;
+
+			$("#btnCancelarExclusao").click(function() {
+				$("#deletedialog").xundialog();
+				return false;
+			});
+
+			$("#btnConfirmarExclusao").click(function() {
+				var i = $(this).data("sidi.index");
+				var horario = horarios[i];
+
+				$.postJSON("../sidi/horario/apagarConfiguracaoHorario", horario, function() {
+					$('.message').message(i18n.get('horario-apagado-com-sucesso'), 'success', true);
+					$(this).data("sidi.index", null);
+					$("#deletedialog").xundialog();
+					$("#listaHorarios").click();
+				});
+				
+				return false;
+			});
+
+			$(".delete").click(function() {
+				var i = $(this).attr("id").replace("apagarHorario_", "");
+				i = parseInt(i);
+				$("#btnConfirmarExclusao").data("sidi.index", i);
+				$("#deletedialog").xdialog({
+						overlay: '#23557E',
+						alpha: '3'
+				});
+			});
+
+			$(".edit").click(function() {
+				var i = $(this).attr("id").replace("editarHorario_", "");
+				i = parseInt(i);
+				var horario = horarios[i];
+
+				$("#alterarhorario").remove();
+				$("<div id='alterarhorario' class='lista-de-exibicao dialog' />").appendTo("#content-details");
+				$.holy("../templates/cadastros/horarios/alterar-horario.xml", {configHorario: horario});
+
+				return false;
+			});
+
+			
+			$("#novoHorario").click(function() {
+				$("div.acoes a.selected").removeClass("selected");
+				$(this).addClass("selected");
+				$('.listagemhorarios').hide();
+
+				$("#alterarhorario").remove();
+				$("<div id='alterarhorario' class='lista-de-exibicao dialog' />").appendTo("#content-details");
+				$.holy("../templates/cadastros/horarios/alterar-horario.xml", {configHorario: {}});
+
+				return false;
+			});
+
+			$("#listaHorarios").click(function() {
+				$("div.acoes a.selected").removeClass("selected");
+				$(this).addClass("selected");
+				$("#alterarhorario").remove();
+				$('.listagemhorarios').show();
+
+				$.getJSON("../sidi/horario/buscarHorarios", function(horarios) {
+					$.holy("../templates/cadastros/horarios/cadastro-horario.xml", {horarios : horarios});
+				});
+
+				return false;
+			});
+		]]>
+	</script>
+</engine>

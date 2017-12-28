@@ -1,0 +1,69 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector="#popup">
+		<h4>${i18n.get('distribuicao-principal')}</h4>
+		<p style="margin: 15px 0;">${i18n.get('confirmacao-alteracao-distribuicao')}</p>
+		<a id="btnRealizarAlteracao" class="showDialog button azul">${i18n.get('confirmar')}</a>
+		<a id="btnCancelarEdicao" class="showDialog button azul">${i18n.get('cancelar')}</a>
+	</template>
+
+	<script>
+		$("#popup").xdialog({
+			overlay: '#23557E',
+			alpha: '3',
+			width: '300'
+		});
+	
+		var distribJson = this.distribJson;
+	
+		$('#btnRealizarAlteracao').click(function(){
+			
+			var distribuicoes = new Array();
+			var eventosPorCanal =  distribJson.distribuicaoPrincipal.eventosPorCanal;
+			for (var key in eventosPorCanal) {
+				var eventoDoCanal = eventosPorCanal[key];
+		  		for( var quey in eventoDoCanal){
+		  			var tipoEvento = distribJson.eventosDisponiveis[eventoDoCanal[quey].eventoId].tipoEvento;
+		  			
+		  			var evento = {'id': eventoDoCanal[quey].eventoId, 'tipoEvento' : tipoEvento};
+		  			if(tipoEvento === 'MOSAICO'){
+		  				evento.canais = distribJson.eventosDisponiveis[eventoDoCanal[quey].eventoId].canais;
+		  			}
+		  			
+		  			var comutacao = {};
+		  			if(eventoDoCanal[quey].comutacao != null){
+		  				comutacao.id = eventoDoCanal[quey].comutacao.id;
+		  			}
+					  			
+		  			var distPrincipal = {
+			  			'id' : eventoDoCanal[quey].distribuicaoPrincipalId,
+			  			'dataInicioTransmissao' : eventoDoCanal[quey].dataInicioTransmissao,
+			  			'dataTerminoTransmissao': eventoDoCanal[quey].dataTerminoTransmissao,		  			
+						'canal' : {'id' : key},
+						'afiliadasExcluidas' : eventoDoCanal[quey].afiliadasExcluidas,
+						'distribuicao' : {'id' : eventoDoCanal[quey].distribuicaoId},
+						'evento' : evento,
+						'alterado' : eventoDoCanal[quey].alterado,
+						'comutacao' :  comutacao
+		  			};
+		  		
+		  			var estados = eventoDoCanal[quey].estados;
+		  			var distribuicaoEstados = new Array();
+		  			for(var keyEstados in estados){
+		  				distribuicaoEstados.push({'estado' : estados[keyEstados], 'selecionado' : true})
+		  			}
+		  		
+					distPrincipal.distribuicaoEstados = distribuicaoEstados;
+		  			distribuicoes.push(distPrincipal);
+		  		}
+			}
+			
+			distribuicao.salvar(distribuicoes);			
+
+			$('#popup').xundialog();
+		});
+		$('#btnCancelarEdicao').click(function(){
+			$('#popup').xundialog();
+		});
+	</script>
+
+</engine>

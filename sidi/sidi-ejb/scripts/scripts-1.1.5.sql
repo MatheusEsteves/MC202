@@ -1,0 +1,14 @@
+alter table DISTRIBUICAOOPERADORA add CONFLITO_TEMP VARCHAR2(5 byte);
+
+-- correcao do tipo da coluna conflito
+update DISTRIBUICAOOPERADORA set
+CONFLITO_TEMP =
+case
+  when CONFLITO = 1 then 'NAO'
+  when CONFLITO = 0 then 'SIM'
+end;
+
+alter table DISTRIBUICAOOPERADORA drop column CONFLITO;
+alter table DISTRIBUICAOOPERADORA add CONFLITO VARCHAR2(5 byte);
+update DISTRIBUICAOOPERADORA set CONFLITO = CONFLITO_TEMP;
+alter table DISTRIBUICAOOPERADORA drop column CONFLITO_TEMP;

@@ -1,0 +1,29 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector="#popup">
+		<h4>${i18n.get('planiha-distribuicao')}</h4>
+		<p style="margin: 15px 0;">${i18n.get('confirmacao-planiha-distribuicao')}</p>
+		<a id="btnRealizarAlteracao" class="showDialog button azul">${i18n.get('confirmar')}</a>
+		<a id="btnCancelarEdicao" class="showDialog button azul">${i18n.get('cancelar')}</a>
+	</template>
+
+	<script>
+		$("#popup").xdialog({
+			overlay: '#23557E',
+			alpha: '3',
+			width: '300'
+		});
+	
+		var dadosPlanilha = this.dadosPlanilha;
+		
+		$("#btnRealizarAlteracao").unbind('click').click(function() {
+			$.postJSON("../sidi/planilha-geracao/gerarPlanilha", [ dadosPlanilha.dataSelecionada, dadosPlanilha.operadorasIds, dadosPlanilha.horario ], function(resultado) {
+				$('#popup').xundialog();
+			});
+		});
+		
+		$('#btnCancelarEdicao').click(function(){
+			$('#popup').xundialog();
+		});
+	</script>
+
+</engine>

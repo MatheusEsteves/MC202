@@ -1,0 +1,70 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector="#popup">
+		<h4>${i18n.get('importar-jogos')}</h4>
+		<form id="frmImportarJogos">
+			<fieldset>
+				<legend>${i18n.get('campeonato')}</legend>
+								
+				<div id="tglPkPCampeonatos" class="lista-de-jogos tglPkList clearfix">
+					<div class="pkCampeonatosDiv" id="pkCampeonatos">
+						<div class="titulosPickList">
+		    				<div class="fst-title">
+		        				<h3>${i18n.get('disponiveis')}</h3>
+		    				</div>
+		    				<div class="scnd-title">
+		        				<h3>${i18n.get('selecionados')}</h3>
+		    				</div>
+		    				<br class="clear" />
+						</div>
+						<div id="pickListFuncionalidades">
+							<select id="campeonatosDisponiveis">
+							{for campeonato in campeonatos}
+								<option value="${campeonato.id}">${campeonato.nome}</option>
+							{/for}
+							</select>
+							<select id="campeonatosSelecionados">
+							
+							</select>
+						</div>
+					</div>
+				</div>
+			</fieldset>
+		</form>
+		<a id="btnRealizarImportacao" class="button azul">${i18n.get('importar')}</a>
+	</template>
+
+	<script>
+		$('#frmImportarJogos').form();
+		
+		$('#tglPkPCampeonatos').togglePanel();
+		
+		$('#pkCampeonatos').picklist();
+
+		$("#popup").xdialog({
+			overlay: '#23557E',
+			alpha: '3'
+		});
+
+		$('#btnRealizarImportacao').click(function() {
+			$('.message').html('');
+			
+			var idsCampeonatos = [];
+			$('#campeonatosSelecionados option').each(function(index){
+				idsCampeonatos[index] = parseInt($(this).val());
+			});
+			
+			if (idsCampeonatos) {
+				$.postJSON("../sidi/jogos/importarJogos", [idsCampeonatos], function(listaDeConflitos) {
+	 				if(! $.isEmptyObject(listaDeConflitos))
+	 					$.holy("../templates/importar/listar-conflitos.xml", { listaDeConflitos : listaDeConflitos});
+	 				else{
+	 					$('.message').message('Jogos importados com sucesso!' , 'success', true);
+	 					scroll(0,0);
+	 				}
+ 					$('#popup').xundialog();
+				});
+			}
+		});
+	</script>
+
+</engine>

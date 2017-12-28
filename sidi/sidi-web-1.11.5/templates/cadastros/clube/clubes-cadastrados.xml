@@ -1,0 +1,50 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+
+	<template selector="table#tblClubesCadastrados tbody">
+	{for clube in clubesCadastrados}
+		<tr>
+			<td><![CDATA[
+				<span class="time"><img src="${clube.urlBrasao}" />
+				</span>
+				]]>
+			</td>
+			<td>${clube.apelido}</td>
+			<td>${clube.sigla}</td>
+			<td class="action">
+				{if sidi.possuiAutorizacao('CONFIGURAR_PESO_CLUBE')}
+				<a href="javascript:void(0)" id="editar_peso_${clube.id}" original-title="${i18n.get('configurar-pesos-por-estado')}" class="conf ttip"></a>
+				<a href="javascript:void(0)" id="editar_clube_${clube.id}" original-title="${i18n.get('alterar-clube')}" class="edit ttip"></a>
+				{/if}
+			</td>
+		</tr>
+	{forelse}
+		<tr>
+			<td colspan="4">${i18n.get('nenhum-registro-encontrado')}</td>
+		</tr>
+	{/for}
+	</template>
+
+	<script>
+		$('a.btaction').tipsy({trigger: 'focus', gravity: 'w', fade: true});
+		$('.ttip').tipsy();
+		$('#tblJogosCadastrados').datatable();
+
+		var clubes = this.clubesCadastrados;
+
+		$.each(clubes, function(idx, clube){
+			$('#editar_peso_' + clube.id).click(function(){
+				$.getJSON("../sidi/clubes/buscarPesos", {arg: clube.id}, function(pesos) {
+					$.holy("../templates/cadastros/clube/alterar-pesos-clube.xml", {pesos : pesos, clube : clube});
+				});
+			});
+		});
+		
+		$.each(clubes, function(idx, clube){
+			$('#editar_clube_'+ clube.id).click(function(){
+				$.holy("../templates/cadastros/clube/alterar-clube.xml",{clube:clube});
+			});
+		});
+		
+	</script>
+
+</engine>

@@ -1,0 +1,79 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector="#nova-tabela">
+		<table>
+			<thead>
+				<tr>
+				{for coluna in colunas}
+					<th data-canal="${coluna.val}">${coluna.display || coluna}</th>
+				{/for}
+				</tr>
+			</thead>
+			<tbody>
+			{for linha in linhas}
+				<tr data-operadora="${linha[indexOperadora].val}">
+					<td title="${linha[0].display}"><div class="icone-status ${linha[0].display}"></div></td>
+				
+					{for celula in linha.slice(1)}
+						{if !celula.canal || celula.temCanal}
+							{if celula.conflito }	
+							<td class="conflito_nesse_item"
+									data-evento="${celula.evento}"
+									title="Clique aqui para resolver o conflito do jogo"><span>${celula.display}</span>
+									<a class="remover-distribuicao cancel ttip" 
+										href="javascript:void(0)" 
+										title="${i18n.get('clique-para-remover-jogo')}"
+										style="{if !mostrarRemover(celula)}visibility:hidden;{/if}"></a>
+								</td>							
+							{elseif celula.pendente}
+								<td class="ppv_desativado"
+									data-evento="${celula.evento}"
+									title="Evento não selecionado"><span>${celula.display}</span>
+									<a class="remover-distribuicao cancel ttip" 
+										href="javascript:void(0)" 
+										title="${i18n.get('clique-para-remover-jogo')}"
+										style="{if !mostrarRemover(celula)}visibility:hidden;{/if}"></a>
+								</td>
+							{else}
+								<td class="${celula.ppv ? 'canal ppv' : celula.canal ? 'canal' : ''}"
+									data-evento="${celula.evento}"
+									title="${celula.display}"><span>${celula.display}</span>
+									<a class="remover-distribuicao cancel ttip" 
+										href="javascript:void(0)" 
+										title="${i18n.get('clique-para-remover-jogo')}"
+										style="{if !mostrarRemover(celula)}visibility:hidden;{/if}"></a>
+								</td>
+							{/if}						
+						{else}
+						<td class="canal ppv" style="background-color: #eee;" title="${i18n.get('canal-nao-disponivel')}"></td>
+						{/if}
+						
+					{/for}
+				</tr>
+			{/for}
+			</tbody>
+		</table>
+	</template>
+	<script>
+		for (var i in this.hiddenColumns) {
+			var hidden = this.hiddenColumns[i];
+			$("#nova-tabela tr").find("td:nth-child(" + hidden + "), th:nth-child(" + hidden + ")").hide();
+		}
+	
+		var table = $("#nova-tabela table").DataTable({
+			"bSort": false,
+			"bFilter" : false,
+			"bInfo": false,
+			"scrollY": "500px",
+			"scrollX": true,
+			"scrollCollapse": true,
+			"paging": false,
+			"bAutoWidth":false
+		});
+
+		new $.fn.dataTable.FixedColumns(table, {"leftColumns": 9});
+		$('.dataTables_scrollBody').scrollLeft(this.scroll);
+		
+		
+		$.popLoading();
+	</script>
+</engine>

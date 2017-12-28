@@ -1,0 +1,7 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0">
+	<script>
+		window.setTimeout(function() {
+			$.holy("../templates/ping.xml");
+		}, 300000);
+	</script>
+</engine>

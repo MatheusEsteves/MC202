@@ -1,0 +1,87 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0"
+	cacheable="true">
+	<template selector="#extraInfo">
+		<form id="frmInfoOperadora">
+			<fieldset>
+				<span class="container">
+					<ul>
+						<li>
+							<label for="cbxOff">${i18n.get('off')}: </label>
+							<![CDATA[
+							<input type="checkbox" name="off" {if evento.off} checked="checked" {/if}></input>
+							]]>
+						</li>
+						<li>
+							<label for="cbxPfi">${i18n.get('pfi')}: </label>
+							<![CDATA[
+							<input type="checkbox" name="pfi" {if evento.pfi} checked="checked" {/if}></input>
+							]]>
+						</li>
+						<li>
+							<label for="cbxHd">${i18n.get('hd')}: </label>
+							<![CDATA[
+							<input type="checkbox" name="hd" {if evento.hd} checked="checked" {/if}></input>
+							]]>
+						</li>
+						<li>
+							<label for="cbxProdDeslocamento">${i18n.get('producao-local-deslocamento')}: </label>
+							<![CDATA[
+							<input type="checkbox" name="producaoLocalDeslocamento" {if evento.producaoLocalDeslocamento} checked="checked" {/if}></input>
+							]]>
+						</li>
+						<li>
+							<label for="cbxOffDeslocamento">${i18n.get('off-deslocamento')}: </label>
+							<![CDATA[
+							<input type="checkbox" name="offDeslocamento" {if evento.offDeslocamento} checked="checked" {/if}></input>
+							]]>
+						</li>
+					</ul>
+				</span>
+				<span class="container">
+					<ul>
+						<li>
+							<label>${i18n.get('genero')}:</label>
+							<input type="text" alt="" value="${evento.genero}" name="genero"></input>
+						</li>
+						<li>
+							<label>${i18n.get('ap')}:</label>
+							<input type="text" alt="" value="${evento.ap}" name="ap"></input>
+						</li>
+						<li>
+							<label>${i18n.get('produtoras')}:</label>
+							<input type="text" alt="" value="${evento.produtoras}" name="produtoras"></input>
+						</li>
+						<li>
+							<label>${i18n.get('prod')}:</label>
+							<input type="text" alt="" value="${evento.prod}" name="prod"></input>
+						</li>
+						<li>
+							<label>${i18n.get('cam')}:</label>
+							<input type="text" alt="integer" value="${evento.cam}" name="cam"></input>
+						</li>
+						<li>
+							<label>${i18n.get('pre')}:</label>
+							<input type="text" alt="" value="${evento.pre}" name="pre"></input>
+						</li>
+						<li>
+							<label>${i18n.get('mm')}:</label>
+							<input type="text" alt="" value="${evento.mm}" name="mm"></input>
+						</li>
+						<li>
+							<label>${i18n.get('pos')}:</label>
+							<input type="text" alt="" value="${evento.pos}" name="pos"></input>
+						</li>
+						<li>
+							<label>${i18n.get('distanciaCapital')}:</label>
+							<input type="text" alt="integer" value="${evento.distanciaCapital}" name="distanciaCapital"></input>
+						</li>
+						<li>
+							<label>${i18n.get('observacao')}:</label>
+							<textarea value="" name="observacao" class="maxlength" maxlength="255">${evento.observacao}</textarea>
+						</li>
+					</ul>
+				</span>
+			</fieldset>
+		</form>
+	</template>
+</engine>

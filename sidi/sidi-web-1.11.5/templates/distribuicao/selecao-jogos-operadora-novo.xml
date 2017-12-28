@@ -1,0 +1,45 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector="#jogosOperadoraDialog .jogosList">
+		<div id="jogosDialog">
+			<div id="selecao-jogos">
+				<ul>
+				{for evento in eventosDisponiveis}
+					<li id="jogo_disponivel_${evento.id}" class="confronto {if evento.id == eventoId} evento-selecionado{/if}" data-evento-descricao="${evento.descricaoEventoAbreviado}" data-evento-id="${evento.id}">
+					{if evento.tipoEvento == 'JOGO'}
+						<span class="time" style="background-image: url('${clubes[evento.mandante].urlBrasao}')">${clubes[evento.mandante].apelido}</span>
+						<div class="versus">
+							<span class="hora">${date.dateToHourString(evento.data)}</span>
+							<span>X</span>
+						</div>
+						<span class="time" style="background-image: url('${clubes[evento.visitante].urlBrasao}')">${clubes[evento.visitante].apelido}</span>
+					{else}
+						<div class="versus">
+							<span class="hora">${date.dateToHourString(evento.data)}</span>
+							<span>${evento.descricaoEvento}</span>
+						</div>
+					{/if}
+					</li>
+				{forelse}
+					${i18n.get('sem-jogos-disponiveis')}
+				{/for}
+				</ul>
+			</div>
+		</div>
+		<div id="selecao-jogos-operadora">
+			<ul>
+				<li id="listItemProgramacaoAlternativaOperadora">
+					<label for="txtAlternativo">${i18n.get('alternativo')}: </label>
+					<input type="text" id="txtAlternativo" title="${i18n.get('informe-distribuicao-alternativo')}" value="{if eventoAlternativo}${eventoAlternativo}{/if}" maxlength="40"/>
+				</li>
+			</ul>
+		</div>
+		<div class="clear"></div>
+		<label for="cbDistribuirFiltro" >
+			<input type="checkbox" id="cbDistribuirFiltro" />
+			${i18n.get('distribuir-filtro')}
+		</label>
+		<div class="buttons right">
+			<input id="salvar" class="button" type="button" value="${i18n.get('salvar')}" />
+		</div>
+	</template>
+</engine>

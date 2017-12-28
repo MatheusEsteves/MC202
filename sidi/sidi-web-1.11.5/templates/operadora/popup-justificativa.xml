@@ -1,0 +1,53 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0">
+	<template selector="#popupJustificativa">
+		<h3>${i18n.get('alteracoes-distribuicao')}</h3>
+		<form id="frmJustificativaAlteracoes">
+			<fieldset>
+				<legend>${i18n.get('justificativa')}</legend>
+				<ul>
+					<li class="required">
+						<textarea title="${i18n.get('alteracoes-justificativa-hint')}" id="txtJustificativa" class="maxlength" maxlength="255"></textarea>
+					</li>
+				</ul>
+			</fieldset>
+		</form>
+		<a id="btnJustificarDistribuicao" class="showDialog button azul">${i18n.get('gravar-justificativa')}</a>
+	</template>
+
+	<script>
+		$('#frmJustificativaAlteracoes').form();
+		$('#frmJustificativaAlteracoes [title]').tipsy({trigger: 'focus', gravity: 'w', fade: true});
+
+		$("#popupJustificativa").xdialog({
+			overlay: '#23557E',
+			alpha: '3'
+		});
+
+		$('.maxlength').each(function() {
+			$(this).charCount({
+				allowed: parseInt($(this).attr('maxlength') || 20),
+				warning: 1,
+				counterText: 'Caracteres restantes: '
+			});
+        });
+		
+		var canais = this.canais;
+		var horario = this.horario;
+		var operadoraId = this.operadoraId;
+		$('#btnJustificarDistribuicao').click(function() {
+			var justificativa = $("#txtJustificativa").val();
+
+			$.postJSON("../sidi/distribuicao-operadora/salvarDistribuicao", [justificativa, canais, horario, operadoraId], function(resultado) {
+				if (resultado) {
+					$('.message').message(i18n.get('alteracoes-sucesso'), 'success', true);
+				}
+				$(window).hashchange();
+				$('html, body').animate({scrollTop:0}, 'fast');
+			});
+
+			$('#popupJustificativa').xundialog();
+			$('.message').message(i18n.get('operadora-alteracoes-aguardando-aprovacao'), 'success');
+			$('html,body').animate({scrollTop:0},'fast');
+		});
+	</script>
+</engine>

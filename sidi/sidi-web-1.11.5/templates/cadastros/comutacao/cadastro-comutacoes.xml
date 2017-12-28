@@ -1,0 +1,579 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0"
+	cacheable="true">
+	<template selector="#content-details">
+		<ul class="message"></ul>
+		<div id="comutacao-base">
+		</div>
+		<form id="frmNovaComutacao" class="lista-de-exibicao">
+			<input type="hidden" id="idAlterarComutacao" name="id"></input>
+			<input type="hidden" id="idEventoAoVivo" name="idEvento"></input>
+			<input type="hidden" id="tipoEventoAoVivo" name="tpEvento"></input>
+			
+			<fieldset>
+				
+				<ul class="ul-cadastro">										
+					<li class="required">
+						<label for="txtDataComutacao">
+							<span class="required">*</span>
+							${i18n.get('data')}:
+						</label>
+						<input type="text" id="txtDataComutacao" data-type="date"
+							data-field="data" title="${i18n.get('informe-data-comutacao')}"
+							alt="date" class="data" name="dia" />
+					</li>
+					
+										
+					<li class="required">
+						<label for="txtHoraComutacao">
+							<span class="required">*</span>
+							${i18n.get("hora")}:
+						</label>
+						<input type="text" id="txtHoraComutacao" name="horario"
+							data-type="hour" data-field="data"
+							title="${i18n.get('informe-horario-comutacao')}" alt="time"
+							class="time" />
+					</li>
+					
+					<li>
+						<div class="acoes">
+							<a class="button azul selecionar-ao-vivo">
+								${i18n.get('selecionar-ao-vivo')}
+							</a>
+							
+						</div>
+					</li>
+				</ul>
+				
+				<ul class="ul-cadastro">
+					<li class="required">
+						<label for="txtNomeComutacao" class="label-cadastro-comutacao">
+							<span class="required">*</span>
+							${i18n.get('nome-comutacao')}:
+						</label>
+						<input type="text" name="nome" id="txtNomeComutacao"
+							maxlength="50" />
+					</li>
+					<li class="required">
+						<label for="txtLocalComutacao">
+							<span class="required">*</span>
+							${i18n.get('local-comutacao')}:
+						</label>
+						<input type="text" name="local" id="txtLocalComutacao"
+							maxlength="100" />
+					</li>
+				</ul>
+								
+				<ul class="ul-cadastro">					
+					<li class="required">
+						<label for="sltCanalPrincipal">
+							<span class="required">*</span>
+							${i18n.get('canal-principal')}:
+						</label>
+						<select id="sltCanalPrincipal" name="canalPrincipal" class="selecaoCanal">							
+						</select>
+					</li>
+					<li class="required">
+						<label for="sltCanalComutacao">
+							<span class="required">*</span>
+							${i18n.get('canal-comutacao')}
+						</label>
+						<select id="sltCanalComutacao" name="canalComutacao" class="selecaoCanal">
+							<option></option>
+						</select>
+					</li>					
+					
+				</ul>					
+			</fieldset>
+
+			<div class="lista-de-jogos">
+				<h3>
+					<span class="separador-data">${i18n.get('adicionar-afiliadas')}</span>
+				</h3>
+				<fieldset>
+					<ul>
+						<li>
+							<label for="sltAfiliadas">
+								<span class="required">*</span>
+								${i18n.get('afiliada-tvg')}
+							</label>
+							<select id="sltAfiliadas" class="chzn-results">
+								<option></option>
+							</select>
+						</li>
+						<li>
+							<img title="${i18n.get('adicionar')}" id="imgAddAfiliada"
+								src="../images/adicionar.png" />
+						</li>
+					</ul>
+					<table id="tblAfiliadasBloqueadas" class="datatable">
+						<thead>
+							<th scope="col">${i18n.get('nome')}</th>
+							<th scope="col">${i18n.get('acoes')}</th>
+						</thead>
+						<tbody>
+							<tr class="template-row">
+								<td class="field-column nome" data-field="nome"></td>
+								<td class="action-column">
+									<a href="javascript:void(0)" class="cancel ttip act-remove"
+										style="width: 12px; height: 12px;">i18n.get("excluir")</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<label id="lblAdicionarFiliadas">${i18n.get('nenhuma-afiliada-selecionada')}</label>
+				</fieldset>
+				<h3>
+					<span class="separador-data">${i18n.get('adcionar-regioes')}</span>
+				</h3>
+				<fieldset>
+					<ul>
+						<li>
+							<label for="sltRegioes">
+								${i18n.get('regiao')}
+							</label>
+							<select id="sltRegioes" class="chzn-results">
+								<option></option>
+							</select>
+						</li>
+						<li>
+							<img title="${i18n.get('adicionar')}" id="imgAddRegiao"
+								src="../images/adicionar.png" />
+						</li>
+					</ul>
+
+					<table id="tblRegioesBloqueadas" class="datatable">
+						<thead>
+							<th scope="col">${i18n.get('nome')}</th>
+							<th scope="col">${i18n.get('acoes')}</th>
+						</thead>
+						<tbody>
+							<tr class="template-row">
+								<td class="field-column nome" data-field="nome"></td>
+								<td class="action-column">
+									<a href="javascript:void(0)" class="cancel ttip act-remove"
+										style="width: 12px; height: 12px;">i18n.get("excluir")</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<label id="lblAdicionarRegiao">${i18n.get('nenhuma-regiao-selecionada')}</label>
+				</fieldset>
+				<a id="btnNovaComutacao" class="button azul">${i18n.get('cadastrar')}</a>
+			</div>
+		</form>
+		
+		<div id="jogosDialog" class="dialog scroll" style="display: none;">
+			<h4>${i18n.get('selecione-jogo')}:</h4>
+			<div class="jogosAoVivo"></div>
+		</div>
+	</template>
+
+	<script>
+		<![CDATA[
+			var self = this;
+			
+			var afiliadasSelecionadas = new Array();
+			var afiliadasAgrupadas = new Array();
+			var regioesSelecionadas = new Array();
+			
+			self.page.find('#tblAfiliadasBloqueadas').datatable();
+			self.page.find('#tblRegioesBloqueadas').datatable();
+			
+			self.page.find('#frmNovaComutacao').form({ liquid: true });
+			self.page.find('#frmNovaComutacao [title]').tipsy({trigger: 'focus', gravity: 'w', fade: true});
+	
+			self.page.find('input:text').setMask();
+			self.page.find('.data').datepicker();
+			self.page.find('#tblComutacoesCadastradas').datatable();
+			
+			self.page.find('.selecionar-ao-vivo').click(function() {
+			});
+			
+			self.page.find('#btnNovaComutacao').click(function() {
+				if(utils.validate(self.page.find('#frmNovaComutacao'), null, self.page.find(".message"))) {
+					 if(afiliadasSelecionadas.length > 0){
+
+						var comutacao = $.sidi.serializeObject(self.page.find("#frmNovaComutacao"));
+
+						var afiliadasBloqueadasIDs = [];
+						for (var i in afiliadasSelecionadas) {
+							afiliadasBloqueadasIDs[i] = parseInt(afiliadasSelecionadas[i].id);
+						}
+						
+						comutacao.afiliadasBloqueadas = afiliadasSelecionadas;
+						
+						var regioesBloqueadasIDs = [];
+						for (var i in regioesSelecionadas) {
+							regioesBloqueadasIDs[i] = parseInt(regioesSelecionadas[i].id);
+						}
+						
+						comutacao.regioesBloqueadas = regioesSelecionadas;
+						
+						var comutacaoData = date.stringToDate(comutacao.dia);
+						var hora = comutacao.horario.split(':')[0];
+						var min  = comutacao.horario.split(':')[1];
+						comutacaoData.setMinutes(min);
+						comutacaoData.setHours(hora);
+																		
+						var comutacaoData = comutacaoData.getTime();
+						comutacao.canalPrincipal = JSON.parse(comutacao.canalPrincipal );
+						comutacao.canalComutacao = JSON.parse(comutacao.canalComutacao);
+						comutacao.data = comutacaoData;
+						
+						if (self.page.find('#idEventoAoVivo').val() != ""){
+							var evento = { 
+											id : self.page.find('#idEventoAoVivo').val(),
+											tipoEvento : self.page.find('#tipoEventoAoVivo').val() 
+										 };
+							comutacao.evento = evento;							
+						}
+						
+						$.postJSON("../sidi/comutacao/salvarComutacao", comutacao, function(comutResult) {
+							var message = comutacao.id ? 'sucesso-alterar-comutacao' : 'sucesso-cadastrar-comutacao';
+							
+							$('html, body').animate({scrollTop:0}, 'fast');
+							limpaForm();
+							if(self.popCallback){
+								self.popCallback(comutResult);
+							}
+							$('.message').attr("data-last-message",message);
+							$('.message').message(i18n.get(message), 'success', true);
+						});
+
+				 	}else{
+				 		self.page.find('.message').message(i18n.get('informe-afiliadas'), 'error',true);
+				 	}
+				}
+			});
+
+			function limpaForm(){
+				self.page.find("#sltCanalComutacao").val("");
+				self.page.find("#sltCanalPrincipal").val("");				
+				afiliadasSelecionadas = new Array();
+				regioesSelecionadas = new Array();
+				self.page.find("#tblAfiliadasBloqueadas tbody  tr.removable").remove();
+				self.page.find("#tblRegioesBloqueadas tbody  tr.removable").remove();
+				utils.clear(self.page.find('#frmNovaComutacao'));
+			}
+
+
+			carregarCombosCanais(self.page.find("#sltCanalPrincipal"), self.page.find("#sltCanalComutacao"));
+			carregarComboAfiliadas(self.page.find("#sltAfiliadas"));
+			carregarComboRegioes(self.page.find("#sltRegioes"))
+
+			function carregarCombosCanais(comboPrincipal, comboComutacao) {
+				var canalPrincipalPromise = $.getJSON("../sidi/canais/buscarCanalPorTipo", { arg: JSON.stringify(['FECHADO'])} , function(result) {
+					comboPrincipal.empty().append(new Option("",""));
+					$(result).each(function() {
+						var option = $(new Option(this.nome, JSON.stringify(this)));
+						option.addClass("canal_principal");
+						option.data(this);
+						comboPrincipal.append(option);
+					});
+				});
+				
+				var canalAlternativoPromise = $.getJSON("../sidi/canais/buscarCanalPorTipo",{ arg: JSON.stringify(['AUXILIAR'])}, function(result) {
+					comboComutacao.empty().append(new Option("",""));
+					$(result).each(function() {
+						var option = $(new Option(this.nome, JSON.stringify(this)));
+						option.addClass("canal_comutacao");
+						option.data(this);						
+						comboComutacao.append(option);
+					});
+				});
+				
+				$.when(canalPrincipalPromise, canalAlternativoPromise).done(function(){
+					if(self.comutacao){
+						$.sidi.deserializeObject(self.page.find('#frmNovaComutacao'), self.comutacao);
+						fillAfiliadas(self.comutacao);
+						fillRegioes(self.comutacao);
+					}
+				})
+			}
+
+			function carregarComboAfiliadas(combo) {
+				$.getJSON("../sidi/afiliada/buscarAfiliadasAgrupadasUF", [], function(result) {
+					afiliadasAgrupadas = result;
+					combo.empty().append(new Option("",""));
+					$.each(result,function(key, value) {
+						var afiliadas = value;
+						var estado = $(new Option("Afiliadas de "+key), key);
+						estado.addClass("category");
+						estado.addClass("uf_"+key);
+						estado.attr("id", "uf_"+key);
+						estado.data({group:true, id:key});
+						combo.append(estado);
+						$(afiliadas).each(function(key, value) {
+							var afiliada = $(new Option(value.nome), JSON.stringify(value));
+							afiliada.addClass("item");
+							afiliada.addClass("afiliada_"+value.codigo);
+							afiliada.attr("id", "afiliada_"+value.id);
+							afiliada.data(value);
+							combo.append(afiliada);
+							
+						});
+						
+					});
+					self.page.find("#sltAfiliadas").chosen({
+					    create_option: true,
+					    persistent_create_option: true,
+					    placeholder_text: 'Selecione afiliada'
+					});
+					
+				});
+				
+			}
+			
+			function carregarComboRegioes(combo) {
+				$.getJSON("../sidi/regioes/buscarRegioes", [], function(result) {
+					afiliadasAgrupadas = result;
+					combo.empty().append(new Option("",""));
+					$.each(result,function(key, value) {
+						var afiliada = $(new Option(value.nome), JSON.stringify(value));
+						afiliada.addClass("item");
+						afiliada.addClass("afiliada_"+value.codigo);
+						afiliada.attr("id", "regiao_"+value.id);
+						afiliada.data(value);
+						combo.append(afiliada);
+					});
+					self.page.find("#sltRegioes").chosen({
+					    create_option: true,
+					    persistent_create_option: true,
+					    placeholder_text: 'Selecione região'
+					});
+					
+				});
+				
+			}
+						
+			self.page.find("#imgAddAfiliada").click(function() {
+				var selectedValue = self.page.find("#sltAfiliadas option:selected").data();
+				var tabela = self.page.find("#tblAfiliadasBloqueadas");
+				if (selectedValue.group || selectedValue.codigo) {
+					if(!selectedValue.group){
+						if (duplicado(selectedValue)) {
+							self.page.find('.message').message(i18n.get('afiliada-ja-existe-comutacao'), 'error', true);
+						} else {
+							addAfiliada(selectedValue, tabela);
+						}
+					}else{
+						var afiliadas = afiliadasAgrupadas[selectedValue.id];
+						$(afiliadas).each(function(){
+							var afiliada = self.page.find("#sltAfiliadas option[id=afiliada_"+this.id+"]").data();
+							if (!duplicado(afiliada)) {
+								addAfiliada(afiliada, tabela);
+							}
+						});
+					}
+				    $('#sltAfiliadas option').prop('selected', false);
+				    $('#sltAfiliadas').trigger('liszt:updated');
+				    
+				    $('#lblAdicionarFiliadas').css('display', 'none');				    
+				} else {
+					self.page.find('.message').message(i18n.get('selecionar-afiliada-comutacao'), 'error', true);
+				}
+			});
+			
+			self.page.find("#imgAddRegiao").click(function() {
+				var selectedValue = self.page.find("#sltRegioes option:selected").data();
+				var tabela = self.page.find("#tblRegioesBloqueadas");
+				if (selectedValue.id) {
+					var regiao = self.page.find("#sltRegioes option[id=regiao_"+selectedValue.id+"]").data();
+					if (!regiaoDuplicada(regiao)) {
+						addRegiao(regiao, tabela);
+					}
+				
+				    $('#sltRegioes option').prop('selected', false);
+				    $('#sltRegioes').trigger('liszt:updated');
+				    
+				    $('#lblAdicionarRegiao').css('display', 'none');
+				} else {
+					self.page.find('.message').message(i18n.get('selecionar-afiliada-comutacao'), 'error', true);
+				}
+			});
+			
+			function fillAfiliadas(comutacao){
+				var tabela = self.page.find("#tblAfiliadasBloqueadas");
+				if(comutacao && comutacao.afiliadasBloqueadas){
+					for(var i = 0; i < comutacao.afiliadasBloqueadas.length ; i++){
+						var afiliada = comutacao.afiliadasBloqueadas[i];
+						addAfiliada(afiliada, tabela);
+					}
+				}
+			
+			}
+			
+			function fillRegioes(comutacao){
+				var tabela = self.page.find("#tblRegioesBloqueadas");
+				if(comutacao && comutacao.regioesBloqueadas){
+					for(var i = 0; i < comutacao.regioesBloqueadas.length ; i++){
+						var regiao = comutacao.regioesBloqueadas[i];
+						addRegiao(regiao, tabela);
+					}
+				}
+			
+			}
+			
+			function addAfiliada(afiliada, tabela){
+				afiliadasSelecionadas.push(afiliada);
+				adicionarTuplaTabela(tabela, afiliada.id, afiliada,{".act-remove":removeAfiliada});
+			}
+			
+			function addRegiao(regiao, tabela){
+				regioesSelecionadas.push(regiao);
+				adicionarTuplaTabela(tabela, regiao.id, regiao,{".act-remove":removeRegiao});
+			}
+			
+			var removeAfiliada = function(line){
+				var tupleId = line.attr("id").replace("line_","");
+				var index = getIndexAfiliadaById(tupleId);
+				afiliadasSelecionadas.splice(index, 1);
+				line.remove();
+				
+				if (afiliadasSelecionadas.length == 0)
+					$('#lblAdicionarFiliadas').css('display', 'block');
+					
+			}
+			
+			var removeRegiao = function(line){
+				var tupleId = line.attr("id").replace("line_","");
+				var index = getIndexRegiaoById(tupleId);
+				regioesSelecionadas.splice(index, 1);
+				line.remove();
+				
+				if (regioesSelecionadas.length == 0)
+					$('#lblAdicionarRegiao').css('display', 'block');
+			}			
+			
+			function adicionarTuplaTabela(table, tuplaId, tupla, actions) {
+				var linhaTemplate = table.find(".template-row").clone();
+				linhaTemplate.attr("id","line_"+ tuplaId);
+				linhaTemplate.removeClass("template-row");
+				linhaTemplate.addClass("removable");
+				
+				fillFieldColumns(linhaTemplate, tupla);
+				fillActionColumn(linhaTemplate, actions);
+				
+				table.find("tbody:last").append(linhaTemplate);
+			}
+			
+			function fillActionColumn(linhaTemplate, actions){
+				var actionsColumn = linhaTemplate.find("action-column");
+				$.each(actions, function(actionClass, actionFunction){
+					linhaTemplate.find(actionClass).click(function() {
+						actionFunction(linhaTemplate)
+					});
+				});
+			}
+			
+			function fillFieldColumns(linhaTemplate, tupla){
+				var fieldColumns = linhaTemplate.find(".field-column");
+				for(var i=0; i < fieldColumns.size();i++){
+					var fieldColumn = fieldColumns.eq(i);
+					var fieldName = fieldColumn.attr("data-field");
+					var tupleValue = tupla[fieldName];
+					fieldColumn.html(tupleValue);
+				}
+			}
+			
+			function getIndexAfiliadaById (afiliadaId){
+				for (var i in afiliadasSelecionadas) {
+					if (afiliadasSelecionadas[i].id == afiliadaId) {
+						return i;
+					}
+				}
+				return -1;
+			}
+			
+			function getIndexRegiaoById (regiaoId){
+				for (var i in regioesSelecionadas) {
+					if (regioesSelecionadas[i].id == regiaoId) {
+						return i;
+					}
+				}
+				return -1;
+			}
+			
+			function duplicado(tupla) {
+				for (var i in afiliadasSelecionadas) {
+					if (afiliadasSelecionadas[i].id == tupla.id) {
+						return true;
+					}
+				}
+				return false;
+			}
+			
+			function regiaoDuplicada(tupla) {
+				for (var i in regioesSelecionadas) {
+					if (regioesSelecionadas[i].id == tupla.id) {
+						return true;
+					}
+				}
+				return false;
+			}
+			
+			$('.selecionar-ao-vivo').click(function() {
+				
+				var data = self.page.find('.data').val();
+				var hora = self.page.find('.time').val();				
+				var dataHora = new Date(date.stringToDateHour(data, hora));
+				
+				var localComutacao = self.page.find('#txtLocalComutacao').val();
+				
+				if (data == "" || hora == ""){					
+					self.page.find('.message').message(i18n.get('selecione-filtros-evento'), 'error',true);							
+				}
+				else {
+							
+					$.postJSON('../sidi/distribuicaoPrincipal/buscarDistribuicaoPrincipalPorDataHora', [dataHora.getTime()],
+	    				function(eventosRetorno) {							
+							var eventosDisponiveis = [];
+							
+							for (var i = 0; i < eventosRetorno.length; i++) {
+								
+								var eventoAtual = eventosRetorno[i].evento;
+								
+								for (var j = 0; j < eventosRetorno[i].canals.length; j++){
+								
+									var canal = eventosRetorno[i].canals[j];
+																		
+									if (eventoAtual.nomeCanal == null)
+										eventoAtual.nomeCanal = canal.nome;
+									else									
+										eventoAtual.nomeCanal += ', ' + canal.nome;  
+								}			
+								
+								eventosDisponiveis.push(eventoAtual);	
+							}	
+							
+							var popCallback = function(eventoSelecionado){
+								
+								console.info(eventoSelecionado);
+								
+								self.page.find('#txtNomeComutacao').val(eventoSelecionado.descricaoEvento);
+								self.page.find('#idEventoAoVivo').val(eventoSelecionado.id);
+								self.page.find('#tipoEventoAoVivo').val(eventoSelecionado.tipoEvento);
+								
+								if (eventoSelecionado.tipoEvento == 'JOGO'){
+									
+									self.page.find('#txtLocalComutacao').val(eventoSelecionado.mandante.cidade.nome);
+								}
+								
+								
+								$('#jogosDialog').xundialog();
+							};													
+													
+							var json = {
+								'eventosDisponiveis' : eventosDisponiveis,
+								'popCallback': popCallback
+							};	
+							
+							$.holy("../templates/distribuicao/popup-selecao-ao-vivo.xml", json);
+						
+					});
+				}						   
+			});
+			$("#filtroComutacoes").hide();
+		]]>
+	</script>
+</engine>

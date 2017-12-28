@@ -1,0 +1,1 @@
+insert into perfil_funcionalidades values(30102,'GERENCIAR_USUARIO')

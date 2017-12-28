@@ -1,0 +1,42 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector="#popup">
+		<h4>${i18n.get('selecionar-colunas')}</h4>
+			<ul class="listaColunas">
+				<h6>${i18n.get('numero-PPV-visivel')}</h6>
+				{var numCanais = new Array(numeroPPV + 1)}
+				{eval}$.each(numCanais, function(idx) {numCanais[idx] = idx});{/eval}
+				{for numeroPPV in numCanais}
+				<li>
+					<label for="numeroPPV_${numeroPPV}">
+						<input type="checkbox" value="numeroPPV_${numeroPPV}" data-numero="${numeroPPV}"/>
+						${numeroPPV}
+					</label>
+				</li>
+				{/for}
+			</ul>
+		<br></br>
+		<a class="btSave button azul" type="button">${i18n.get('confirmar')}</a>
+		<a class="btCancel button azul" type="button">${i18n.get('cancelar')}</a>
+	</template>
+	<script>
+		$('#popup').xdialog({
+			overlay: '#333',
+			alpha: '3',
+			width: 250
+		});
+
+		$('#popup ul.listaColunas li').corner();
+		
+		$('#popup .btCancel').click(function() {
+			$("#popup").xundialog();
+		});
+
+		<![CDATA[
+		var numeroDePPV = $('#seletorNumeroPPV').data('selecao');
+		numeroDePPV = numeroDePPV.substring(0, numeroDePPV.length - 1).split(',');
+
+		for (var i = 0; i < numeroDePPV.length; i++)
+			$('#popup input[type=checkbox]').eq(numeroDePPV[i]).attr('checked', 'checked');
+		]]>
+	</script>
+</engine>

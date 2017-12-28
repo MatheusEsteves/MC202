@@ -1,0 +1,14 @@
+<html>
+<body>
+<div style="font-family:Verdana; color:#000;">
+<p>Prezados,</p>
+<br>
+<p>$!{mensagem}</p>
+<p>Para mais informações, acesse o SIDI utilize o endereço: <a href="https://sidi.aws.globosat.com.br">https://sidi.aws.globosat.com.br</a>, e utilize suas credenciais de acesso.</p>
+
+<br>
+<p>Atenciosamente,</p>
+<p>SIDI – Sistema de Distribuição</p>
+</div>
+</body>
+</html>

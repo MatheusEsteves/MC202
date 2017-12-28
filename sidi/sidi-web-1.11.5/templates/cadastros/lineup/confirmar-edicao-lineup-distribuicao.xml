@@ -1,0 +1,36 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector="#popup">
+		<h4>${i18n.get('cadastro-de-lineup')}</h4>
+		<p style="margin: 15px 0;">${i18n.get('confirmacao-editar-lineup-distribuicao')}</p>
+		<a id="btnRealizarAlteracao" class="showDialog button azul">${i18n.get('confirmar')}</a>
+		<a id="btnCancelarEdicao" class="showDialog button azul">${i18n.get('cancelar')}</a>
+	</template>
+
+	<script>
+		$("#popup").xdialog({
+			overlay: '#23557E',
+			alpha: '3',
+			width: '300'
+		});
+
+        var matriz = this.matriz;
+        var editarlineupdistribuicao = this.editarlineupdistribuicao;
+        var callback = this.callback;
+        var tabela = this.tabela;
+	
+		$('#btnRealizarAlteracao').click(function(){		
+          $.postJSON("../sidi/operadora-canal/setEdicaoLineupDistribuicaoPorMatriz", [matriz,editarlineupdistribuicao], function(resp) {
+            callback(!editarlineupdistribuicao,tabela,matriz);
+	        var mensagem = ' para a matriz ' + matriz;
+	        $('.message').message(i18n.get('editar-lineup-distribuicao') + mensagem, 'success', true);
+			$('#popup').xundialog();
+			$("#"+matriz).attr("checked","checked");
+		  });
+		});
+		
+		$('#btnCancelarEdicao').click(function(){ 
+		  $('#popup').xundialog();
+		});
+	</script>
+
+</engine>

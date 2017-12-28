@@ -1,0 +1,156 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+
+	<template selector="table#tblComutacoesCadastradas tbody">
+		<tr class="template-row">
+			<td class="field-column nome" data-field="nome"></td>
+			<td class="field-column data" data-type="datehour" data-field="data"></td>
+			<td class="field-column canal-principal" data-field="canalPrincipal.nome"></td>
+			<td class="field-column canal-comutacao" data-field="canalComutacao.nome"></td>
+			<td class="field-column afiliadas" data-field="afiliadasBloqueadas.nome"></td>
+			<td class="field-column regioes" data-field="regioesBloqueadas.nome"></td>
+			<td class="field-column transmissionId" data-field="transmissionId"></td>
+			<td class="acoes action-column">
+				<a href="javascript:void(0)" class="edit ttip" original-title="${i18n.get('alterar')}">Edit</a>
+				<a href="javascript:void(0)" class="delete ttip" original-title="${i18n.get('apagar')}">Delete</a>
+			</td>
+		</tr>
+	</template>
+
+	<script>
+		<![CDATA[
+
+			$('a.btaction').tipsy({trigger: 'focus', gravity: 'w', fade: true});
+			json = this;
+			var self = this;
+			
+			$('.ttip').tipsy();
+			
+			var closeDialog = function(){
+				$('#popup').xundialog();
+			}
+			
+			var comutacoes = this.comutacoes;
+			
+			var popCallback = function(comutResult){
+				var index = getIndexComutacaoById(comutResult.id);
+				self.comutacoes[index]=comutResult;
+				reloadLine(comutResult);
+				$('#popup').xundialog();
+			}
+			
+			var popRemoveCallback = function(comutResult){
+				var index = getIndexComutacaoById(comutResult.id);
+				self.comutacoes.splice(index, 1);
+				self.page.find("#comutacao_"+comutResult.id).remove();
+				console.info(self.page.find("tr:not(.template-row)").length);
+			}
+			
+			function remove(line){
+				var tupleId = line.attr("id").replace("comutacao_","");
+				var index = getIndexComutacaoById(tupleId);
+				var comutacao = self.comutacoes[index]
+				$.holy("../templates/cadastros/comutacao/apagar-comutacao.xml", {'comutacao': comutacao, 'popCallback' : popRemoveCallback});
+			};
+			
+			function edit(line){
+				var tupleId = line.attr("id").replace("comutacao_","");
+				var index = getIndexComutacaoById(tupleId);
+				var comutacao = self.comutacoes[index]
+				$.holy("../templates/cadastros/comutacao/cadastro-comutacoes.xml",{'comutacao' : comutacao, target: "#popup", "popCallback":popCallback}).done(function(test){
+					$("#popup").xdialog({
+						overlay: '#23557E',
+						alpha: '3',
+						width:925
+					})
+				});
+			};
+				
+			
+			function getIndexComutacaoById (comutacaoId){
+				for (var i=0; i <   self.comutacoes.length; i++) {
+					if (self.comutacoes[i].id == comutacaoId) {
+						return i;
+					}
+				}
+				return -1;
+			}
+			
+			function reloadLine(comutacao){
+				var table = self.page.parent();
+				var line = table.find("#comutacao_"+comutacao.id);
+				var rowTemplate = table.find("tr.template-row").clone();
+				var row = addRow(rowTemplate, comutacao.id, comutacao, {".edit":edit, ".delete": remove});
+				line.replaceWith(row);
+			}
+			
+			function loadTable(comutacoes){
+				var table = self.page.parent();
+				var template = table.find("tr.template-row");
+				for(var i=0; i < comutacoes.length; i++){
+					var comutacao = comutacoes[i];
+					var rowTemplate = template.clone();
+					var row = addRow(rowTemplate, comutacao.id, comutacao, {".edit":edit, ".delete": remove});
+					table.append(row);
+				}
+			}
+			
+			
+			function addRow(linhaTemplate, rowObjectId, rowObject, actions){
+				linhaTemplate.attr("id","comutacao_"+ rowObjectId);
+				linhaTemplate.removeClass("template-row");
+				
+				fillFieldColumns(linhaTemplate, rowObject);
+				fillActionColumn(linhaTemplate, actions);
+				return linhaTemplate;
+			
+			}
+			
+			function fillActionColumn(linhaTemplate, actions){
+				var actionsColumn = linhaTemplate.find(".action-column");
+				$.each(actions, function(actionClass, actionFunction){
+					linhaTemplate.find(actionClass).click(function() {
+						actionFunction(linhaTemplate)
+					});
+				});
+			}
+			
+			function fillFieldColumns(linhaTemplate, tupla){
+				var fieldColumns = linhaTemplate.find(".field-column");
+				for(var i=0; i < fieldColumns.size();i++){
+					var fieldColumn = fieldColumns.eq(i);
+					var fieldNames = fieldColumn.attr("data-field");
+					var dataType = fieldColumn.attr("data-type");
+					var tupleValue = tupla;
+					var fieldArray = fieldNames.split(".");
+					
+					for(var j=0; j< fieldArray.length; j++){
+						var fieldName = fieldArray[j];
+						if(tupleValue){
+							if(Array.isArray(tupleValue)){
+								var element = $("<ul></ul>");
+								for(var f=0; f<tupleValue.length; f++){
+									var aux = tupleValue[f];
+									for(var z=j; z<fieldArray.length; z++){
+										aux = aux[fieldArray[z]];
+									}
+									element.append($("<li></li>").text(aux));
+								}
+								tupleValue = element;
+							}else{
+								tupleValue = tupleValue[fieldName];
+							}
+						}
+					}
+					
+					if(dataType == "datehour"){
+						tupleValue = date.dateToString(tupleValue) +" " + date.dateToHourString(tupleValue);
+					}
+					fieldColumn.html(tupleValue);
+				}
+			}
+			loadTable(comutacoes);
+			
+		]]>
+	</script>
+
+</engine>

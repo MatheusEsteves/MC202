@@ -1,0 +1,18 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector="#content-details">
+		<div class="topo" id="topo">
+	      <div class="titulo">${i18n.get('cadastro-de-canais')}</div>
+	      <div class="separador"></div>
+	      <div class="acoes">
+	        <a href="javascript:void(0)" id="btnListaDeCanais" class="acao selected">${i18n.get('lista-de-canais')}</a>
+	      	{if sidi.possuiAutorizacao('GERENCIAR_CANAIS')}
+	        <a href="javascript:void(0)" id="btnCadastroDeCanais" class="acao">${i18n.get('novo-canal')}</a>
+	       	{/if}
+	      </div>
+	    </div>
+		<div id="divNovo">
+		</div>
+		<div id="divConsulta">
+		</div>
+	</template>
+</engine>

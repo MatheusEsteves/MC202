@@ -1,0 +1,63 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector="#content-details">
+		<div class="filtro"><a class="button azul" href="#historico/consultar/${data}">Voltar</a></div>
+		<div id="historico-operadora">
+			<table class="historico datatable">
+				<thead>
+					<tr>
+						<th>${i18n.get('canal')}</th>
+						<th>${i18n.get('original')}</th>
+						<th>${i18n.get('corrente')}</th>
+					</tr>
+				</thead>
+				<tbody>
+					{for canal in canais}
+						<tr>
+							<td class="globo colCanal">
+								<div class="img">
+									<img src="../imagens/canal?id=${canal.id}"></img>
+								</div>
+								<span class="canal">${canal.nome}</span>
+							</td>
+							
+							{for d in distribuicoes}
+								{var dist = distribuicao.buscarDistribuicao(d, canal)}
+								<td>
+									<![CDATA[
+									{var temJogo = dist && dist.evento}
+									]]>
+									
+									{if temJogo}
+										<div class="confronto">
+											{if dist.evento.tipoEvento == "JOGO"}
+											<div class="estadio">{if dist.evento.estadio != null}${dist.evento.estadio.nomePopular} / ${dist.evento.estadio.cidade.estado}{/if}</div>
+											<div class="time mandante">
+												<img src="${dist.evento.mandante.urlBrasao}"></img>
+												<span>${dist.evento.mandante.apelido}</span>
+											</div>
+											<div class="versus">
+												<span class="hora">${date.dateToHourString(dist.evento.data)}</span>
+												<span>X</span>
+											</div>
+											<div class="time visitante">
+												<img src="${dist.evento.visitante.urlBrasao}"></img>
+												<span>${dist.evento.visitante.apelido}</span>
+											</div>
+											{else}
+											${dist.evento.nome}
+											{/if}
+										</div>
+									{/if}
+								</td>
+							{/for}
+						</tr>
+					{/for}
+				</tbody>
+			</table>
+		</div>
+	</template>
+	
+	<script>
+		$("#content-info div.titulo").html(i18n.get('historico') + " - " + this.operadora.nome);
+	</script>
+</engine>

@@ -1,0 +1,33 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector="#popup">
+		<h3>${i18n.get('apagar-evento')}</h3>
+		<p style="padding-top:15px;size:12px;font-family:calibri;padding-bottom:15px;">${i18n.get('confirmacao-apagar-evento', evento.nome)}</p>
+		<a id="btnCancelarExclusao" class="button azul">${i18n.get('cancelar')}</a>
+		<a id="btnRealizarExclusao" class="button azul">${i18n.get('confirmar')}</a>
+	</template>
+
+	<script>
+
+		$("#popup").xdialog({
+			overlay: '#23557E',
+			alpha: '3',
+			width: '300'
+		});
+		
+		var id = this.evento.id;
+		
+		$('#btnRealizarExclusao').click(function(){
+				$.postJSON("../sidi/eventos/apagarEvento", id, function(json) {
+					$('#btnFiltrarOperadoras').click();
+					$('.message').message(i18n.get('sucesso-apagar-evento'), 'success', true);
+					$('#popup').xundialog();
+					$('#btnFiltroEdicaoTabular').click();
+				});
+		});
+		
+		$('#btnCancelarExclusao').click(function(){
+			$('#popup').xundialog();
+		});
+	</script>
+
+</engine>

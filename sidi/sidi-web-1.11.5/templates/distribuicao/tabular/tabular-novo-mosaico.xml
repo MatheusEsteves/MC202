@@ -1,0 +1,106 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0"
+	cacheable="true">
+	<template selector="#popup">
+		<ul class="message mensagemPopup" id="mensagemPopup"></ul>
+		{if (evento.id) }
+			<h4>${i18n.get('alterar-mosaico')}</h4>
+		{else}
+			<h4>${i18n.get('novo-mosaico')}</h4>
+		{/if}
+		
+		<div class="tab">
+			<ul>
+	            <li>
+	                <a href="#">${i18n.get('informacoes-mosaico')}</a>
+	            </li>
+	            <li>
+	                <a href="#"  id="tab2">${i18n.get('informacoes-operadora')}</a>
+	            </li>
+	        </ul>
+			<div class="container">
+				<form id="frmNovoMosaico">
+					<fieldset>
+						<ul>
+							<li class="required">
+								<label>
+									<span class="required">*</span>
+									${i18n.get('nome')}:
+								</label>
+								<input type="text" name="nome" value="${evento.nome}" class="url"
+									maxlength="40" />
+							</li>
+							<li class="required">
+								<label for="txtNovaData">
+									<span class="required">*</span>
+									${i18n.get('data')}:
+								</label>
+								<input type="text" id="txtNovaData" value="${date.dateToString(evento.data)}" alt="date"
+									class="data" name="data"></input>
+							</li>
+							<li class="required">
+								<label for="txtNovoEfetivo">
+									<span class="required">*</span>
+									${i18n.get('hora-efetiva')}:
+								</label>
+								<input id="txtNovoEfetivo" type="text" alt="time" value="${date.dateToHourString(evento.data)}"
+									name="efetivo"></input>
+							</li>
+							<li class="required">
+								<label>
+									<span class="required">*</span>
+									${i18n.get('hora-entrada')}:
+								</label>
+								<input type="text" name="aberturaSinal" alt="time" value="${date.dateToHourString(evento.aberturaSinal)}" />
+							</li>
+							<li class="required">
+								<label>
+									<span class="required">*</span>
+									${i18n.get('hora-saida')}:
+								</label>
+								<input type="text" name="fechamentoSinal" alt="time" value="${date.dateToHourString(evento.fechamentoSinal)}" />
+							</li>
+							<li class="required">
+								<label>
+									<span class="required">*</span>
+									${i18n.get('canal')}:
+								</label>
+								<select id="listaCanais" name="canal">
+										<option value="">${i18n.get('selecionar-canal')}</option>
+									{for canal in canais}
+										{if (canalEvento &amp;&amp; canalEvento.id == canal.id) }
+											<option value="${canal.id}" selected="selected">${canal.nome}</option>
+										{else}
+											<option value="${canal.id}">${canal.nome}</option>
+										{/if}
+									{/for}
+								</select>
+							</li>
+							<li class="required">
+								<label>
+									<span class="required">*</span>
+									${i18n.get('quantidade-canais')}:
+								</label>
+								<select id="listaQuantideCanais" name="divisaoMosaico">
+										<option value="">${i18n.get('selecione-quantidade')}</option>
+									{for divisao in divisoes}
+										{if (divisao &amp;&amp; divisao == evento.divisaoMosaico) }
+											<option value="${divisao}" selected="selected">${i18n.get(divisao)}</option>
+										{else}
+											<option value="${divisao}">${i18n.get(divisao)}</option>
+										{/if}
+									{/for}
+								</select>
+							</li>
+						</ul>
+					</fieldset>
+				</form>
+			</div>
+			<div id="extraInfo" class="container">
+			</div>
+		</div>
+		<a id="btnCancelarNovoMosaico" class="button azul">${i18n.get('cancelar')}</a>
+		<a id="btnCriarNovoMosaico" class="button azul">${i18n.get('confirmar')}</a>
+	</template>
+	<script>
+	</script>
+</engine>

@@ -1,0 +1,211 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector="#popup">
+	<a href="${window.location.hash}" class="close">(x)</a>
+	<ul id="dialogMessages" class="message"></ul>
+            <form class="forms">
+                <div class="confronto">
+                	{if evento.tipoEvento == 'JOGO'}
+						{var mandante = distribuicao.clubes[evento.mandante]}
+						{var visitante = distribuicao.clubes[evento.visitante]}
+	                    <span class="time" style="background-image: url('${mandante.urlBrasao}')">${mandante.apelido}</span>
+	                    <div class="versus">
+	                        <span class="hora">${date.dateToHourString(evento.data)}</span>
+	                        <span>X</span>
+	                    </div>
+	                    <span class="time" style="background-image: url('${visitante.urlBrasao}')">${visitante.apelido}</span>
+					{else}
+					<div class="versus">
+						<span class="hora">${date.dateToHourString(evento.data)}</span>
+						<span>${evento.descricaoEvento}</span>
+					</div>
+					{/if}
+            </div>
+            <div class="selectall">
+                <span>Selecionar todos</span>
+                <input type="checkbox"/>
+            </div>
+            <div class="estadosList">
+                <ul class="estados">
+					{for estado in distribuicao.estados}
+						<li title="${i18n.get('estado-' + estado)}" class="estado">
+							<input type="checkbox"  id="estado_${estado}" value="${estado}" />
+							${estado}
+						</li>			
+					{/for}
+					{if canal.tipo == 'FECHADO'}
+					<li id="listItemProgramacaoAlternativa" class="hidden">
+						<label for="programacaoAlternativa">
+							<span class="required">* </span>
+							${i18n.get('programacao-alternativa')}:
+						</label>
+						<input type="text" id="programacaoAlternativa" value="${eventoDistribuicao.programacaoAlternativa}" maxlength="40"/>
+					</li>
+        
+					{/if}
+                 </ul>
+            </div>
+			{if eventoDistribuicao.comutacao != null}
+				{for comu in comutacao}
+					{if eventoDistribuicao.comutacao.id == comu.id}
+						{if evento.descricaoEvento == comu.nome}
+				            <div class="afiliadasList">
+								<fieldset>
+					   				<ul>
+						   				<h3>
+											<span class="separador-data">Afiliadas Bloqueadas</span>
+										</h3>
+									</ul>
+									<table id="tblAfiliadasBloqueadas" class="datatable">
+										<thead>
+											<th scope="col">${i18n.get('nome')}</th>
+										</thead>
+										<tbody>
+											{for afiliada in comu.afiliadasBloqueadas}
+												<tr>
+													<td class="field-column nome" data-field="nome">
+														${ afiliada.nome }											
+													</td>
+												</tr>
+											{/for}
+										</tbody>
+									</table>
+								</fieldset>
+				            </div>
+		   		            <div class="afiliadasList">
+								<fieldset>
+					   				<ul>
+						   				<h3>
+											<span class="separador-data">Regiões Bloqueadas</span>
+										</h3>
+									</ul>
+									<table id="tblAfiliadasBloqueadas" class="datatable">
+										<thead>
+											<th scope="col">${i18n.get('nome')}</th>
+										</thead>
+										<tbody>
+											{for regiao in comu.regioesBloqueadas}
+												<tr>
+													<td class="field-column nome" data-field="nome">
+														${ regiao.nome }											
+													</td>
+												</tr>
+											{/for}
+										</tbody>
+									</table>
+								</fieldset>
+				            </div>
+			            {/if}
+					{/if}
+	            {/for}
+			{/if}            
+            
+            <div class="buttons right">
+                <input id="btnCancelar-estados" class="buttons" value="Cancelar" type="button"/>
+                <input id="btnOK-estados" class="buttons" value="OK" type="button"/>
+            </div>
+        </form>
+	</template>
+	<script>
+		<![CDATA[
+		$("#popup div.estadosList li").corner();
+		$("#popup").xdialog({
+			overlay: '#333',
+			alpha: '3'
+		});
+
+		var evento = this.evento;
+		var canal = this.canal;
+		var eventoDistribuicao = this.eventoDistribuicao;
+		var distribuicao = this.distribuicao;
+		var comutacao = this.comutacao;
+		
+		$.each(distribuicao.estados, function(idxEstado, estado) {
+			if (eventoDistribuicao.estados && eventoDistribuicao.estados.indexOf(estado) >= 0) {
+				$('#estado_' + estado).attr('checked', 'checked').parent('li').addClass('selecionado');
+			}
+
+			$('#estado_' + estado).bind('sidi.estado.check',function() {
+				if (this.checked) {
+					$('#estado_' + estado).parent('li').addClass('selecionado');
+				} else {
+					$('#estado_' + estado).parent('li').removeClass('selecionado');
+				}
+
+				if ($('#popup .estadosList input:checkbox:checked').length == distribuicao.estados.length) {
+					$('#listItemProgramacaoAlternativa').addClass('hidden');	
+					$("#popup div.selectall input").prop('checked', true);
+				} else {
+					$('#listItemProgramacaoAlternativa').removeClass('hidden');
+					$("#popup div.selectall input").prop('checked', false);
+				}
+			});
+
+    		$('#estado_' + estado).click(function() {
+				$(this).trigger("sidi.check");
+			});
+		});
+
+
+		if(eventoDistribuicao.comutacao != null && comutacao != null){
+			for(i in comutacao){
+				var comu = comutacao[i];
+				if(eventoDistribuicao.comutacao.id == comu.id && evento.descricaoEvento == comu.nome){
+					$('#popup .estadosList input:checkbox').prop('disabled', true);
+					$("#popup div.selectall input:checkbox").prop('disabled', true);
+				}
+			}
+		}
+
+		$("#popup div.selectall input").click(function() {
+			if (this.checked) {
+				$('#popup .estadosList input:checkbox').prop('checked', true)
+					.trigger("sidi.check").parent('li').addClass('selecionado');
+			} else {
+				$('#popup .estadosList input:checkbox').prop('checked', false)
+					.trigger("sidi.check").parent('li').removeClass('selecionado');
+			}
+		});
+
+		$('#btnCancelar-estados, #popup .close').click(function(){
+			$('#popup').xundialog();
+        });
+
+        $('#btnOK-estados').click(function() {
+			eventoDistribuicao.estados = [];
+			var estadosSelecionados = $('#popup .estadosList input:checkbox:checked');
+			var todosSelecionados = estadosSelecionados.length == distribuicao.estados.length;
+			var alternativa = $.trim($('#programacaoAlternativa').val());
+
+			eventoDistribuicao.programacaoAlternativa = (alternativa.length > 0 && !todosSelecionados)? alternativa : null;
+			eventoDistribuicao.alterado = true;
+
+			$('#popup .estadosList input:checkbox:checked').each(function(idx, input) {
+				eventoDistribuicao.estados.push($(input).val());
+			});
+
+			if(canal.relacionado){
+				var distribs_canal = distribuicao.distribuicaoPrincipal.eventosPorCanal[canal.relacionado.id];
+				if(distribs_canal != null){
+					var evento_canal = utils.findByField(distribs_canal, 'eventoId' , evento.id);
+					if(evento_canal){
+						evento_canal.estados = eventoDistribuicao.estados;
+						evento_canal.programacaoAlternativa = (alternativa.length > 0 && !todosSelecionados)? alternativa : null;
+						evento_canal.alterado = true;
+					}
+				}
+			}
+
+			$.holy("../templates/distribuicao/distribuicao-principalNovo.xml", {'distribuicaoJson' : distribuicao, 'comutacao': comutacao });
+			$('#popup').xundialog();
+        });
+
+		if ($('#popup .estadosList input:checkbox:checked').length == distribuicao.estados.length) {
+			$('#listItemProgramacaoAlternativa').addClass('hidden');
+			$("#popup div.selectall input").prop('checked', true);
+		} else {			
+			$('#listItemProgramacaoAlternativa').removeClass('hidden');
+			$("#popup div.selectall input").prop('checked', false);
+		}
+		]]>
+	</script>
+</engine>

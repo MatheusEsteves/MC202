@@ -1,0 +1,160 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+
+	<template selector="#content-info">
+		<div class="topo">
+			<div class="titulo">${i18n.get('menu.liberar-distribuicao')}</div>
+			<div class="separador"></div>
+		</div>
+		
+		<form class="filtro">
+			<div class="data data-selecionada seletor-de-data">
+				<label for="dataEventos">${i18n.get('jogos-dia')} </label>
+				<input type="text" id="dataEventos" alt="date" class="data"/>
+			</div>
+			
+			<div class="clear"/>
+		</form>
+
+		<div id="abasLiberacaoDistribuicao" class="topo-abas">
+			<table class="abas">
+				<tr>
+					<td class="selected" id="distribuicao-operadora-aba">
+						<a href="javascript:void(0);" id="distribuicao-operadora">${i18n.get('distribuicao-operadora')}</a>
+						<div class="progress"></div>
+					</td>
+				</tr>
+			</table>
+		</div>
+
+		<div class="filtro" id="div-status">
+		{if !jQuery.isEmptyObject(distribuicaoJson.eventosDisponiveis)}
+			<h3 class="statusDistribuicao"><b>${i18n.get('status')}:</b>
+				<span/>
+			</h3>
+		{/if}
+		</div>
+		<div class="filtro" id="div-filtro" style="display:none;">
+			<label for="filtroEstado">${i18n.get('uf')}</label>
+			<select id="filtroEstado" class="filtro-operadora-novo" data-coluna="UF">
+				<option value="">${i18n.get('todos')}</option>
+				{for estado in distribuicaoJson.estados}
+					<option value="uf_${estado}">${estado}</option>
+				{/for}
+			</select>
+			<label for="filtroHeadendOperadora">${i18n.get('headend')}</label>
+			<select id="filtroHeadendOperadora" name="headend" class="filtro-operadora-novo" data-coluna="headend">
+				<option value="">${i18n.get('todos')}</option>
+				{for headEnd in distribuicaoJson.headEnds}
+				<option value="headend_${headEnd.id}">${headEnd.nome}</option>
+				{/for}
+			</select>
+			<label for="filtroRegiao">${i18n.get('regiao')}</label>
+			<select id="filtroRegiao" name="regiao" class="filtro-operadora-novo" data-coluna="regiao">
+				<option value="">${i18n.get('todas')}</option>
+				{for regiao in distribuicaoJson.regioes}
+				<option value="regiao_${regiao.id}">${regiao.nome}</option>
+				{/for}
+			</select>
+			<label for="filtroOperadora">${i18n.get('operadora')}</label>
+			<select id="filtroOperadora" name="operadora" class="filtro-operadora-novo" data-coluna="nome">
+				<option value="">${i18n.get('todas')}</option>
+				{for operadora in distribuicaoJson.sort.operadoras}
+				<option value="operadora_${operadora.id}" data-uf="uf_${operadora.UF}" data-headend="headend_${operadora.headend}" data-regiao="regiao_${operadora.regiao}">${operadora.nome}</option>
+				{/for}
+			</select>
+			
+			<label for="filtroAfiliada">${i18n.get('afiliada')}</label>
+			<select id="filtroAfiliada" name="afiliada" class="filtro-operadora-novo" data-coluna="afiliada">
+				<option value="">${i18n.get('todas')}</option>
+				{for afiliada in distribuicaoJson.sort.afiliadas.map(distribuicaoJson.map.afiliadas).filter(distribuicaoJson.filter.duplicates)}
+					<option value="afiliada_${afiliada.replace(/ /g, '_')}" >${afiliada}</option>
+				{/for}
+			</select>
+
+			<label for="filtroHorario">${i18n.get('horarios')}</label>
+			<select id="filtroHorario" name="horario" >
+				{for horario in distribuicaoJson.distribuicaoOperadora.horarios}
+				<option value="horario_${horario.horario}" horario="${horario.horario}">
+					${date.dateToHourString(horario.horario)}
+				</option>
+				{/for}
+			</select>
+			<input type="hidden" id="horarioHidden"/>
+
+			<label for="filtroConflito">
+				<input id='filtroConflito' name="conflito" class="filtro-operadora-novo"   type="checkbox" value="conflito"/>
+				${i18n.get('emconflito')}
+			</label>
+
+			<div class="checkbox-picker" id="btnSeletorColuna">
+                <span class="titulo">${i18n.get('selecionar-colunas')}</span>
+            </div>
+			{var numCanais = new Array(distribuicaoJson.numeroPPV + 1)}
+			{eval}$.each(numCanais, function(idx) {numCanais[idx] = idx});{/eval}
+			<div class="checkbox-picker" id="seletorNumeroPPV" data-selecao="{for numeroPPV in numCanais}${numeroPPV},{/for}">
+				<span type="titulo">${i18n.get('numero-PPV-disponivel')}</span>
+			</div>
+		</div>
+
+		<div id="jogosDialog" class="dialog" style="display: none;">
+			<h4>${i18n.get('selecione-jogo')}:</h4>
+			<div class="jogosList"></div>
+		</div>
+
+	</template>
+	
+	<template selector="#content-details">
+		<div class="operadoras" style=""></div>
+	</template>
+	
+	<script>
+		<![CDATA[
+			
+		var distribuicaoJson = this.distribuicaoJson;
+		
+		$('#dataEventos').change(function() {
+			var dataSelecionada = $(this).val();
+			dataSelecionada = dataSelecionada ? date.stringToDate(dataSelecionada).getTime() : null;
+			location.hash = 'distribuicao/liberacao/operadora/' + dataSelecionada;
+		});
+
+		$("input:text").setMask();
+		$("#dataEventos").datepicker();
+		
+		if (this.data)
+			$('#dataEventos').datepicker('setDate' , new Date(this.data));
+
+		$('#distribuicao-operadora-aba').click(function() {
+			if ($('.progress:visible').length == 0) {
+				$('#distribuicao-principal-aba').removeClass('selected');
+				$('#content-details .principal').hide();
+	
+				$(this).addClass('selected');
+				$('#content-details .operadoras, #div-filtro').show();
+	
+				if (!$('.scroll-pane').data('jsp')) {
+					$.pushLoading();
+					setTimeout(function() {
+						distribuicaoOperadoraTemplate.initScrollableTable();
+						$.popLoading();
+					}, 0);
+				}
+			}
+		});
+
+		$('.filtro-operadora-novo').change(function() {
+			$.pushLoading();
+			setTimeout(distribuicaoOperadoraTemplate.aplicarFiltros, 0);
+		});
+
+		$('#filtroHorario').change(function() {
+			var parametro = $(this).find('option:selected').attr("horario");
+			$.holy("../templates/distribuicao/confirmar-alteracao-horario-distribuicao-novo.xml",
+				 {'horario':parametro, 'distribuicaoJson' : distribuicaoJson });
+		});
+
+		$('#distribuicao-operadora-aba .progress').show().progressbar({value : 0});
+
+		]]>
+	</script>
+</engine>

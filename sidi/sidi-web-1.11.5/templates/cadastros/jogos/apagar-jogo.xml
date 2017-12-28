@@ -1,0 +1,33 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector="#popup">
+		<h3>${i18n.get('apagar-jogo')}</h3>
+		<p style="padding-top:15px;size:12px;font-family:calibri;padding-bottom:15px;">${i18n.get('confirmacao-apagar-jogo')}</p>
+		<a id="btnRealizarExclusao" class="button azul">${i18n.get('confirmar')}</a>
+		<a id="btnCancelarEdicao" class="button azul">${i18n.get('cancelar')}</a>
+	</template>
+
+	<script>
+
+		$("#popup").xdialog({
+			overlay: '#23557E',
+			alpha: '3',
+			width: '300'
+		});
+		
+		var jogo = this.jogo;
+		
+		$('#btnRealizarExclusao').click(function(){
+				$.postJSON("../sidi/jogos/apagarJogo", jogo, function(json) {
+					$('.message').message(i18n.get('sucesso-apagar-jogo', $('#tglNovoJogo h3 span').html()), 'success', true);
+					$('#popup').xundialog();					
+					$('#btnFiltrarJogos').click();
+				});
+				$('#popup').xundialog();
+		});
+		
+		$('#btnCancelarEdicao').click(function(){
+			$('#popup').xundialog();
+		});
+	</script>
+
+</engine>

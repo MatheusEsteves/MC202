@@ -1,0 +1,83 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector="#content-info">
+		<div class="topo">
+			<div class="titulo">${i18n.get('campeonatos-importados')}</div>
+			<div class="separador"></div>
+		</div>
+	</template>
+	<template selector="#content-details">
+		<style>
+			.times{
+				font-weight:bold;
+			}
+		</style>
+		<div class="lista-conflitos-importacao lista-de-exibicao">
+			<form id="frmCampeonatosImp">
+				<fieldset>
+					<table class="datatable">
+						<thead>							
+							<th scope="col">${i18n.get('campeonato')}</th>
+							<th scope="col">${i18n.get('campeonato-slug')}</th>
+							<th scope="col">${i18n.get('edicao-slug')}</th>
+							<th scope="col">${i18n.get('novo-campeonato')}</th>
+							<th scope="col"></th>
+						</thead>
+						{for camp in listaCampeonatos.novosCampeonatos}
+							<tr>								
+								<td>${camp.nome}</td>
+								<td>${camp.campeonatoSlug}</td>
+								<td>${camp.edicaoSlug}</td>								
+								<td><img title="${i18n.get('insere-fase-tabela')}" id="imgAdicionar" src="../images/ok.png"/></td>
+								<td><img title="${i18n.get('importar-fases')}" id="imgImpFase_${camp.id}" src="../images/page_white_conf.png"/></td>								
+							</tr>
+						{/for}
+						{for camp in listaCampeonatos.campeonatosAlterados}
+							<tr>							
+								<td>${camp.nome}</td>
+								<td>${camp.campeonatoSlug}</td>
+								<td>${camp.edicaoSlug}</td>								
+								<td>-</td>
+								<td><img title="${i18n.get('importar-fases')}" id="imgImpFase_${camp.id}" src="../images/page_white_conf.png"/></td>								
+							</tr>
+						{/for}
+					</table>
+					<a class="button azul" id="btnVoltarImp">${i18n.get('ok')}</a>
+				</fieldset>
+			</form>
+		</div>
+	</template>
+	<script>
+		$('#frmCampeonatosImp').form();
+		var listaCampeonatos = this.listaCampeonatos;
+		
+		$('#btnVoltarImp').click(function(){
+			scroll(0,0);
+			location.reload();			
+		});
+				
+		$.each(listaCampeonatos.novosCampeonatos, function(idx, campeonato){
+			$('#imgImpFase_' + campeonato.id).click(function() {
+				importaFase(campeonato);
+				$('#imgImpFase_' + campeonato.id).hide();				
+			});
+		});
+		
+		$.each(listaCampeonatos.campeonatosAlterados, function(idx, campeonato){
+			$('#imgImpFase_' + campeonato.id).click(function() {
+				importaFase(campeonato);
+				$('#imgImpFase_' + campeonato.id).hide();
+			});
+		});
+		
+		function importaFase(campeonato){
+			$.postJSON("../sidi/campeonatos/importarFasesCampeonato", [campeonato], function(resposta) {
+				scroll(0,0);					
+				if (resposta) {
+					$('.message').message('Importação de fase realizada com sucesso', 'success', true);						
+				} else
+					$('.message').message('Algo deu errado...', 'error', true);
+			});
+		}
+				
+	</script>
+</engine>

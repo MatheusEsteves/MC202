@@ -1,0 +1,175 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector="#popup">
+	<ul class="message mensagemPopup" id="mensagemPopup"></ul>
+		<h4>${i18n.get('alterar-usuario')}</h4>
+		<form id="frmEditarUsuario" class="lista-de-jogos">
+			<fieldset>
+				<legend>${usuario.login}</legend>
+					<ul>
+						<li class="required">
+							<label for="txtEmail"><span class="required">*</span>${i18n.get('email')}</label>
+							<input type="text" name="email" value="${usuario.email}"></input>
+						</li>
+						<li>
+							<label for="txtTelefone">${i18n.get('telefone')}</label>
+							<input type="text" name="telefone" value="{if usuario.telefone != ''}${usuario.telefone}{/if}"
+								   maxlength="11" class="numeric" id="edtTelefone"></input>
+						</li>
+						<li>
+							<label for="txtSenha">${i18n.get('senha')}</label>
+							<input type="password" name="senha" id="txtSenha"></input>
+						</li>
+						<li class="required">
+							<label for="perfilEdt"><span class="required">*</span>${i18n.get('perfil')}</label>
+							<select name="perfil" id="perfilEdt">
+								<option></option>
+								{for perfil in perfis}
+								<option value="${perfil.id}" name="${perfil.nome}">${perfil.nome}</option>
+								{/for}
+							</select>
+						</li>
+					</ul>
+					<ul id="operadoras">
+						<li>
+							<label for="sgsOperadorasAlteracao" class="{if usuario.perfil.nome == 'Operadora'}required{/if}">
+							<span id="spanRequired" style="display:none" class="required">*</span>${i18n.get('nome-operadora')}:</label>
+							<input type="text" id="sgsOperadorasAlteracao"></input>
+							<img title="${i18n.get('insere-operadora-tabela')}" class="ttip" id="imgAdicionarOp" src="../images/adicionar.png"/>
+							<div style="max-height:300px;overflow-y:auto;width:450px;">
+								<table id="tblListaDeOperadorasAlteracao" class="small-table">
+									<thead>
+										<tr>
+											<th scope="col">${i18n.get('login')}</th>
+											<th scope="col">${i18n.get('acoes')}</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
+						</li>
+					</ul>
+			</fieldset>
+		</form>
+		<a id="btnRealizarEdicao" class="button azul">${i18n.get('confirmar')}</a>
+		<a id="btnCancelarEdicao" class="button azul">${i18n.get('cancelar')}</a>
+	</template>
+	<script><![CDATA[
+		$('#frmEditarUsuario').form();
+		$('#tblListaDeOperadorasAlteracao').datatable();
+
+		$("#popup").xdialog({
+			overlay: '#23557E',
+			alpha: '3',
+			width:'500'
+		});
+		$('#popup select[name=perfil]').val(this.usuario.perfil.id);
+		
+		$("#edtTelefone").setMask("(99) 99999-9999");
+
+        var usuarios = this.usuarios;
+		var usuario = this.usuario;
+		var perfis = this.perfis;
+		var idUsuario = this.idUsuario;
+		var callback = this.callback;
+		
+		$('#imgAdicionarOp').click(function() {
+			consultaOperadora.adicionaOperadora($('#sgsOperadorasAlteracao'), $('#mensagemPopup'), usuario);
+		});
+
+		function vetorOperadorasApenasComNomeId(operadoras) {
+			if (operadoras != null)
+				for (var i = 0; i < operadoras.length; i++) {
+					operadoras[i] = {'id' : operadoras[i].id, 'nome' : operadoras[i].nome};
+				}
+
+			return operadoras;
+		}
+
+		$('#btnRealizarEdicao').click(function(){
+			if(!utils.validate($('#frmEditarUsuario'))){
+				$('.message').html('');
+				$('#mensagemPopup').message('Preencha todos os campos obrigatorios','error',true);
+
+				return;
+			}
+
+			if (!$("input[name=email]:visible").isEmail()) {
+				$('.mensagemPopup').message(i18n.get('email-invalido'), 'error', true);
+
+				return;
+			}
+
+			if (!$("input[name=senha]:visible").isValidPassword()) {
+				$('.mensagemPopup').message(i18n.get('senha-invalida'), 'error', true);
+
+				return;
+			}
+
+			var perfil = {};
+			perfil.id = $('#popup select[name=perfil]').val();
+			perfil.nome = $('#popup select[name=perfil] option:selected').text();
+
+			if (perfil.id == $('#popup option[name="Operadora"]').val() && $('table#tblListaDeOperadorasAlteracao tbody td').length < 2) {
+				$('.mensagemPopup').message(i18n.get('operadora-obrigatoria'), 'error', true);
+
+				return;
+			}
+
+
+			usuario.email = $('#popup input[name=email]').val();
+			usuario.telefone = $('#popup input[name=telefone]').val();
+			usuario.senha = $.trim($('#popup input[name=senha]').val());
+			usuario.perfil = perfil;
+
+			usuario.operadoras = vetorOperadorasApenasComNomeId(usuario.operadoras);
+
+			$.post("../sidi/usuario/alterarUsuario",{arg: JSON.stringify(usuario)}, function(sucesso) {
+				if(sucesso) {
+				    usuarios[idUsuario] = usuario;
+				
+				    $("#emailUsuario_" + usuario.id).text(usuario.email);
+				    $("#perfilUsuario_" + usuario.id).text(usuario.perfil.nome);
+				    $("#telefoneUsuario_" + usuario.id).text(usuario.telefone);
+				    
+				    callback(usuarios,0);
+					
+					$('.message').message(i18n.get('sucesso-alterar-usuario'), 'success', true);
+					$('#popup').xundialog();
+				} else {
+					$('#mensagemPopup').html('');
+					$('#mensagemPopup').message(i18n.get('falha-alterar-usuario'), 'error', true);
+				}
+			});
+		});
+
+		$('#btnCancelarEdicao').click(function(){
+			$('#popup').xundialog();
+		});
+
+		$('#perfilEdt').change(function() {
+			var $this = $(this);
+			if ($this.val() == $this.find('option[name="Operadora"]').val()) {
+				$('#operadoras').removeClass('required');
+				$('#spanRequired').show();
+			} else {
+				$('#operadoras').addClass('required');
+				$('#spanRequired').hide();
+			}
+		});
+
+		if ($('#perfilEdt').val() == $('#perfilEdt').find('option[name="Operadora"]').val()) {
+			$('#operadoras').removeClass('required');
+			$('#spanRequired').show();
+		}
+
+		consultaOperadora.buscarOperadorasEAutoComplete($('#sgsOperadorasAlteracao'));
+
+		usuario.operadoras = vetorOperadorasApenasComNomeId(usuario.operadoras);
+
+		$.getJSON("../sidi/usuario/buscarOperadorasRelacionadas",{arg: JSON.stringify(usuario.id)},function(ops) {
+			$.holy("../templates/cadastros/usuario/operadoras-relacionadas.xml", {'operadorasRelacionadas':ops, 'usuario': usuario});
+			usuario.operadoras = vetorOperadorasApenasComNomeId(ops);
+		});
+	]]></script>
+</engine>

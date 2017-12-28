@@ -1,0 +1,79 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector="#jogosDialog .jogosList">
+		<div id="selecao-jogos">
+			<ul>
+			{for evento in eventosDisponiveis}
+				<li id="jogo_disponivel_${evento.id}" class="confronto" data-evento-descricao="${evento.descricaoEventoAbreviado}" data-evento-id="${evento.id}">
+				{if evento.tipoEvento == 'JOGO'}
+					<span class="time" style="background-image: url('${clubes[evento.mandante].urlBrasao}')">${clubes[evento.mandante].apelido}</span>
+					<div class="versus">
+						<span class="hora">${date.dateToHourString(evento.data)}</span>
+						<span>X</span>
+					</div>
+					<span class="time" style="background-image: url('${clubes[evento.visitante].urlBrasao}')">${clubes[evento.visitante].apelido}</span>
+				{else}
+					<div class="versus">
+						<span class="hora">${date.dateToHourString(evento.data)}</span>
+						<span>${evento.descricaoEvento}</span>
+					</div>
+				{/if}
+				</li>
+			{forelse}
+				${i18n.get('sem-jogos-disponiveis')}
+			{/for}
+			</ul>
+		</div>
+	</template>
+	<script>
+		$('#jogosDialog ul li').corner();
+
+		$('#jogosDialog').xdialog({
+            overlay: '#333',
+            alpha: '3',
+            width: '655px'
+        });
+	
+		var jsonCompleto = this.distribuicao;
+		var canalId = this.canalId;
+		var comutacaoJson = this.comutacao;
+		$('#selecao-jogos .confronto').click(function() {
+			estados = [];
+			
+			var eventoId = $(this).data("evento-id");
+			
+			var canal = utils.find(jsonCompleto.canais, canalId);
+			var evento = jsonCompleto.eventosDisponiveis[eventoId];
+			if (canal.tipo != 'ABERTO') {
+				$.each(jsonCompleto.estados, function(idx, estado) {
+					estados.push(estado);
+				});
+			}
+			
+			var json = {
+				'eventoId' : $(this).data("evento-id"),
+				'estados' : estados,
+				'dataInicioTransmissao' : date.setHour(evento.inicioTransmissao),
+				'dataTerminoTransmissao' : date.setHour(evento.fimTrasmissao)
+			};
+			
+			if (jsonCompleto.distribuicaoPrincipal.eventosPorCanal[canalId]) {
+				jsonCompleto.distribuicaoPrincipal.eventosPorCanal[canalId].push(json);
+			} else {
+				jsonCompleto.distribuicaoPrincipal.eventosPorCanal[canalId] = [json];
+			}
+			
+			
+			if(canal.relacionado){
+				if (jsonCompleto.distribuicaoPrincipal.eventosPorCanal[canal.relacionado.id]) {
+					jsonCompleto.distribuicaoPrincipal.eventosPorCanal[canal.relacionado.id].push(json);
+				} else {
+					jsonCompleto.distribuicaoPrincipal.eventosPorCanal[canal.relacionado.id] = [json];
+				}
+			}
+
+        	$.holy("../templates/distribuicao/distribuicao-principalNovo.xml", {'distribuicaoJson' : jsonCompleto, 'comutacao' : comutacaoJson});
+			$("#jogosDialog").xundialog();
+		});
+
+	</script>
+</engine>

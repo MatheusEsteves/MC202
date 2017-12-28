@@ -1,0 +1,116 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector="#content-details">
+		<div class="topo" id="topo">
+	      <div class="titulo">${i18n.get('controle-de-vazada')}</div>	      
+	    </div>
+	    
+	    <div class="filtro" id="filtroControleVazada">
+			<form class="forms">
+				<fieldset>
+					<ul>
+						<li class="required">
+							<label for="txtDataInicial"><span class="required">*</span>${i18n.get('data')}: </label>
+							<input type="text" id="txtDataInicial" name="inicio" alt="date" class="data" />
+							<span> ${i18n.get('ate')} </span>
+							<input type="text" id="txtDataFinal" name="fim" alt="date" class="data" />
+						</li>
+						<li class="required">
+							<label for="sltCampeonatoFiltro"><span class="required">*</span>${i18n.get('campeonato')}: </label>
+							<select id="sltCampeonatoFiltro" name="campeonatoId">								
+								{for campeonato in campeonatos}
+								<option value="${campeonato.id}">${campeonato.nome}</option>
+								{/for}
+							</select>
+						</li>
+						<li>
+							<label for="sgsMandante">${i18n.get('time-mandante')}: </label>
+							<input type="text" id="sgsMandante" class="time ui-autocomplete-input" name="mandante" />
+						</li>
+						<li>
+							<label for="sgsRegiao">${i18n.get('regiao')}: </label>
+							<input type="text" id="sgsRegiao" class="regiao ui-autocomplete-input" name="regiao" />
+						</li>
+						<li>
+							<label for="sltCanais">${i18n.get('canal')}: </label>
+							<select id="sltCanais" name="canalId">
+							</select>
+						</li>
+					</ul>
+				</fieldset>
+								
+				<a id="btnGerarRelatorio" class="button azul">${i18n.get('gerar-relatorio-vazada')}</a>
+								
+			</form>
+		</div>
+	    
+	</template>
+	
+	<script>
+		<![CDATA[ 
+			$('.data').setMask();
+		
+			$.getJSON("../sidi/clubes/buscarClubes", function(json) {
+				var equipes = [];
+				$(json).each(function() {
+					equipes.push({'label': this.apelido, 'value': this.id});
+				});
+	
+				$('.time').sidiAutocomplete({
+					source: equipes
+				}, json);
+			});
+			
+			$.getJSON("../sidi/regioes/buscarRegioes",function(json) {
+				var regioes = [];
+				$(json).each(function() {
+					regioes.push({'label': this.nome, 'value': this.id});
+				});
+	
+				$('.regiao').sidiAutocomplete({
+					source: regioes
+				}, json);
+			});
+			
+			$.getJSON("../sidi/canais/buscarCanalPorTipo", { arg: JSON.stringify(['ABERTO'])} , function(result) {
+				$('#sltCanais').empty().append(new Option(i18n.get('todos'), ""));
+				$(result).each(function() {
+					var option = $(new Option(this.nome, this.id));
+					option.addClass("canal_principal");
+					option.data(this);
+					$('#sltCanais').append(option);
+				});
+			});
+			
+			$('.data').datepicker();
+			$('.forms ul li label').width(110);
+			
+			$('#btnGerarRelatorio').click(function() {
+			
+				var filtro = [];
+				utils.bind($("#filtroControleVazada"), filtro);
+				
+				if (filtro.inicio == null || filtro.fim == null || isNaN(filtro['campeonatoId'])) {
+					$('.message').message(i18n.get('campos-obrigatorios'), 'error', true);
+				} else {
+				
+					var idCampeonato = parseInt(filtro['campeonatoId']);
+					var idMandante =  filtro['mandante'] != null ? filtro['mandante'].id : null;
+					var idRegiao = filtro['regiao'] != null ? filtro['regiao'].id : null;
+					var idCanal = filtro['canalId'] != null ? parseInt(filtro['canalId']) : null;
+					
+					console.info(idCanal);
+					var form = $('<form></form>').attr('action', '../sidi/relatorioVazada').attr('method', 'post');
+				    form.append($("<input></input>").attr('type', 'hidden').attr('name', 'inicio').attr('value', filtro.inicio));
+				    form.append($("<input></input>").attr('type', 'hidden').attr('name', 'fim').attr('value', filtro.fim));
+				    form.append($("<input></input>").attr('type', 'hidden').attr('name', 'idCampeonato').attr('value', idCampeonato));
+				    form.append($("<input></input>").attr('type', 'hidden').attr('name', 'idMandante').attr('value', idMandante));
+				    form.append($("<input></input>").attr('type', 'hidden').attr('name', 'idRegiao').attr('value', idRegiao));
+				    form.append($("<input></input>").attr('type', 'hidden').attr('name', 'idCanal').attr('value', idCanal));	    
+				    form.appendTo('body');
+				    form.submit();
+				    form.remove();
+				}
+			});
+		]]>
+	</script>
+</engine>

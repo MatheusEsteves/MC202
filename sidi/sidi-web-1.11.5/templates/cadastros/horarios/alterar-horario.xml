@@ -1,0 +1,104 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector=".message">
+	</template>
+
+	<template selector="#alterarhorario">
+		<form id="frmHorarios">
+			<div class="content">
+				{if configHorario.id}
+				<ul class="message mensagemPopup"></ul>
+				{/if}
+				<fieldset>
+					<ul>
+						<li class="required">
+							<label><span class="required">*</span>${i18n.get("horario-do-jogo")}:</label>
+							<input type="text" name="horario" class="time" value="${configHorario.horario}" title="${i18n.get('informe-horario')}" alt="time"/> 
+						</li>
+						<li class="required">
+							<label><span class="required">*</span>${i18n.get("abertura-sinal")}:</label>
+							<input type="text" name="inicio" class="time" value="${configHorario.inicio}" title="${i18n.get('ttip-horario-abertura')}" alt="time"/>
+						</li>
+						<li class="required">
+							<label><span class="required">*</span>${i18n.get("fechamento-sinal")}:</label>
+							<input type="text" name="fim" class="time" value="${configHorario.fim}" title="${i18n.get('ttip-horario-fechamento')}" alt="time"/> 
+						</li>
+					</ul>
+				</fieldset>
+				<a href="javascript:void(0);" id="btnRealizar" class="button azul">${i18n.get('confirmar')}</a>
+				{if configHorario.id}
+				<a href="javascript:void(0);" id="btnCancelar" class="button azul">${i18n.get('cancelar')}</a>
+				{/if}
+			</div>
+		</form>
+	</template>
+	<script>
+		<![CDATA[
+			var config = this.configHorario;
+
+			if (config.id) {
+				$("#alterarhorario").xdialog({
+					overlay: '#23557E',
+					alpha: '3'
+				});
+
+				$('input[name=horario]').val(date.dateUTCToHourString(new Date(config.horario)));
+
+				$('input[name=inicio]').val(date.dateUTCToHourString(new Date(config.inicio)));
+
+				$('input[name=fim]').val(date.dateUTCToHourString(new Date(config.fim)));
+
+			}
+
+			$('#frmHorarios').form();
+			$('#frmHorarios [title]').tipsy({trigger: 'focus', gravity: 'w', fade: true});
+			$('input:text').setMask();
+
+
+			$("#btnCancelar").click(function() {
+				$('#alterarhorario .close').click();
+			});
+
+			function getHorario(nomeCampo) {
+				var hora = $('input[name=' + nomeCampo + ']').val().split(':')[0];
+				var min  = $('input[name=' + nomeCampo + ']').val().split(':')[1];
+
+				var date = new Date(0);
+				date.setUTCMinutes(min);
+				date.setUTCHours(hora);
+				return date.getTime();
+			}
+
+			$("#btnRealizar").click(function() {
+				var msgSelector = "mensagemPopup";
+
+				if (!config.id) {
+					msgSelector = "message";
+				}
+
+				var form = $("#frmHorarios");
+				if (utils.validate(form, msgSelector)) {
+					var horario = getHorario('horario');
+					var inicio = getHorario('inicio');
+					var fim = getHorario('fim');
+
+					config.horario = horario;
+					config.inicio = inicio;
+					config.fim = fim;
+
+					$.postJSON("../sidi/horario/alterarConfiguracaoHorario", config, function() {
+						$('.message').message(i18n.get('horario-salvo-com-sucesso'), 'success', true);
+
+						if (config.id) {
+							$('#alterarhorario .close').click();
+						}
+
+						$("#listaHorarios").click();
+					});
+				}
+
+				return false;
+			});
+
+		]]>
+	</script>
+</engine>

@@ -1,0 +1,300 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+
+	<template selector=".message">
+	</template>
+
+	<template selector="#content-details">
+		<div class="topo" id="topo">
+	      <div class="titulo">${i18n.get('cadastro-de-clubes')}</div>
+	      <div class="separador"></div>
+	      <div class="acoes">
+	        <a href="javascript:void(0)" id="btnListaDeClubes" class="acao selected">${i18n.get('lista-de-clubes')}</a>
+			{if sidi.possuiAutorizacao('GERENCIAR_CAMPEONATOS')}
+			<a href="javascript:void(0)" id="btnNovoClube" class="acao">${i18n.get('cadastrar-clube')}</a>
+			{/if}
+	      </div>
+	    </div>
+	    
+	    <div id = "filtroClubes">
+		   <div class = "filtro">
+		     <input type = "text" class = "txt_nome" placeholder="${i18n.get('informe-nome-clube')}"></input>
+		     <a class = "button small" id = "btnFiltrar">${i18n.get('filtrar')}</a>
+		     <a class = "button small" id = "btnTodos">${i18n.get('todos')}</a>
+		   </div>
+	    </div>
+	    
+	    <div class="lista-de-exibicao" id="divListaDeClubes">
+			<table id="tblClubesCadastrados">
+				<thead>
+					<tr>
+						<th scope="col"></th>
+						<th scope="col">${i18n.get('nome-clube')}</th>
+						<th scope="col">${i18n.get('sigla-clube')}</th>
+						<th scope="col">${i18n.get('acoes')}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td colspan="4">${i18n.get('busque-jogos')}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div id="divCadastrarClube" class="lista-de-exibicao" style="display: none;">
+			<form id="frmCadastrarClube" method="POST" enctype="multipart/form-data" action="upload">
+				<fieldset>
+					<ul>
+						<li class="required">
+							<label for="txtNomeClube"><span class="required">*</span>${i18n.get('nome-clube')}:</label>
+							<input type="text" name="nome" id="txtNomeClube" maxlength="40"></input>
+						</li>
+						
+						<li class="required">
+							<label for="txtApelidoClube"><span class="required">*</span>${i18n.get('apelido-clube')}:</label>
+							<input type="text" name="apelido" id="txtApelidoClube" maxlength="40"></input>
+						</li>
+						
+						<li class="required">
+							<label for="txtSiglaClube"><span class="required">*</span>${i18n.get('sigla-clube')}:</label>
+							<input type="text" name="sigla" id="txtSiglaClube" maxlength="3" size="3"></input>
+						</li>
+						
+						<li class="required">
+							<label for="txtSlugClube"><span class="required">*</span>${i18n.get('slug-clube')}:</label>
+							<input type="text" name="slug" id="txtSlugClube" class="ttip" title="${i18n.get('explicacao-slug')}"></input>
+						</li>
+						
+						<li>
+							<label>${i18n.get('escudo')}</label>
+							<input type="file" id="fileLogo" name="logo" /> 
+						</li>
+						
+						<li>
+							<label for="txtCidadeClube">${i18n.get('cidade-clube')}:</label>
+							<input type="text" name="cidade" id="txtCidadeClube" class="cidade ui-autocomplete-input"></input>
+						</li>
+						<li>
+							<label for="sgsEstadio">${i18n.get('estadio')}: </label>
+							<input type="text" id="sgsEstadio" title="${i18n.get('estadio-partida')}" class="ui-autocomplete-input" name="estadio" />
+							<img title="${i18n.get('adicionar')}" id="imgAddEstadio" src="../images/adicionar.png"/>							
+						</li>
+						<li>
+							<table id="tblEstadios" class="datatable" style="width:250px; max-height: 250px;margin-left:0;">
+						    	<thead>
+									<th scope="col">${i18n.get('estadio')}</th>
+									<th scope="col">${i18n.get('acoes')}</th>							
+						    	</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</li>
+					</ul>
+					<a href="javascript:void(0)" id="btnCadastrar" class="button azul">${i18n.get('cadastrar-clube')}</a>
+				</fieldset>				
+			</form>
+		</div>
+	</template>
+	<script>
+		<![CDATA[
+		var data = new Array();
+		
+		$('#content-info').html('');
+		$('#tblClubesCadastrados').datatable();
+
+		$('input:text').setMask();
+		$('.data').datepicker();
+		$('#tblJogosCadastrados').datatable();
+		var estados = this.estados;
+		$('.ttip').tipsy();
+		
+		$('#tblEstadios').datatable();
+		
+		$("#imgAddEstadio").click(function() {
+			var estadio = $('#sgsEstadio').data('sidi.autocomplete');
+			tabela = $("#tblEstadios tbody:last");
+			
+			if ($("#sgsEstadio").val()) {
+				var tupla = criarTupla(estadio);
+				if (duplicado(tupla)) {
+					$('.message').message(i18n.get('estadio-ja-existe-clube'), 'error', true);
+				} else {
+					data.push(tupla);					
+					adicionarTuplaTabela(tupla);
+				}
+			} else {
+				$('.message').message(i18n.get('selecionar-estadio'), 'error', true);
+			}
+		});
+		
+		function adicionarTuplaTabela(tupla) {
+			var linha = '<tr><td>' + tupla.nomePopular + '<input type="text" value="' + tupla.id + '" class="hidden estadio"/></td><td class="action">' 
+				+ '<a href="javascript:void(0)" class="cancel ttip" style="width: 12px; height: 12px;" id="remover_' + tupla.id + '">'
+				+ i18n.get("excluir") + '</a></td></tr>';
+			
+			$("#tblEstadios tbody:last").append(linha);
+			$("#remover_" + tupla.id).click(function() {
+				var index = dataIndexOf(tupla);
+				data.splice(index, 1);
+				$(this).parent().parent().remove();
+			});
+			$("#sgsEstadio").val("");
+		}
+		
+		function criarTupla(estadio) {
+			var tupla = {
+				id: estadio.id,
+				nomePopular: estadio.nomePopular
+			}
+			return tupla;
+		}
+		
+		function dataIndexOf(tupla) {
+			var id;
+			for (var i in data) {
+				id = "remover_" + data[i].id;
+				if (id == ("remover_" + tupla.id)) {
+					return i;
+				}
+			}
+			return -1;
+		}
+		
+		function duplicado(tupla) {
+			for (var i in data) {
+				if (data[i].id == tupla.id) {
+					return true;
+				}
+			}
+			return false;
+		}
+		
+		$(document).ready(function() {
+			$.getJSON("../sidi/clubes/buscarClubes",function(json) {
+				$.holy("../templates/cadastros/clube/clubes-cadastrados.xml", {'clubesCadastrados' : json});
+			});
+		});
+		
+		$.getJSON("../sidi/jogos/todosEstadios", function(json){
+			var estadios = [];
+			$(json).each(function() {
+				estadios.push({"label": this.nomePopular, "value": this.id});
+			});
+			
+			$('#sgsEstadio').sidiAutocomplete({
+				source: estadios
+			}, json);
+		});		
+		
+		$.getJSON("../sidi/clubes/buscarCidades", function(json) {
+			var cidades = [];
+			$(json).each(function() {
+				cidades.push({'label': this.nome, 'value': this.id});
+			});
+
+			$('.cidade').sidiAutocomplete({
+				source: cidades
+			}, json);
+		});
+		
+		$('#btnCadastrar').click(function(){
+			var opts = {url : '../upload', form : $('#frmCadastrarClube')[0]};
+			opts.frame = true;
+			
+			opts.complete = function(frame) {
+				var logo = null;
+				if (frame) {
+					var arquivos = jQuery.parseJSON(frame.contents().find('body').text());
+					logo  = arquivos.logo ? arquivos.logo : null;
+				}
+
+				var json = {};
+				var form = $('#frmCadastrarClube');
+
+				if (utils.validate(form)) {
+					if ($('#txtCidadeClube').data('sidi.autocomplete') && $('#txtCidadeClube').val() != $('#txtCidadeClube').data('sidi.autocomplete').nome)
+						$('#txtCidadeClube').data('sidi.autocomplete', null);
+
+					var cidade = {
+						'id':$('#txtCidadeClube').data('sidi.autocomplete') ? $('#txtCidadeClube').data('sidi.autocomplete').id : null
+					}
+						
+					var json = {
+						'apelido' : $('#txtApelidoClube').val(),
+						'nome': $('#txtNomeClube').val(),
+						'sigla':$('#txtSiglaClube').val(),
+						'slug':$('#txtSlugClube').val(),
+						'cidade':cidade
+					};
+					
+					var estadios = [];
+					$("#tblEstadios tbody tr").each(function() {					
+						var id = parseInt($(this).find('.estadio').val());					
+						estadios.push(id);
+					});
+					
+					var clubeVO = {
+						'clube': json,
+						'logo' : logo,
+						'idsEstadios': estadios
+					};
+					
+					console.info(clubeVO);											
+					$.postJSON("../sidi/clubes/cadastrarClube", [clubeVO], function(sucesso) {
+						if(sucesso) {
+							
+								$.getJSON("../sidi/clubes/buscarClubes", function(clubes) {
+									$.holy("../templates/cadastros/clube/cadastro-clube.xml", {'clubes': clubes});
+								});
+								$('.message').message(i18n.get('sucesso-cadastrar-clube'), 'success', true);
+								$('html, body').animate({scrollTop:0}, 'fast');
+								utils.clear(form);
+							}
+						});
+					} else {
+						$('.message').html('');
+						$('.message').message(i18n.get('falha-cadastrar-clube'), 'error', true);
+					}
+				}
+				
+				data = new Array();
+				
+				if ($("input[name=logo]:visible").val()) {
+					$.ajax(opts);
+				} else
+					opts.complete();
+				
+		});
+		
+		$('#btnNovoClube').click(function(){
+			$('#divCadastrarClube').show();
+			$('#divListaDeClubes').hide();
+			$('#btnListaDeClubes').removeClass('selected');
+			$('#btnNovoClube').addClass('selected');
+			$('#frmCadastrarClube').form();
+			$('#filtroClubes').hide();
+		});
+		
+		$('#btnListaDeClubes').click(function(){
+			$('#divCadastrarClube').hide();
+			$('#divListaDeClubes').show();
+			$('#btnListaDeClubes').addClass('selected');
+			$('#btnNovoClube').removeClass('selected');
+			$('#filtroClubes').show();
+		});
+		
+		$('#btnTodos').click(function(){
+		  $.getJSON("../sidi/clubes/buscarClubes",function(json) {
+		    $.holy("../templates/cadastros/clube/clubes-cadastrados.xml", {'clubesCadastrados' : json});
+		  });
+		  $(".txt_nome").val('');
+		});
+		
+		$('#btnFiltrar').click(function(){
+		  var nome = $(".txt_nome").val();
+		  $.postJSON("../sidi/clubes/buscarClubesPorNome",[nome],function(json) {
+		    $.holy("../templates/cadastros/clube/clubes-cadastrados.xml", {'clubesCadastrados' : json});
+		  });
+		});
+		]]>
+	</script>
+</engine>

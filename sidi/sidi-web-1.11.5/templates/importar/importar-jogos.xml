@@ -1,0 +1,8 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0">
+	<template selector="#dialog">
+		<fieldset>
+			<legend>Importar Jogos</legend>
+			
+		</fieldset>
+	</template>
+</engine>

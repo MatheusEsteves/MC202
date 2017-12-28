@@ -1,0 +1,222 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector="#popup">
+		<ul class="message mensagemPopup" id="mensagemPopup"></ul>
+		<h4>${i18n.get('alterar-operadora')}</h4>
+		<div class="tab">
+			<ul>
+	            <li>
+	                <a href="#">${i18n.get('informacoes-operadora')}</a>
+	            </li>
+	            <li>
+	                <a href="#"  id="tab2">${i18n.get('canais')}</a>
+	            </li>
+	        </ul>
+	        <div id="informacoesBasicas">
+			<form id="frmEditarOperadora" class="lista-de-exibicao">
+				<fieldset>
+				<legend>${operadora.nome}</legend>
+					<input type="hidden" value="${operadora.id}" id="idOperadora"></input>
+					<ul>
+						<li class="required">
+							<label><span class="required">*</span>${i18n.get('nome-operadora')}</label>
+							<input type="text" id="txtEditarNome" name="nome" value="${operadora.nome}" />
+						</li>
+						<li>
+							<label>${i18n.get('apresent')}</label>
+							<input type="text" id="txtEditarApresent" name="apresent" value="${operadora.apres}" />
+						</li>
+						
+						<li class="required">
+							<label><span class="required">*</span>${i18n.get('headend')}</label>
+							<select id="sltEditarHeadend" name="headend" >
+								<option></option>
+								{for headend in headends}
+									<![CDATA[
+									{if operadora.headEnd && headend.id == operadora.headEnd.id}
+										<option selected="selected" value="${headend.id}">${headend.nome}</option>
+									{else}
+										<option value="${headend.id}">${headend.nome}</option>
+									{/if}
+									]]>
+								{/for}
+							</select>
+						</li>
+						<li class="required">
+							<label for="sltMatriz"><span class="required">*</span>${i18n.get('matriz')}: </label>
+							<input type="text" name="matriz" id="txtMatrizEdicao" maxlength="20" value="${operadora.matriz}"></input>
+						</li>
+						<li>
+							<label>${i18n.get('regiao')}</label>
+							<select id="sltEditarRegiao" name="regiao" >
+								<option></option>
+								{for regiao in regioes}
+									<![CDATA[
+									{if operadora.regiao && regiao.id == operadora.regiao.id}
+										<option selected="selected" value="${regiao.id}">${regiao.nome}</option>
+									{else}
+										<option value="${regiao.id}">${regiao.nome}</option>
+									{/if}
+									]]>
+								{/for}
+							</select>
+						</li>
+						
+						<li class="required">
+							<label><span class="required">*</span>${i18n.get('estado')}</label>
+							<select id="sltEditarEstado" name="estado" >
+								<option></option>
+								{for estado in estados}
+									{if estado == operadora.estado}
+										<option selected="selected">${estado}</option>
+									{else}
+										<option>${estado}</option>
+									{/if}
+								{/for}
+							</select>
+						</li>
+						
+						<li>
+							<label>${i18n.get('distancia-capital')}</label>
+							<input type="text" id="txtEditarDistanciaDaCapital" name="distanciacapital" value="${operadora.distanciaCapital}" />
+						</li>
+						
+						{if !operadora.afiliada}
+						<li>
+							<label>${i18n.get('afiliada-tvg-old')}</label>
+							<input disabled="true" type="text" id="txtEditarAfiliada" name="afiliadatvglobo" value="${operadora.afiliadaTvGlobo}" />
+						</li>
+						{/if}
+						
+						<li>
+							<label>${i18n.get('afiliada-tvg')}</label>
+							<select id="sltEditarAfiliada" name="afiliada" >
+								<option></option>
+								{for afiliada in afiliadas}
+									<![CDATA[
+									{if operadora.afiliada && afiliada.id == operadora.afiliada.id}
+										<option selected="selected" value="${afiliada.id}">${afiliada.nome}</option>
+									{else}
+										<option value="${afiliada.id}">${afiliada.nome}</option>
+									{/if}
+									]]>
+								{/for}
+							</select>
+						</li>
+				
+					</ul>
+				</fieldset>
+			</form>	
+			</div>
+			<div id="relacionamentoCanais">
+				<form id="frmRelacionarCanais" class="lista-de-exibicao">
+					<fieldset>
+					<legend>${operadora.nome}</legend>
+					<div class="titulosPickList">
+	    				<div class="fst-title">
+	        				<h3>${i18n.get('disponiveis')}</h3>
+	    				</div>
+	    				<div class="scnd-title">
+	        				<h3>${i18n.get('selecionados')}</h3>
+	    				</div>
+	    				<br class="clear" />
+					</div>
+					<div class="pkCanais">
+						
+                        <select>
+                            {for canal in canais}
+	                       		{if utils.find(canaisRelacionados,canal.id) == null}
+	                        	   	<option value="${canal.id}">${canal.nome}</option>
+	                           	{/if}
+                            {/for}
+                        </select>
+                        <select id="canaisRelacionados">
+                            {for canal in canaisRelacionados}
+                            	<option value="${canal.id}">${canal.nome}</option>
+                            {/for}
+                        </select>
+                    </div>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+				<a id="btnConfirmarAlteracao" class="button azul">${i18n.get('alterar')}</a>
+				<a id="btnCancelarAlteracao" class="button azul">${i18n.get('cancelar')}</a>
+	</template>
+	<script>
+		$("#popup").xdialog({
+			overlay: '#23557E',
+			alpha: '3',
+			width: 650
+		});
+		$(".tab").tabPanel();
+		var estados = this.estados;
+		$('.pkCanais').picklist();
+		
+		var todosCanais = this.canais;
+		var relacionados = this.canaisRelacionados;
+		
+		$('#btnConfirmarAlteracao').click(function(){
+				var regiao = null;
+				if ($('#sltEditarRegiao').val()) {
+					regiao = {
+						'id':$('#sltEditarRegiao').val()
+					};
+				}
+				var afiliada = null;
+				if ($('#sltEditarAfiliada').val()) {
+					afiliada = {
+						'id':$('#sltEditarAfiliada').val()
+					};
+				}
+				
+				var canais = [];
+				$('#canaisRelacionados option').each(function(index){
+					canais[index] = parseInt($(this).val());
+				});
+				
+				var headend= {};
+				headend = {
+					'id':$('#sltEditarHeadend').val()
+				};
+				
+				var operadora = {};
+				
+				if(utils.validate($('#frmEditarOperadora')))
+				{
+					operadora = {
+						'afiliadaTvGlobo':$('#txtEditarAfiliada').val(),
+						'apres':$('#txtEditarApresent').val(),
+						'distanciaCapital':$('#txtEditarDistanciaDaCapital').val(),
+						'estado': $('#sltEditarEstado').val() !== "" ? $('#sltEditarEstado').val() : null,
+						'nome':$('#txtEditarNome').val(),
+						'regiao':regiao,
+						'headEnd' : headend,
+						'id':$('#idOperadora').val(),
+						'afiliada': afiliada,
+						'matriz':$('#txtMatrizEdicao').val()
+					};
+					
+					$.postJSON('../sidi/operadora/salvarOperadora',[operadora,canais], function(){
+						$('#btnFiltrarOperadoras').click();
+						$('#popup').xundialog();
+						$('.message').html('');
+						$('.message').message(i18n.get('sucesso-alterar-operadora'), 'success', true);
+						utils.clear($('#frmEditarOperadora'));
+					});
+				}
+				else
+				{
+					$('.message').html('');
+					$('#mensagemPopup').message(i18n.get('falha-alterar-operadora'),'error',true);
+				}
+		});
+		$('#tab2').click(function(){
+			$('#frmRelacionarCanais').form();
+		});
+		
+		$('#btnCancelarAlteracao').click(function(){
+			$('#popup').xundialog();
+		});
+		$('#frmEditarOperadora').form();
+	</script>
+</engine>

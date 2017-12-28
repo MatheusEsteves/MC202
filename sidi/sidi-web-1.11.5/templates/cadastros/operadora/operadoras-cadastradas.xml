@@ -1,0 +1,50 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+
+	<template selector="#divListaDeOperadoras tbody">
+	{for operadora in operadoras}
+		<tr>
+			<td>${operadora.nome}</td>
+			<td>${operadora.estado}</td>
+			<td>${operadora.afiliada ? operadora.afiliada.nome : ''}</td>
+			<td>${operadora.matriz ? operadora.matriz : ''}</td>
+			<td>${operadora.numeroCanaisPPV}</td>
+			<td class="action">
+				{if sidi.possuiAutorizacao('GERENCIAR_OPERADORAS')}
+				<a href="javascript:void(0)" class="edit ttip" id="editar_operadora_${operadora.id}" title="${i18n.get('alterar')}">${i18n.get('alterar')}</a>
+				<a href="javascript:void(0)" class="delete ttip" id="apagar_operadora_${operadora.id}" title="${i18n.get('apagar')}">${i18n.get('excluir')}</a>
+				{/if}
+			</td>
+		</tr>
+	{forelse}
+		<tr>
+			<td colspan="6">${i18n.get('nenhum-registro-encontrado')}</td>
+		</tr>
+	{/for}
+	</template>
+	<script>
+		$('a.btaction').tipsy({trigger: 'focus', gravity: 'w', fade: true});
+		$('.ttip').tipsy();
+		
+		var canais = this.canais;
+		var estados = this.estados;
+		var operadoras = this.operadoras;
+		var regioes = this.regioes;
+		var afiliadas = this.afiliadas;
+		var headends = this.headends;
+		
+		$.each(operadoras, function(idx, operadora){
+			$('#editar_operadora_' + operadora.id).click(function(){
+				$.getJSON("../sidi/operadora/buscarCanais",{arg:JSON.stringify({id : operadora.id })},function(canaisRelacionados){
+					var params = {'operadora' : operadora,'estados':estados,'regioes':regioes,'headends':headends,'canais':canais,'canaisRelacionados':canaisRelacionados, 'afiliadas':afiliadas}
+					$.holy("../templates/cadastros/operadora/alterar-operadora.xml", params);
+				})
+			});
+		});
+		
+		$.each(operadoras, function(idx, operadora){
+			$('#apagar_operadora_' + operadora.id).click(function(){
+				$.holy("../templates/cadastros/operadora/apagar-operadora.xml", {'operadora':operadora});
+			});
+		});
+	</script>
+</engine>

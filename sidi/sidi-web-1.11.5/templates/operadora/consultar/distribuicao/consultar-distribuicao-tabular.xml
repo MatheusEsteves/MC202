@@ -1,0 +1,357 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0"
+	cacheable="true">
+
+	<template selector=".message">
+	</template>
+
+	<template selector="#content-info">
+		<div class="topo">
+			<div class="titulo">${i18n.get('consultar-distribuicao')}</div>
+			<div class="separador"></div>
+		</div>
+	</template>
+	<template selector="#content-details">
+		<div class="consulta-operadoras">
+			<div class="lista-de-exibicao-operadora">
+				<div class="content">
+					<form class="forms">
+						<fieldset class="fieldset-tecnologias">
+							<legend>Selecione a tecnologia (Opcional):</legend>
+							<div class="tecnologias">
+								<ul>
+									<li>
+										<input class="checkbox" id="cabo" type="checkbox" checked="checked" value="CABO"/>
+										<label for="cabo">Cabo</label>
+									</li>
+								</ul>								
+								<ul>
+									<li>
+										<input class="checkbox" id="dth" type="checkbox" checked="checked" value="DTH"/>
+									    <label for="dth">DTH</label>
+									</li>
+								</ul>
+								<ul>
+									<li>										
+										<input class="checkbox" id="fibra" type="checkbox" checked="checked" value="FIBRA"/>
+										<label for="fibra">Fibra</label>
+									</li>
+								</ul>
+							</div> 
+						</fieldset>
+						<fieldset class="fieldset-operadoras">
+							<legend>Selecione as operadoras:</legend>
+							<div id="" class="lista-de-jogos tglPkList">
+								<div>
+									<div class="titulosPickList">
+										<div class="fst-title">
+											<h3>${i18n.get('disponiveis')}</h3>
+										</div>
+										<div class="scnd-title">
+											<h3>
+												${i18n.get('selecionados')}
+												<span class="required">*</span>
+											</h3>
+										</div>
+										<br class="clear" />
+									</div>
+									<div class="pkOperadoras">
+										<select id="operadorasDisponiveis">
+										</select>
+										<select id="operadorasRelacionadas">
+										</select>
+									</div>
+								</div>
+							</div>
+						</fieldset>
+						<fieldset  class="fieldset-data">
+							<legend>Selecione o dia e horário dos eventos:</legend>
+							<ul class="data-filtro">
+								<li class="data data-selecionada seletor-de-data">
+									<label for="dataEventos">
+										${i18n.get('eventos-dia')}
+										<span class="required">*</span>
+									</label>
+									<input type="text" id="dataEventos" alt="date" class="data" />
+								</li>
+								<li id="horario">
+									<label for="horaEventos">${i18n.get('horarios-dia')} </label>
+									<select id="horaEventos">
+									</select>
+								</li>
+							</ul>
+						</fieldset>
+						<div style="clear: both;"></div>
+						<a id="btnFiltrar" class="button azul">${i18n.get('buscar')}</a>
+					</form>
+				</div>
+			</div>
+			<div class="abas">
+				<div class="aba-button-container">
+					<div class="aba-button active visao-geral-button" data-aba-content="visao-geral ">
+						${i18n.get('distribuicao.operadora.canal.visaoGeral')}
+					</div>
+					<div class="aba-button pracas-limitadas-button" data-aba-content="pracas-limitadas">
+						${i18n.get('distribuicao.operadora.canal.pracasCapacLimitada')}
+					</div>
+				</div>
+				<div class="aba-content-container">
+					<div id="visao-geral" class="aba-content visao-geral active">
+					</div>
+					<div id="pracas-limitadas" class="aba-content tabela tabela-geral">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="tabela-pracas-limitadas"></div>
+		<div class="topo clear">
+			<div class="acoes">
+				<a id="btnDownloadMultiplasDistribuicoes" class="acao selected pointer"
+					target="_blank">${i18n.get('download-completa')}</a>
+				<a id="btnDownloadMultiplasDistribuicoesResumidas" class="acao selected pointer">${i18n.get('download-resumida')}</a>
+				{if sidi.possuiAutorizacao('LIBERAR_DISTRIBUICAO_OPERADORAS')}
+					<span id="btnLiberarDistribuicoes" class="acao selected pointer">${i18n.get('liberar-distribuicao-lower')}</span>	
+				{/if}
+				{if sidi.possuiAutorizacao('LIBERAR_DISTRIBUICAO_OPERADORAS')}
+				<span id="btnFinalizarMarcadas" class="acao selected pointer">${i18n.get('finalizar-marcadas')}</span>
+				{/if}
+			</div>
+		</div>
+
+		<div id="popupFinalizar">
+		</div>
+	</template>
+
+	<script>
+		<![CDATA[   
+		
+		$('.abas .aba-button-container .aba-button').click(function(){
+			var buttons = $('.abas .aba-button-container .aba-button');
+			buttons.removeClass('active');
+			
+			var conteudos = $('.abas .aba-content-container .aba-content');
+			conteudos.removeClass('active');
+			
+			$(this).addClass('active');
+			var contentId = $(this).attr('data-aba-content');
+			$('.abas .aba-content-container').find('#'+contentId).addClass('active');
+		});
+		
+		args = [ null, null	];
+		var todasOperadoras = [];
+		
+		$.getJSON("../sidi/usuario/buscarNomeOperadorasUsuario", function(operadoras) {
+			todasOperadoras = operadoras;
+			for (var i = 0; i < operadoras.length; i++) {
+				$('#operadorasDisponiveis').append("<option value=" + operadoras[i].id + ">" + operadoras[i].nome + "</option>");
+			}
+		});
+		
+		$('.checkbox').change(function() {
+		
+			for(var i in todasOperadoras){
+				var op = todasOperadoras[i];
+				if(op.headEnd.tecnologia === $(this).val()){
+					if($(this).is(':checked')){
+						if ($('#operadorasDisponiveis option[value='+op.headEnd.tecnologia+']').length === 0){
+							$('#operadorasDisponiveis').append("<option value=" + op.id + ">" + op.nome + "</option>");
+						}
+					} else {
+						$('#operadorasDisponiveis option[value='+op.id+']').remove();
+						$('#operadorasRelacionadas option[value='+op.id+']').remove();
+					}
+				}
+			}
+		});
+	
+		$("#tabelaConsultaOperadora").hide();
+		$(".abas").hide();
+		$('#btnDownloadMultiplasDistribuicoes').hide();
+		$('#btnDownloadMultiplasDistribuicoesResumidas').hide();
+		$('#btnLiberarDistribuicoes').hide();
+		$("#btnFinalizarMarcadas").hide();
+		$("#horario").hide();
+		$('.pkOperadoras').picklist();
+		$("input:text").setMask();
+
+		$('#dataEventos').change(function() {
+			var dataSelecionada = $(this).val();
+			dataSelecionada = dataSelecionada ? date.stringToDate(dataSelecionada).getTime() : null;
+			$.getJSON("../sidi/distribuicao/buscarHorariosJogos",
+				{arg : [JSON.stringify(dataSelecionada)]}, function(resultado) {
+				$('#horaEventos').empty();
+				$("#horario").show();
+				$('#horaEventos').append('<option value="">' + i18n.get('todos') + '</option>');
+				for (var i = 0; i < resultado.length; i++) {
+					$('#horaEventos').append('<option value="' + resultado[i] + '">' + date.dateToHourString(resultado[i]) + '</option>');
+				}
+			});
+		});
+
+		$("#dataEventos").datepicker();
+		if (this.data) {
+			$("#dataEventos").datepicker( "setDate" , new Date(this.data) );
+		}
+
+		function getStatus(distribuicao) {
+			if (distribuicao.status != 'FINALIZADA' && distribuicao.statusAlteracao && distribuicao.statusAlteracao != 'CANCELADO')
+				return distribuicao.statusAlteracao;
+
+			return distribuicao.status;
+		}
+		
+		var renderizaTabela = function renderiza(json, pagina) {
+			var args = {
+				json : json
+			};
+
+			$.holy("../templates/operadora/consultar/distribuicao/tabela-pracas-limitadas.xml", args);
+			
+			$('.tabela.tabela-geral div.oper').remove();
+
+			$('<div class="tabela-coluna dinamico">' + i18n.get('acoes') + '</div>').appendTo($('#headerDinamico'));
+
+			$('.ttip').tipsy();
+
+		}
+		
+		var operadoraHabilitada = function(operadora){
+			return ((operadora.status == 'LIBERADA' && operadora.statusAlteracao == null) 
+					  || operadora.statusAlteracao == 'ACEITO');
+		};
+		
+
+		$("#btnFiltrar").unbind('click').click(function() {
+			var dataSelecionada = $('#dataEventos').val();
+			dataSelecionada = dataSelecionada ? date.stringToDate(dataSelecionada).getTime() : null;
+			var horario = $('#horaEventos').val();
+			horario = horario && horario != '' ? parseInt(horario) : null;
+			var operadorasIds = $('#operadorasRelacionadas').getOptions();
+			
+			if (!dataSelecionada || operadorasIds.length == 0) {
+				$('.message').message(i18n.get('erro-consulta-operadora-tabular'), 'error');
+				return;
+			}
+			
+			var args = {
+				operadorasIds : operadorasIds,
+				dia : dataSelecionada,
+				horario : horario
+			};
+			
+			var visaoGeralPromise = $.postJSON("../sidi/distribuicao-operadora/buscarDistribuicaoSemConflito", [args], function(json) {
+			    $.getJSON("../sidi/usuario/getUsuarioLogado",function(usuarioLogado){
+				  $.holy("../templates/operadora/consultar/distribuicao/distribuicao-visao-geral.xml", {'distribuicoes': json,'filtro':args, 'usuarioLogado':usuarioLogado});
+				});
+			});
+
+			var limitadaPromise = $.postJSON("../sidi/distribuicao-operadora/buscarConsultaOperadora", [args], function(json) {
+
+				if (json.length != 0) {
+					$("#consultar-distribuicao-paginacao").html("");
+					renderizaTabela(json, 0);
+					
+					
+					$("#consultar-distribuicao-paginacao").show();
+					$("#checkHeader").removeAttr("checked");
+				}
+
+				$(".consulta-distribuicao.okay.ttip").each(function() {
+				
+					$(this).unbind('click').click(function() {
+					
+						$.postJSON("../sidi/distribuicao-operadora/buscarDistribuicoesFinalizar",
+							[ $(this).parent().data("horario"), $(this).parent().data("operadora-id") ], function(resultado) {
+							
+							$.holy('../templates/operadora/consultar/distribuicao/finalizar-distribuicoes-consulta.xml', {
+							   alteracaoId : -1,
+							   distribuicoes : resultado
+							});
+						});
+					});
+				});
+				
+				distribuicaoOperadoraTemplate.initScrollableTable();
+				
+				$("#checkHeader").unbind('click').click(function() {
+					
+					var headerSelecionado = this.checked;	
+					
+					for (var i = 0; i < json.length; i++){
+						json[i].selecionado = headerSelecionado;
+						
+						if (!operadoraHabilitada(json[i])) {
+							json[i].selecionado = false;
+						}
+					};
+					
+					renderizaTabela(json, 0);
+					
+				});
+				
+				$("#btnLiberarDistribuicoes").unbind('click').click(function() {
+					var liberarDistribuicao = function(justificativa, enviarEmail, enviarSMS, mensagemSMS){
+						$.postJSON("../sidi/distribuicao-operadora/liberarDistribuicoesOperadora", [args, justificativa, enviarEmail, enviarSMS, mensagemSMS], function(resultado) {
+							$(window).scrollTop(0);
+							$('.message').message(i18n.get('distribuicao-sucesso'), 'success', true);
+							$('#btnFiltrar').click();
+						});
+					};	
+					
+					$.holy('../templates/distribuicao/popup-justificativa-novo.xml', {
+					   callback : liberarDistribuicao
+					});
+				});
+				return true;
+			});
+			
+			$.when(visaoGeralPromise,limitadaPromise).done(function(visaoRespose, limitadaResponse){
+				var visaoJson = visaoRespose[0];
+				var limitadaJson = limitadaResponse[0];
+				if($.isEmptyObject(visaoJson) && $.isEmptyObject(limitadaJson)){
+					$('.message').message(i18n.get('nenhum-registro-encontrado'), 'warning', true);
+					$('#btnDownloadMultiplasDistribuicoes').hide();
+					$('#btnDownloadMultiplasDistribuicoesResumidas').hide();
+					$('#btnLiberarDistribuicoes').hide();
+					$("#tabelaConsultaOperadora").hide();
+					$(".abas").hide();
+					$("#btnFinalizarMarcadas").hide();
+					$("#consultar-distribuicao-paginacao").hide();
+				}else{
+					$("#tabelaConsultaOperadora").show();
+					
+					$('#btnDownloadMultiplasDistribuicoes').show();
+					$('#btnDownloadMultiplasDistribuicoesResumidas').show();
+					$('#btnLiberarDistribuicoes').show();
+					
+					var obterPlanilha = function(resumida) {
+					    var form = $('<form></form>').attr('action', '../sidi/planilha').attr('method', 'post');
+					    form.append($("<input></input>").attr('type', 'hidden').attr('name', 'data').attr('value', dataSelecionada));
+					    form.append($("<input></input>").attr('type', 'hidden').attr('name', 'horario').attr('value', $("#horaEventos").val()));
+					    form.append($("<input></input>").attr('type', 'hidden').attr('name', 'operadora').attr('value', operadorasIds));
+					    form.append($("<input></input>").attr('type', 'hidden').attr('name', 'resumida').attr('value', false || resumida));
+					    form.appendTo('body');
+					    form.submit();
+					    form.remove();
+					};
+					
+					var obterPlanilhaResumida = function() {
+						obterPlanilha(true);
+					};
+					
+					$('#btnDownloadMultiplasDistribuicoes').click(obterPlanilha);
+					$('#btnDownloadMultiplasDistribuicoesResumidas').click(obterPlanilhaResumida);
+					
+					if( $.isEmptyObject(limitadaJson)){
+						$('.pracas-limitadas-button').hide();
+						$('#pracas-limitadas').hide();
+					}else{
+						$('.pracas-limitadas-button').show();
+					}
+					$(".abas").show();
+				}
+			});
+			
+		});
+		]]>
+	</script>
+</engine>

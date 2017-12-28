@@ -1,0 +1,78 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+
+	<template selector="table#tblJogosCadastrados tbody">
+	{var novosDias = []}
+	{for jogo in jogosCadastrados}
+		<![CDATA[		
+		{if jQuery.inArray(date.dateToString(jogo.data), novosDias) == -1}
+		]]>
+			{eval}
+				novosDias.push(date.dateToString(jogo.data));				
+			{/eval}
+			<tr>				
+				<td colspan="5" class="separador-data-td"><span class="separador-data">
+					{if (jogo.data != null)}
+						${date.dateToWeek(jogo.data)} - ${date.getDayFromDate(jogo.data)} ${i18n.get('de')} ${date.getMonthFromDate(jogo.data)}
+					{else}
+						${i18n.get('jogos-tabela-base')}
+					{/if}
+				</span></td>
+			</tr>
+		{/if}
+       	<tr>
+			<td class="jogo">
+				{if jogo.mandante != null}
+            	<span class="mandante"><img src = "${jogo.mandante.urlBrasao}"/>
+            		<p>${jogo.mandante.apelido}</p>
+            	</span>
+            	{/if}
+            	<span class="versus-x">X</span>
+            	{if jogo.visitante != null}
+            	<span class="visitante"><img src="${jogo.visitante.urlBrasao}" />
+            		<p>${jogo.visitante.apelido}</p>
+				</span>
+				{/if}
+          	</td>
+          	<td>${date.dateToHourString(jogo.data)}</td>
+         	<td>${jogo.fase.campeonato.nome}</td>
+			<td>{if jogo.estadio != null}${jogo.estadio.nomePopular}{/if}</td>
+			<td>
+				{if sidi.possuiAutorizacao('GERENCIAR_JOGOS')}
+				<a href="javascript:void(0)" id="editar_jogo_${jogo.id}" original-title="${i18n.get('alterar')}" class="edit ttip">Edit</a>
+				<a href="javascript:void(0)" id="apagar_jogo_${jogo.id}" original-title="${i18n.get('apagar')}" class="delete ttip">Delete</a>
+				{/if}
+			</td>
+         </tr>
+	{forelse}
+		<tr>
+			<td colspan="6">${i18n.get('nenhum-registro-encontrado')}</td>
+		</tr>
+	{/for}
+	
+	</template>
+
+	<script>
+		var jogos = this.jogosCadastrados;
+		<![CDATA[
+	
+		$('a.btaction').tipsy({trigger: 'focus', gravity: 'w', fade: true});
+		$('.ttip').tipsy();
+		
+		var jogosCadastrados = this.jogosCadastrados;
+		var campeonatos = this.campeonatosCadastrados;
+
+		$.each(jogosCadastrados, function(idx, jogo){
+			$('#editar_jogo_' + jogo.id).click(function(){
+				$.holy("../templates/cadastros/jogos/alterar-jogo.xml", {'jogo':jogo,'campeonatosCadastrados':campeonatos});
+			});
+		});
+		
+		$.each(jogosCadastrados, function(idx, jogo){
+			$('#apagar_jogo_' + jogo.id).click(function(){
+				$.holy("../templates/cadastros/jogos/apagar-jogo.xml", {'jogo':jogo,'jogosCadastrados':jogosCadastrados});
+			});
+		});
+		]]>
+	</script>
+
+</engine>

@@ -1,0 +1,83 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector="#comutacao-base">
+		<div class="topo" id="topo">
+	      <div class="titulo">${i18n.get('cadastro-comutacoes')}</div>
+	      <div class="separador"></div>
+	      <div class="acoes">
+	        <a href="#comutacao/buscar" id="btnListaDeComutacoes" class="acao">${i18n.get('lista-de-comutacoes')}</a>
+	        <a href="#comutacao/cadastrar" id="btnCadastrarComutacao" class="acao">${i18n.get('nova-comutacao')}</a>
+	      </div>
+	    </div>
+	    
+	    <div id = "filtroComutacoes">
+		   <div class = "filtro">
+		     <div class = "tooltip">
+		       <input type="text" id="txtDataInicioPeriodo" data-type="date"
+					  data-field="data"
+					  alt="date" class="data" name="dia" />
+		       <div class = "tooltiptext">${i18n.get('informe-data-inicio-periodo')}</div>
+			 </div>
+			 <span>${i18n.get('informe-periodos')}</span>
+			 <div class = "tooltip">
+			   <input type="text" id="txtDataTerminoPeriodo" data-type="date"
+					  data-field="data"
+					  alt="date" class="data" name="dia" />
+			   <div class = "tooltiptext">${i18n.get('informe-data-fim-periodo')}</div>
+			 </div>
+		     <a class = "button small" id = "btnFiltrar">${i18n.get('filtrar')}</a>
+		     <a class = "button small" id = "btnTodos">${i18n.get('todos')}</a>
+		   </div>
+	    </div>
+	    
+	    <div id="busca-comutacao"></div>
+	    <div id="cadastro-comutacao"></div>
+	</template>
+
+	<script>
+		<![CDATA[
+			var activate = this.activate;
+			var page = $("#content-details");
+			
+			$("#comutacao-base .acoes a").removeClass('selected');
+			$(activate).addClass('selected');
+			
+			$('.data').datepicker();
+			
+			$("#btnTodos").click(function(){
+			  $.getJSON("../sidi/comutacao/buscarComutacoes",function(json) {
+				$.holy("../templates/cadastros/comutacao/comutacoes-cadastradas.xml",{'comutacoes' : json});
+			  });
+			  $("#txtDataInicioPeriodo").val('');
+			  $("#txtDataTerminoPeriodo").val('');
+			});
+			
+			$("#btnFiltrar").click(function(){
+			  var dataInicioEmMilis = $('#txtDataInicioPeriodo').datepicker('getDate').getTime();
+			  var dataFimEmMilis    = $('#txtDataTerminoPeriodo').datepicker('getDate').getTime();
+			  $.postJSON("../sidi/comutacao/buscarComutacoesPorPeriodo",[dataInicioEmMilis,dataFimEmMilis],function(json) {
+				$.holy("../templates/cadastros/comutacao/comutacoes-cadastradas.xml",{'comutacoes' : json});
+			  });
+			});
+			
+			$("#btnListaDeComutacoes").click(function(){
+			  $("#filtroComutacoes").show();
+			});
+			
+			$("#txtDataInicioPeriodo").click(function(){
+			  $(".tooltiptext").hide();			
+			});
+			
+			$("#txtDataInicioPeriodo").hover(function(){
+			  $(".tooltiptext").show();
+			});
+			
+			$("#txtDataTerminoPeriodo").click(function(){
+			  $(".tooltiptext").hide();			 
+			});
+			
+			$("#txtDataTerminoPeriodo").hover(function(){
+			  $(".tooltiptext").show();
+			});
+		]]>
+	</script>
+</engine>

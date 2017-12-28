@@ -1,0 +1,37 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+
+	<template selector="#content-info">
+		<div class="topo">
+			<div class="titulo">${i18n.get('menu.liberar-distribuicao')}</div>
+			<div class="separador"></div>
+		</div>
+		
+		<div class="filtro">
+			<div class="data data-selecionada seletor-de-data">
+				<label for="dataEventos">${i18n.get('jogos-dia')} </label>
+				<input type="text" id="dataEventos"/>
+			</div>
+			
+			<div class="clear"/>
+		</div>
+	</template>
+	
+	<template selector="#content-details">
+		<div class="principal" style=""></div>
+		<div class="operadoras" style="display:none;"></div>
+	</template>
+	
+	<script>
+		<![CDATA[
+		$('#dataEventos').change(function() {
+			var dataSelecionada = $(this).val();
+			dataSelecionada = dataSelecionada ? date.stringToDate(dataSelecionada).getTime() : null;
+			location.hash = 'distribuicao/liberacao/operadora/' + dataSelecionada;
+		});
+
+		$("#dataEventos").datepicker();
+		
+
+		]]>
+	</script>
+</engine>

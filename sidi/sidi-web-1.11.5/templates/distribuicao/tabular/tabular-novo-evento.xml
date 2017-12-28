@@ -1,0 +1,47 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0"
+	cacheable="true">
+	<template selector="#popup">
+		<ul class="message mensagemPopup" id="mensagemPopup"></ul>
+		{if (evento.id) }
+			<h4>${i18n.get('alterar-evento')}</h4>
+		{else}
+			<h4>${i18n.get('novo-evento')}</h4>
+		{/if}
+		<div class="tab">
+			<ul>
+	            <li>
+	                <a href="#">${i18n.get('informacoes-evento')}</a>
+	            </li>
+	            <li>
+	                <a href="#"  id="tab2">${i18n.get('informacoes-operadora')}</a>
+	            </li>
+	        </ul>
+			<div class="container">
+				<form id="frmNovoEvento">
+					<div class="container">
+						<fieldset>
+							<ul>
+								<li class="required">
+									<label><span class="required">*</span> ${i18n.get('nome')}:</label>
+									<input type="text" name="nome" value="${evento.nome}" class="url" maxlength="40" />
+								</li>
+								<li class="required">
+									<label for="txtNovaData"><span class="required">*</span>${i18n.get('data')}:</label>
+									<input type="text" id="txtNovaData" value="${date.dateToString(evento.data)}" alt="date" class="data" name="data"></input>
+								</li>
+								<li class="required">
+									<label for="txtNovoInicio"><span class="required">*</span>${i18n.get('inicio')}:</label>
+									<input type="text" alt="time" value="${date.dateToHourString(evento.data)}" name="inicio"></input>
+								</li>
+							</ul>
+						</fieldset>
+					</div>
+				</form>
+			</div>
+			<div id="extraInfo" class="container">
+			</div>
+		</div>
+		<a id="btnCancelarNovoEvento" class="button azul">${i18n.get('cancelar')}</a>
+		<a id="btnCriarNovoEvento" class="button azul">${i18n.get('confirmar')}</a>
+	</template>
+</engine>

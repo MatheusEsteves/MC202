@@ -1,0 +1,53 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+
+	<template selector="#popup">
+	
+		<h4>${i18n.get('selecionar-colunas')}</h4>
+			<ul class="listaColunas">
+			
+				<h6>${i18n.get('colunas-fixas')}</h6>
+				
+				{for coluna in colunas}
+					{if !coluna.canal}
+					<li>
+						<label for="coluna-${coluna.index}">
+							<input id="coluna-${coluna.index}" data-index="${coluna.index}" type="checkbox" checked="checked"/>
+							${coluna.display}
+						</label>
+					</li>
+					{/if}
+				{/for}
+				
+				<h6>${i18n.get('colunas-dinamicas')}</h6>
+				
+				{for coluna in colunas}
+					{if coluna.canal}
+					<li>
+						<label for="coluna-${coluna.index}">
+							<input id="coluna-${coluna.index}" data-index="${coluna.index}" type="checkbox" checked="checked"/>
+							${coluna.display}
+						</label>
+					</li>
+					{/if}
+				{/for}
+			</ul>
+		<br></br>
+		<a class="btSave button azul" type="button">${i18n.get('confirmar')}</a>
+		<a class="btCancel button azul" type="button">${i18n.get('cancelar')}</a>
+	</template>
+
+	<script>
+		$('#popup').xdialog({
+			overlay: '#333',
+			alpha: '3',
+			width: 250
+		});
+
+		$('#popup ul.listaColunas li').corner();
+		
+		$('#popup .btCancel').click(function(){
+			$("#popup").xundialog();
+		});
+
+	</script>
+</engine>

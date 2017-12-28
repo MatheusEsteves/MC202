@@ -1,0 +1,68 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0"
+	cacheable="true">
+	<template selector="#popup">
+		<div>
+			<ul class="message popup"> </ul>
+			<div>
+				<ul>
+					<h4>${i18n.get('distribuicao.operadora.alterar.canal')}</h4>
+				</ul>
+				<ul>
+					<li>
+						<label for="numCanal">Número Canal</label>
+						<input id="numCanal" class="numCanal" type="text" maxlength="3"/>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="clear"></div>
+		<div class="buttons right">
+			<input id="salvar" class="button" type="button" value="${i18n.get('salvar')}" />
+		</div>
+	</template>
+	<script>
+		<![CDATA[   
+			var self = this;
+			var canalNum = this.canalNum;
+			$(this).css('z-index',10);	
+			
+			$('#popup ul li').corner();
+			$('#popup').xdialog({
+				overlay: '#333',
+				alpha: '3',
+				width: '317px'
+			});
+			
+			
+			$('.evento').click( function(){
+				$('.evento-selecionado').removeClass('evento-selecionado');
+				$(this).addClass('evento-selecionado');
+				eventoId = $(this).data('eventoId');
+				
+			});
+			
+			$('#salvar').click( function(){
+				var canal = Number( $('#numCanal').val());
+				if(canal){
+					if(!self.confirmCallback){
+						var distOperadoraId = self.distOperadoraId;
+						var operadoraId = self.operadoraId;
+						var canalId = self.canalId;
+						var horario = self.horario;			
+			
+						$.postJSON("../sidi/distribuicao-operadora/alterarCanalDistribuicaoPracasLimitadas", [distOperadoraId, canal], function(resp) {
+							$('.oper.oper'+operadoraId).find('.canal_'+canalId).find('.canal_num'+horario).text(canal);
+							$('#popup').xundialog();
+						});
+					} else {
+						var horario = self.horario;
+						self.confirmCallback(self.distVO, horario, canal);
+					}
+				} else {
+					$('.message.popup').message(i18n.get('distribuicao.operadora.erro.numero.canal'), 'error');
+					return;
+				}
+			});
+		]]>
+	</script>
+</engine>

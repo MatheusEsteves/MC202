@@ -1,0 +1,46 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector="#content-info">
+		<div class="topo">
+			<div class="titulo">${i18n.get('menu.distribuicao-tabular')}</div>
+			<div class="separador"></div>
+		</div>
+		<div class="filtro" id="filtroEdicaoTabular">
+			<form class="forms">
+				<fieldset>
+					<ul>
+						<li class="required">
+							<label for="txtDataInicial">${i18n.get('data')}: </label>
+							<input type="text" id="txtDataInicial" name="inicio" title="${i18n.get('informe-data-jogos-inicio')}" alt="date"
+								class="data" />
+							<span> ${i18n.get('ate')} </span>
+							<input type="text" id="txtDataFinal" name="fim"
+								title="${i18n.get('informe-data-jogos-fim')}" alt="date" class="data" />
+						</li>
+						<li class="required">
+							<label for="sltCampeonatoFiltro">${i18n.get('campeonato')}: </label>
+							<select id="sltCampeonatoFiltro" title="${i18n.get('informe-campeonato')}" name="campeonatoId">
+								<option>${i18n.get('todos')}</option>
+								{for campeonato in campeonatos}
+								<option value="${campeonato.id}">${campeonato.nome}</option>
+								{/for}
+							</select>
+						</li>
+						<li class="li-botao-distribuicao-tabular">
+							<a id="btnFiltroEdicaoTabular" class="button azul">${i18n.get('filtrar')}</a>
+							<a id="btnExportarEventos" class="button azul">${i18n.get('exportar-eventos')}</a>
+						</li>
+					</ul>
+				</fieldset>
+								
+				{if sidi.possuiAutorizacao('GERENCIAR_DISTRIBUICAO_TABULAR')}
+					<a id="btnFiltroNovoEvento" class="button azul">${i18n.get('novo-evento')}</a>
+					<a id="btnFiltroNovoMosaico" class="button azul">${i18n.get('novo-mosaico')}</a>
+					<a id="btnNotificarPrevia" class="button azul">${i18n.get('notificacao-previa')}</a>						
+				{/if}				
+			</form>
+		</div>
+	</template>
+	<template selector="#content-details">
+		<div id="divTblJogosTabular"></div>
+	</template>
+</engine>

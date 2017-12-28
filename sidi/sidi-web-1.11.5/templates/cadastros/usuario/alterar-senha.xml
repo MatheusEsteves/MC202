@@ -1,0 +1,73 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector=".message">
+	</template>
+	
+	<template selector="#content-details">
+		<div class="topo" id="topo">
+	      <div class="titulo">${i18n.get('alterar-senha')}</div>
+	      <div class="separador"></div>
+	    </div>
+	
+		<div class="content lista-de-exibicao">
+		<form id="frmAlterarSenha">
+			<fieldset>
+				<ul>
+					<li class="required">						
+						<label for="txtSenhaAtual"><span class="required">*</span>${i18n.get('senha-atual')}:</label>
+						<input type="password" name="senha" id="txtSenhaAtual"></input>
+					</li>
+					<li class="required">						
+						<label for="txtNovaSenha"><span class="required">*</span>${i18n.get('nova-senha')}:</label>
+						<input type="password" name="senha" id="txtNovaSenha"></input>
+					</li>
+					<li class="required">						
+						<label for="txtConfirmNovaSenha"><span class="required">*</span>${i18n.get('confirmacao-nova-senha')}:</label>
+						<input type="password" name="senha" id="txtConfirmNovaSenha"></input>
+					</li>
+				</ul>
+			</fieldset>
+		</form>
+		<a id="btnConfirmarAlteracao" class="button azul">${i18n.get('confirmar')}</a>
+		</div>
+	</template>
+
+	<script>
+		$('#content-info').html('');
+		$('#frmAlterarSenha').form();
+
+		var usuario = this.usuarioLogado;
+		<![CDATA[
+		$("#btnConfirmarAlteracao").click(function(){
+			
+			if(utils.validate($("#frmAlterarSenha"))){
+				var senhaAtual = $('#txtSenhaAtual').val();
+				var novaSenha = $('#txtNovaSenha').val();
+				var confirmacao = $('#txtConfirmNovaSenha').val();
+				
+				if(novaSenha==confirmacao){
+					if(novaSenha.length>=8){
+						$.getJSON("../sidi/usuario/alterarSenha",{arg: [senhaAtual, '"' + novaSenha + '"']}, function(sucesso){
+							if(sucesso){
+								$('.message').message(i18n.get('sucesso-alterar-senha'), 'success', true);
+								utils.clear($("#frmAlterarSenha"));
+							}else{
+								$('.message').message(i18n.get('atual-alterar-senha'), 'error', true);
+							}
+						});
+					}else{
+						$('.message').html('');
+						$('.message').message(i18n.get('senha-pequena'),'error',true);
+					}
+				}else{
+					$('.message').html('');
+					$('.message').message(i18n.get('confirmacao-alterar-senha'),'error',true);
+				}
+			}else{
+				$('.message').html('');
+				$('.message').message(i18n.get('campos-alterar-senha'),'error',true);
+			}
+		});
+		]]>
+	</script>
+
+</engine>

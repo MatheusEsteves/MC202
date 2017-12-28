@@ -1,0 +1,38 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0"
+	cacheable="true">
+	<template selector="#content-details">
+		<table>
+			<thead>
+				<th>Usuario</th>
+				<th>Requests</th>
+			</thead>
+			<tbody>
+				{for log in logGroupUsuario}
+				<tr>
+					<td>${log[0]}</td>
+					<td>${log[1]}</td>
+				</tr>
+				{/for}
+			</tbody>
+		</table>
+		<br />
+		<table>
+			<thead>
+				<th>Metodo</th>
+				<th>Chamadas</th>
+			</thead>
+			<tbody>
+				{for log in logGroupTelas}
+				<tr>
+					<td>${log[0]}</td>
+					<td>${log[1]}</td>
+				</tr>
+				{/for}
+			</tbody>
+		</table>
+	</template>
+	<script>
+		var logGroupUsuario = this.logGroupUsuario;
+		var logGroupTelas = this.logGroupTelas;
+	</script>
+</engine>

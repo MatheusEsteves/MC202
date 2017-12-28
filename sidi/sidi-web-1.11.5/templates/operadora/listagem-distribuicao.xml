@@ -1,0 +1,225 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0">
+	<template selector="#content-details">
+		{if alteracao.alteracao}
+		<div class="topo-abas">
+			<table class="abas">
+				<tr>
+					<td class="selected">
+						<a href="javascript:void(0);">
+						<![CDATA[
+							${i18n.get('alteracao-seu-pedido')}
+							{if liberada && alteracao.alteracao && alteracao.alteracao.rejeitado && finalizada}
+								- ${i18n.get('status-rejeitado')}
+							{/if}
+						]]>
+						</a>
+					</td>
+					<td>
+						<a href="javascript:void(0);">${i18n.get('alteracao-original')}</a>
+					</td>
+				</tr>
+			</table>
+		</div>
+		{/if}
+		<div class="criterios">
+			<span>${i18n.get('criterios-distribuicao')}:</span>
+			<![CDATA[
+			{if original.distribuicoes.length > 0 && original.distribuicoes[0].justificativa != null}
+				${original.distribuicoes[0].justificativa}
+			{else}
+				${i18n.get('sem-justificativa')}
+			{/if}
+			]]>
+		</div>
+		<div class="criterios">
+			<span>${i18n.get('numero-canais-ppv-disponivel')}:</span> ${original.operadora.numeroCanaisPPV}
+		</div>
+
+		<div id="pedido" class="distribuicoes">
+			<ul class="alteracao-operadora ppv-pronto disponivel-alteracao undone">
+			</ul>
+			<div class="legenda">
+				<ul>
+					<li>
+						<div class="aberto-fechado box"></div>
+						<span>${i18n.get('ttip-aberto-fechado')}</span>
+						<div class="clear" />
+					</li>
+					<li>
+						<div class="ppv-pendente-disponivel box"></div>
+						<span>${i18n.get('ttip-ppv-pendente-disponivel')}</span>
+						<div class="clear" />
+					</li>
+					<li>
+						<div class="ppv-pendente-selecionado box"></div>
+						<span>${i18n.get('ttip-ppv-pendente-selecionado')}</span>
+						<div class="clear" />
+					</li>
+					<li>
+						<div class="ppv-pronto-disponivel box"></div>
+						<span>${i18n.get('ttip-ppv-pronto-disponivel')}</span>
+						<div class="clear" />
+					</li>
+					<li>
+						<div class="ppv-pronto-selecionado box"></div>
+						<span>${i18n.get('ttip-ppv-pronto-selecionado')}</span>
+						<div class="clear" />
+					</li>
+				</ul>
+			</div>
+			<div class="topo clear">
+				<div class="acoes">
+					<a id="btnDownloadDistribuicao" class="acao selected" href="#" target="_blank">${i18n.get('download')}</a>
+					<![CDATA[
+					{if liberada}
+						{if !finalizada}
+							<a id="btnGravarAlteracoes" class="acao selected" href="#" title="${i18n.get('alteracao-gravar-ttip')}">${i18n.get('gravar-alteracoes')}</a>
+							{if !alteracao.alteracao || !alteracao.alteracao.pendente}
+								<a id="btnFinalizar" class="acao selected" href="#">${i18n.get('finalizar')}</a>
+							{/if}
+						{else}
+							<a id="btnAlterarCanais" class="acao selected" href="#">${i18n.get('alterar-canais-ppv')}</a>
+						{/if}
+					{/if}
+					]]>
+				</div>
+			</div>
+		</div>
+		{if alteracao.alteracao}
+		<div id="original" style="display: none;" class="distribuicoes">
+			<ul class="alteracao-operadora ppv-pronto disponivel-alteracao">
+			</ul>
+		</div>
+		{/if}
+
+		<div id="popupJustificativa"></div>
+		<div id="popupFinalizar"></div>
+	</template>
+	<template selector="#content-info .filtro .status">
+		<span class="statusAlteracao">${i18n.get('status')}:</span>
+		{if liberada}
+			{if alteracao.alteracao}
+				{if alteracao.alteracao.aceito}
+					<span class="aprovado">${i18n.get(finalizada? 'status-finalizada' : 'status-aprovada')}</span>
+				{elseif alteracao.alteracao.pendente}
+					<span class="pendente">${i18n.get('status-pendente')}</span>
+				{elseif alteracao.alteracao.rejeitado}
+					<span class="${finalizada? 'aprovado' : 'rejeitado'}">${i18n.get(finalizada? 'status-finalizada' : 'status-rejeitada')}</span>
+				{else}
+					<span class="nova">${i18n.get('status-nova')}</span>
+				{/if}
+			{elseif finalizada}
+				<span class="aprovado">${i18n.get('status-finalizada')}</span>
+			{else}
+				<span class="nova">${i18n.get('status-nova')}</span>
+			{/if}
+		{else}
+			<span class="rejeitado">${i18n.get('status-nao-liberada')}</span>
+		{/if}
+	</template>
+	<script>
+		var that = this;
+		
+		$.ajax({
+			type: 'GET',
+			url: '../templates/operadora/listagem-distribuicao-canais.xml',
+			dataType: 'holy',
+			context: {'horarioSelecionado' : this.horarioSelecionado, 'alteracao' : this.alteracao, 'original' : this.original},
+			success	: function() {
+				$('#pedido ul').removeClass('undone');
+				if (that.alteracao.alteracao) {
+					$('#original ul').addClass('undone');
+					$.ajax({
+						type: 'GET',
+						url: '../templates/operadora/listagem-distribuicao-canais.xml',
+						dataType: 'holy',
+						context: {'horarioSelecionado' : this.horarioSelecionado, 'alteracao' : this.alteracao, 'original' : this.original, 'distribuicaoOriginal': true},
+						success	: function() {
+							$('#original ul').removeClass('undone');
+							init();
+						}
+					});
+				} else
+					init();
+			}
+		});
+
+		var init = function() {
+			 $(".alteracao-operadora *, .legenda div.box, .legenda").corner();
+				
+			var numeroCanaisPPV = that.original.operadora.numeroCanaisPPV;
+			var disponiveis = $('#pedido .alteracao-operadora li.disponivel').length;
+			var selecionados = $('#pedido .alteracao-operadora li.disponivel.selecionado').length;
+	
+			var maxPossiveis = Math.min(numeroCanaisPPV, disponiveis);
+	
+			if (selecionados == maxPossiveis) {
+				$('#pedido .alteracao-operadora').addClass('ppv-pronto').removeClass('ppv-pendente');
+			} else {
+				$('#pedido .alteracao-operadora').removeClass('ppv-pronto').addClass('ppv-pendente');
+			}
+	
+			<![CDATA[
+			if (that.liberada && !that.finalizada) {
+				$('#pedido .alteracao-operadora li.disponivel').click(function() {
+					if ($(this).hasClass('selecionado')) {
+						$(this).removeClass('selecionado');
+					} else {
+						var selecionados = $('#pedido .alteracao-operadora li.disponivel.selecionado').length;
+						if (selecionados < maxPossiveis) {
+							$(this).addClass('selecionado');
+						}
+					}
+					if ($('#pedido .alteracao-operadora li.disponivel.selecionado').length == maxPossiveis) {
+						$('#pedido .alteracao-operadora').addClass('ppv-pronto').removeClass('ppv-pendente');
+					} else {
+						$('#pedido .alteracao-operadora').removeClass('ppv-pronto').addClass('ppv-pendente');
+					}
+				});
+			}
+	
+			var horario = that.original.data;
+			var operadoraId = that.operadoraId;
+			var alteracaoId = -1;
+	
+			if (that.alteracao.alteracao) {
+				alteracaoId = that.alteracao.alteracao.id;
+			}
+	
+			$('#btnGravarAlteracoes').click(function() {
+				var canaisSelecionados = [];
+				$('#pedido .alteracao-operadora li.disponivel.selecionado').each(function() {
+					canaisSelecionados.push(parseInt($(this).attr('canal')));
+				});
+				$.holy('../templates/operadora/popup-justificativa.xml', { canais : canaisSelecionados, horario : horario, operadoraId : operadoraId});
+				return false;
+			});
+	
+			$('#btnDownloadDistribuicao').attr('href', '../sidi/planilha?data=' + horario + '&operadora='+operadoraId);
+			]]>
+	
+			$('.topo-abas .abas td a').click(function() {
+				$('.topo-abas .abas td').toggleClass('selected');
+				$('#content-details .distribuicoes').toggle();
+			});
+	
+			$('*[title]').tipsy({delay: 500, gravity: 'w', fade: true});
+	
+			$('#btnAlterarCanais').click(function(){
+				$.postJSON("../sidi/distribuicao-operadora/buscarDistribuicoesFinalizar",
+					[horario, operadoraId], function(resultado) {
+					$.holy('../templates/operadora/finalizar-distribuicoes.xml', {alteracaoId: alteracaoId, distribuicoes: resultado});
+				});
+				return false;
+			});
+	
+			$('#btnFinalizar').click(function() {
+				$.postJSON("../sidi/distribuicao-operadora/buscarDistribuicoesFinalizar",
+					[horario, operadoraId], function(resultado) {
+					$.holy('../templates/operadora/finalizar-distribuicoes.xml', {alteracaoId: alteracaoId, distribuicoes: resultado});
+				});
+				return false;
+			});
+		}
+	</script>
+</engine>

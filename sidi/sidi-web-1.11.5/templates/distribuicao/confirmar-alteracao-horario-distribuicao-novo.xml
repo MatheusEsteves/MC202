@@ -1,0 +1,31 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0">
+	<template selector="#popup">
+		<h4>${i18n.get('distribuicao-operadora')}</h4>
+		<p style="margin: 15px 0;">${i18n.get('confirmacao-alteracao-horario-distribuicao')}</p>
+		<a id="btnRealizarAlteracaoHorario" class="showDialog button azul">${i18n.get('confirmar')}</a>
+		<a id="btnCancelarEdicao" class="showDialog button azul">${i18n.get('cancelar')}</a>
+	</template>
+
+	<script>
+			<![CDATA[
+		$("#popup").xdialog({
+			overlay: '#23557E',
+			alpha: '3',
+			width: '300'
+		});
+	
+		var horario = this.horario;
+		var distribuicao = this.distribuicaoJson;
+		
+		$('#btnRealizarAlteracaoHorario').click(function(){
+			distribuicaoOperadoraTemplate.buscarDistribuicaoDoHorario(horario, distribuicao);
+		});
+		
+		$('#btnCancelarEdicao').click(function(){
+			$("#filtroHorario option[value='" + $("#horarioHidden").val() + "']").attr("selected", "selected");
+			$('#popup').xundialog();
+		});
+		]]>
+	</script>
+
+</engine>

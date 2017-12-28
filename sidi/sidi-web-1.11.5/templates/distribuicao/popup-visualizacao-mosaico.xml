@@ -1,0 +1,28 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+    <template selector="#popup">
+    <h4>${i18n.get('consulta-mosaico')}:</h4>
+    
+    <div class="detalhe-visualizacao-mosaico"><b>Nome:</b> ${evento.descricaoEvento}</div>
+    <div class="detalhe-visualizacao-mosaico"><b>Operadora:</b> ${operadora.nome}</div>
+    <div class="detalhe-visualizacao-mosaico"><b>Canal:</b> ${canal.nome}</div>
+    <div class="detalhe-visualizacao-mosaico ultimo"><b>Hora:</b> ${date.dateToHourString(evento.data)}</div>
+    
+    <ul class="display-canais-mosaico">
+    {for idx in indices}
+      {if canais(idx)}
+        <li data-indice="${idx}" 
+            data-id="seleciona-canal-${canais(idx).id}" 
+            data-canal-id="${canais(idx).id}" 
+            data-canal-nome="${canais(idx).nome}">
+          <div class="canal">
+            <img class="icone-mosaico" src="../imagens/canal?id=${canais(idx).id}" title="${canais(idx).nome}"/>${canais(idx).nome}
+			<div class="evento-canal-mosaico">${eventoCanal(idx)}</div>
+	      </div>
+        </li>
+      {else}
+        <li data-indice="${idx}"><div class="canal"></div></li>
+      {/if}
+    {/for}
+    </ul>
+    </template>
+</engine>

@@ -1,0 +1,158 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector="#header">                                                             
+		<!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
+		<ul class="menu-principal">
+				<li class="logo">
+					<span class="logo-globosat">GLOBOSAT</span>
+					<span class="versao-globosat"></span>
+				</li>        
+				<li class="head perfil">
+					<span class="titulo">
+						<span class="icone"></span>
+						<span class="texto">${i18n.get('menu.perfil')}</span>
+					</span>
+					<ul class="submenu">
+						<li><a class="head" href="#usuario/alterarEmail">${i18n.get('alterar-email')}</a></li>
+						<li><a class="head" href="#usuario/alterarSenha">${i18n.get('alterar-senha')}</a></li>
+					</ul>
+				</li>
+				{if sidi.possuiAutorizacao('CONSULTAR_CAMPEONATOS', 'GERENCIAR_CAMPEONATOS', 'CONSULTAR_JOGOS', 'GERENCIAR_JOGOS', 'CONSULTAR_CLUBES', 'CONFIGURAR_PESO_CLUBE', 'CONSULTAR_OPERADORAS', 'GERENCIAR_OPERADORAS', 'CONSULTAR_CANAIS', 'GERENCIAR_CANAIS', 'GERENCIAR_COMUTACAO')}
+				<li class="head cadastros">
+					<span class="titulo">
+						<span class="icone"></span>
+						<span class="texto">${i18n.get('menu.cadastros')}</span>
+					</span>
+					<ul class="submenu">
+						{if sidi.possuiAutorizacao('CONSULTAR_CAMPEONATOS', 'GERENCIAR_CAMPEONATOS')}
+						<li><a class="head" href="#campeonatos/consultar">${i18n.get('menu.campeonatos')}</a></li>
+						{/if}
+						{if sidi.possuiAutorizacao('CONSULTAR_JOGOS', 'GERENCIAR_JOGOS', 'GERENCIAR_CAMPEONATOS')} 
+						<li><a class="head" href="#jogos/consultar">${i18n.get('menu.jogos')}</a></li>
+						{/if}
+						{if sidi.possuiAutorizacao('CONSULTAR_CLUBES', 'CONFIGURAR_PESO_CLUBE')}
+		                <li><a class="head" href="#clubes/consultar">${i18n.get('menu.clubes')}</a></li>
+		                {/if}
+						{if sidi.possuiAutorizacao('CONSULTAR_OPERADORAS', 'GERENCIAR_OPERADORAS')}        
+		                <li><a class="head" href="#operadora/cadastrar">${i18n.get('menu.operadoras')}</a></li>
+		                {/if}
+						{if sidi.possuiAutorizacao('GERENCIAR_REGIAO')}
+		                <li><a class="head" href="#regioes/cadastrar">${i18n.get('menu.regioes')}</a></li>
+		                {/if}
+						{if sidi.possuiAutorizacao('CONSULTAR_CANAIS', 'GERENCIAR_CANAIS')} 
+		                <li><a class="head" href="#canais/novo">${i18n.get('menu.canais')}</a></li>
+		                {/if}
+		                {if sidi.possuiAutorizacao('CONSULTAR_LINEUP')} 		                
+		                <li><a class="head" href="#lineup/novo">${i18n.get('menu.lineup')}</a></li>
+		                {/if}
+		                {if sidi.possuiAutorizacao('GERENCIAR_USUARIO')}
+		                <li><a class="head" href="#usuario/cadastrar">${i18n.get('menu.usuario')}</a></li>
+		                {/if}
+		                {if sidi.possuiAutorizacao('GERENCIAR_PERFIS')}
+		                <li><a class="head" href="#perfil/cadastrar">${i18n.get('menu.perfil')}</a></li>
+		                {/if}
+		                {if sidi.possuiAutorizacao('GERENCIAR_HORARIOS')}
+		                <li><a class="head" href="#horarios/cadastrar">${i18n.get('menu.horarios')}</a></li>
+		                {/if}
+		                {if sidi.possuiTodasAutorizacoes('GERENCIAR_COMUTACAO','GERENCIAR_REGIAO') || sidi.possuiTodasAutorizacoes('GERENCIAR_COMUTACAO','CONSULTAR_REGIAO')}
+		                <li><a class="head" href="#comutacao/buscar">${i18n.get('menu.comutacao')}</a></li>
+		                {/if}
+		                {if sidi.possuiTodasAutorizacoes('CONSULTAR_VAZADA') }
+		                <li><a class="head" href="#vazada/consultar">${i18n.get('menu.vazada')}</a></li>
+		                {/if}
+   		                {if sidi.possuiTodasAutorizacoes('CONSULTAR_LOG') }
+		                <li><a class="head" href="#log/buscar">${i18n.get('menu.log')}</a></li>
+		                {/if}
+   		                {if sidi.possuiAutorizacao('CONFIGURACAO_LIVEADMIN') || sidi.possuiAutorizacao('CONFIGURACAO_PESO')}
+		                <li><a class="head" href="#configuracao/buscar">${i18n.get('menu.configuracoes')}</a></li>
+		                {/if}
+					</ul>
+				</li>
+				{/if}
+				{if sidi.possuiAutorizacao('CONSULTAR_DISTRIBUICAO', 'GERENCIAR_DISTRIBUICAO', 'CONSULTAR_DISTRIBUICAO_TABULAR', 'GERENCIAR_DISTRIBUICAO_TABULAR', 'LIBERAR_DISTRIBUICAO_OPERADORAS', 'CONSULTAR_HISTORICO_DISTRIBUICAO','GERENCIAR_COMUTACAO',
+				'CONSULTAR_COMUTACAO')}                                                                     
+					<li class="head distribuicao">
+						<span class="titulo">
+							<span class="icone"></span>
+							<span class="texto">${i18n.get('menu.distribuicao')}</span>
+						</span>
+						<ul class="submenu">
+							{if sidi.possuiAutorizacao('CONSULTAR_DISTRIBUICAO_TABULAR', 'GERENCIAR_DISTRIBUICAO_TABULAR')}
+							<li><a href="#distribuicao/tabular">${i18n.get('menu.distribuicao-tabular')}</a></li>
+							{/if}
+							{if sidi.possuiAutorizacao('GERENCIAR_DISTRIBUICAO','LIBERAR_DISTRIBUICAO_OPERADORAS')}
+							<li><a class="head" href="#distribuicao/liberacao/principal">${i18n.get('menu.liberar-distribuicao-principal')}</a></li>
+							{/if}
+							{if sidi.possuiAutorizacao('CONSULTAR_DISTRIBUICAO', 'GERENCIAR_DISTRIBUICAO', 'LIBERAR_DISTRIBUICAO_OPERADORAS')}
+							<li><a class="head" href="#operadora/consultar/distribuicao">${i18n.get('menu.liberar-distribuicao-operadora')}</a></li>
+							{/if}
+						</ul>
+					</li>
+				{/if}
+				{if sidi.possuiAutorizacao('CONSULTAR_DISTRIBUICAO_OPERADORA', 'GERENCIAR_DISTRIBUICAO_OPERADORA')}
+					<li class="head operadora">
+						<span class="titulo">
+							<span class="icone"></span>
+							<span class="texto">${i18n.get('menu.operadora')}</span>
+						</span>
+						<ul class="submenu">
+							{if sidi.possuiAutorizacao('CONSULTAR_DISTRIBUICAO_OPERADORA', 'GERENCIAR_DISTRIBUICAO_OPERADORA')}
+							<li><a href="#operadora/consultar/distribuicao" id="lnkConsultarDistribuicaoTabular">${i18n.get('menu.consultar-distribuicao')}</a></li>
+							{/if}
+						</ul>
+	            	</li>
+				{/if}
+		</ul>
+		<a class="botao-sair" href="../logout"><span class="icone"></span><span class="texto">${i18n.get('menu.sair')}</span></a>
+		<a class="botao-retrair"></a>
+	</template>                                                                               
+	<script>        
+		$('ul.submenu').hide();
+		$.holy('../versao.xml');
+
+		<![CDATA[
+		$.each($('ul.menu-principal > li span.titulo'), function(idx, element) {                                     
+			$(element).click(function(e) {
+				var secao = $(element).parent('li');
+				var secaoEstavaSelecionada = secao.hasClass('aberto');
+
+				$('li.head .menu-selecionado').remove();
+
+				$('ul.menu-principal').find('li.head.aberto').removeClass('aberto').find('ul.submenu').slideUp('fast');
+
+				if (!secaoEstavaSelecionada) {
+					secao.addClass('aberto').find('ul.submenu').slideDown('fast');
+					$('<div class="menu-selecionado"></div>').appendTo(secao);
+					$('.menu-selecionado').click(function() {
+						$(element).click();
+					});
+				}
+			});
+		});
+
+		$('.botao-retrair').click(function() {
+			var retraido = $('.menu-principal').data('retraido');
+
+			if (!retraido) {
+				$('#header, #main').addClass('menu-pequeno');
+				$(this).text('>').attr('title', i18n.get('menu.expandir'));
+				$.cookie('menu-retraido', true, { expires: 999 });
+			} else {
+				$('#header, #main').removeClass('menu-pequeno');
+				$(this).text('<').attr('title', i18n.get('menu.retrair'));
+				$.removeCookie('menu-retraido');
+			}
+
+			$('.menu-principal').data('retraido', !retraido);
+
+			distribuicaoOperadoraTemplate.ajustDinamicTable();
+
+		}).attr('title', i18n.get('menu.retrair'))
+		  .text('<');
+
+		if ($.cookie('menu-retraido')) {
+			$('.botao-retrair').click();
+		}
+
+		]]>
+	</script>
+</engine>

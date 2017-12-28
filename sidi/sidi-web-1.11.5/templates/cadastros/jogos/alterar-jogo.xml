@@ -1,0 +1,320 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector="#popup">
+		<ul class="message mensagemPopup"></ul>
+		<h3>${i18n.get('alterar-jogo')}</h3>
+		<div class="tab">
+			<ul>
+	            <li>
+	                <a href="#">${i18n.get('informacoes-jogo')}</a>
+	            </li>
+	            <li>
+	                <a href="#"  id="tab2">${i18n.get('informacoes-operadora')}</a>
+	            </li>
+	        </ul>
+	        <div id="opcoesDeJogos">
+				<form id="frmEditarJogo">
+					<fieldset>
+						<input type="hidden" value="${jogo.id}" id="idJogo"></input>
+						<ul>
+							<li class="required">
+								<label for="sltNovoCampeonato"><span class="required">*</span>${i18n.get('campeonato')}:</label>
+								<select type="text" id="sltNovoCampeonato" name="campeonato">
+									{for campeonato in campeonatosCadastrados}
+										{if campeonato.id == jogo.fase.campeonato.id}
+										<option value="${campeonato.id}" selected="selected">${campeonato.nome}</option>
+										{else}
+										<option value="${campeonato.id}">${campeonato.nome}</option>
+										{/if}
+									{/for}
+								</select>
+							</li>
+							<li class="required">
+								<label for="sltNovaFase"><span class="required">*</span>${i18n.get('fase')}:</label>
+								<select id="sltNovaFase" name="fase">
+								</select>
+							</li>
+							<li class="required">
+								<label for="txtNovaData"><span class="required">*</span>${i18n.get('data')}:</label>
+								<input type="text" id="txtNovaData" value="{if jogo.data != null}${date.dateToString(jogo.data)}{/if}" alt="date" class="data"></input>								
+							</li>
+							<li class="required">
+								<label for="txtNovoInicio"><span class="required">*</span>${i18n.get('inicio')}:</label>
+								<input type="text" id="txtNovoInicio" alt="time" value="{if jogo.data != null}${date.dateToHourString(jogo.data)}{/if}"></input>
+							</li>
+							<li class="required">
+								<label for="sgsMandante"><span class="required">*</span>${i18n.get('time-mandante')}: </label>
+								<input type="text" id="sgsNovoMandante" value="{if jogo.mandante != null}${jogo.mandante.apelido}{/if}" title="${i18n.get('time-mandante-partida')}" class="time ui-autocomplete-input" name="mandante"/>
+							</li>
+							<li class="required">
+								<label for="sgsNovoVisitante"><span class="required">*</span>${i18n.get('time-visitante')}:</label>
+								<input type="text" id="sgsNovoVisitante" value="{if jogo.visitante != null}${jogo.visitante.apelido}{/if}" class="time ui-autocomplete-input" name="visitante"></input>
+							</li>
+							<li>
+								<label for="sgsNovoEstadio">${i18n.get('estadio')}:</label>
+								<input type="text" id="sgsNovoEstadio" class="ui-autocomplete-input" value="{if jogo.estadio != null}${jogo.estadio.nomePopular}{/if}" name="estadio"></input>
+							</li>
+						</ul>
+					</fieldset>
+				</form>
+			</div>
+			<div>
+				<form id="frmOpcoesOperadora">
+					<fieldset>
+						<ul>
+							<li>
+								<label for="cbxProdDeslocamento">${i18n.get('producao-local-deslocamento')}: </label>
+								{if jogo.producaoLocalDeslocamento == false}
+									<input type="checkbox" id="cbxProdDeslocamento" name="producaoLocalDeslocamento"/>
+								{else}
+									<input type="checkbox" id="cbxProdDeslocamento" name="producaoLocalDeslocamento" checked="checked"/>
+								{/if}
+							</li>
+							<li>
+								<label for="cbxOff">${i18n.get('off')}: </label>
+								{if jogo.off == false}
+								<input type="checkbox" id="cbxOff" name="off" />
+								{else}
+								<input type="checkbox" id="cbxOff" name="off" checked="checked"></input>
+								{/if}
+							</li>
+							<li>
+								<label for="cbxPfi">${i18n.get('pfi')}: </label>
+								{if jogo.pfi == false}
+								<input type="checkbox" id="cbxPfi" name="pfi"/>
+								{else}
+								<input type="checkbox" id="cbxPfi" name="pfi" checked="checked"></input>
+								{/if}
+							</li>
+							<li>
+								<label for="cbxHd">${i18n.get('hd')}: </label>
+								{if jogo.hd == false}
+								<input type="checkbox" id="cbxHd" name="hd"/>
+								{else}
+								<input type="checkbox" id="cbxHd" name="hd" checked="checked"></input>
+								{/if}
+							</li>
+						</ul>
+						<ul>
+						
+							<li>
+								<label for="cbxOffDeslocamento">${i18n.get('off-deslocamento')}: </label>
+								{if jogo.offDeslocamento == false}
+								<input type="checkbox" id="cbxOffDeslocamento" name="offDeslocamento"/>
+								{else}
+								<input type="checkbox" id="cbxOffDeslocamento" name="offDeslocamento" checked="checked"></input>
+								{/if}
+							</li>
+							<li>
+								<label for="txtRodada">${i18n.get('rodada')}: </label>
+								<input type="text" id="txtRodada" value="${jogo.rodada}" alt="integer" size="5" name="rodada"/>
+							</li>
+							<li>
+								<label for="txtGenero">${i18n.get('genero')}: </label>
+								<input type="text" id="txtGenero" value="${jogo.genero}" name="genero"/>
+							</li>
+							<li>
+								<label for="txtAp">${i18n.get('ap')}: </label>
+								<input type="text" id="txtAp" value="${jogo.ap}" name="ap"/>
+							</li>
+							<li>
+								<label for="txtProdutoras">${i18n.get('produtoras')}: </label>
+								<input type="text" id="txtProdutoras" value="${jogo.produtoras}" name="produtoras"/>
+							</li>
+							<li>
+								<label for="txtProd">${i18n.get('prod')}: </label>
+								<input type="text" id="txtProd" value="${jogo.prod}" name="prod"/>
+							</li>
+						</ul>
+						<ul>
+							<li>
+								<label for="txtCam">${i18n.get('cam')}: </label>
+								<input type="text" id="txtCam" value="${jogo.cam}" alt="integer" name="cam" />
+							</li>
+							<li>
+								<label for="txtPre">${i18n.get('pre')}: </label>
+								<input type="text" id="txtPre" value="${jogo.pre}" name="pre"/>
+							</li>
+							<li>
+								<label for="txtMm">${i18n.get('mm')}: </label>
+								<input type="text" id="txtMm" value="${jogo.mm}" name="mm"/>
+							</li>
+							<li>
+								<label for="txtPos">${i18n.get('pos')}: </label>
+								<input type="text" id="txtPos" value="${jogo.pos}" name="pos"/>
+							</li>
+							<li>
+								<label for="txtClassificacao">${i18n.get('classificacao')}: </label>
+								<input type="text" id="txtClassificacao" value="${jogo.classificacaoJogo}" name="classificacaoJogo"/>
+							</li>
+							<li>
+								<label for="txtDistanciaCapital">${i18n.get('distancia-capital')}: </label>
+								<input type="text" id="txtDistanciaCapital" value="${jogo.distanciaCapital}" alt="integer" size="5" name="distanciaCapital"/>
+							</li>
+							<li>
+								<label for="txtObservacao">${i18n.get('observacao')}: </label>
+								<textarea id="txtObservacao" value="" name="observacao" class="maxlength" maxlength="255">${jogo.observacao}</textarea>
+							</li>
+						</ul>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+		<a id="btnRealizarEdicao" class="button azul">${i18n.get('confirmar')}</a>
+		<a id="btnCancelarEdicao" class="button azul">${i18n.get('cancelar')}</a>
+
+	</template>
+	<script>
+		$("#popup").xdialog({
+			overlay: '#23557E',
+			alpha: '3',
+			width:'500px'
+		});
+		
+		$(".tab").tabPanel();
+		$('input:text').setMask();
+		$('.data').datepicker();
+		
+		$('#frmEditarJogo').form();
+		$("#tab2").click(function(){
+			$('#frmOpcoesOperadora').form();
+		});
+
+		$('.maxlength').each(function() {
+			$(this).charCount({
+				allowed: parseInt($(this).attr('maxlength') || 20),
+				warning: 1,
+				counterText: 'Caracteres restantes: '
+			});
+        });
+				
+		var jogo = this.jogo;
+		var mandante = this.jogo.mandante;
+		var visitante = this.jogo.visitante;
+		var estadio = this.jogo.estadio;
+		var campeonato = this.jogo.fase.campeonato;
+		
+		$('#sgsNovoMandante').data({'sidi.autocomplete':mandante});
+		$('#sgsNovoVisitante').data({'sidi.autocomplete':visitante});
+		$('#sgsNovoEstadio').data({'sidi.autocomplete':estadio});
+		$('#sltNovoCampeonato').data({'sidi.select':campeonato});
+		
+		<![CDATA[
+		$.getJSON("../sidi/clubes/buscarClubes", function(json) {
+			var equipes = [];
+			$(json).each(function() {
+				equipes.push({'label': this.apelido, 'value': this.id});
+			});
+
+			$('.time').sidiAutocomplete({
+				source: equipes
+			}, json );
+		});
+		
+		$.getJSON("../sidi/jogos/todosEstadios", function(json){
+			var estadios = [];
+			$(json).each(function() {
+				estadios.push({"label": this.nomePopular, "value": this.id});
+			});
+			
+			$('#sgsNovoEstadio').sidiAutocomplete({
+				source: estadios
+			}, json);
+		});
+		
+		$('#btnRealizarEdicao').click(function(){
+		
+			var optionFase = $('#sltNovaFase').children('option:selected');
+			var fase = {};
+			fase.id = optionFase.val();
+			$('#sltNovaFase').data({'sidi.select': fase});
+			
+			var json = {};			
+			var form = $("#frmEditarJogo");
+			var form2 = $("#frmOpcoesOperadora");
+			
+			if (utils.validate(form,"mensagemPopup")) {
+				json.id = jogo.id;
+				utils.bind(form,json);
+				utils.bind(form2,json);
+				
+				var data = date.stringToDate($('#txtNovaData').val());
+				var hora = $('#txtNovoInicio').val().split(':')[0];
+				var min  = $('#txtNovoInicio').val().split(':')[1];
+				
+				if (data) {
+					data.setMinutes(min);
+					data.setHours(hora);
+					json.data = data.getTime();
+				}
+				
+				$.postJSON("../sidi/jogos/salvar", json, function(json) {
+						$('.message').message(i18n.get('sucesso-alterar-jogo'), 'success', true);
+						$('#popup').xundialog();			
+						$('#btnFiltrarJogos').click();
+				});
+			}
+		});
+		
+		var campeonatos = this.campeonatosCadastrados;
+		
+		$('#sltNovoCampeonato').ready(function(){
+			
+			$(campeonatos).each(function () {
+				if (this.id == $('#sltNovoCampeonato').val()) {
+					campeonato = this;
+					return;
+				}
+			});
+			
+			$.getJSON("../sidi/campeonatos/buscarFases", {arg: JSON.stringify(campeonato)}, function(json){
+				$("#sltNovaFase").html('');
+				
+				$(json).each(function() {
+					var fase = this;
+					if(fase.nome == jogo.fase.nome)
+					{
+						$('#sltNovaFase').append(
+							$('<option selected="selected">').val(fase.id).html(fase.nome)
+						);
+					}
+					else
+					{
+						$('#sltNovaFase').append(
+							$('<option>').val(fase.id).html(fase.nome)
+						);
+					}
+				});
+			});
+		});
+		
+		$('#sltNovoCampeonato').change(function(){
+			var campeonato = {};
+			
+			$(campeonatos).each(function () {
+				if (this.id == $('#sltNovoCampeonato').val()) {
+					campeonato = this;
+					return;
+				}
+			});
+		
+			campeonato.nome = $('#sltNovoCampeonato').val();
+
+			$.getJSON("../sidi/campeonatos/buscarFases", {arg: JSON.stringify(campeonato)}, function(json){
+				$("#sltNovaFase").html('');
+				
+				$(json).each(function() {
+					var fase = this;
+					$('#sltNovaFase').append(
+						$('<option>').val(fase.id).html(fase.nome)
+					);
+				});
+			});
+		});
+		
+		$('#btnCancelarEdicao').click(function(){
+			$('#popup').xundialog();							
+		});
+		]]>
+	</script>
+
+</engine>

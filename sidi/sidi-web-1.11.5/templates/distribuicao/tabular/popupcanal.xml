@@ -1,0 +1,34 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector="#selecaoCanalDialogTabular">
+		<h4>${i18n.get('alterar-canais')}</h4>
+			{if distribuicao.evento.tipoEvento == 'JOGO'}
+				<div class="confronto">
+					<span style="background-image: url('${distribuicao.evento.mandante.urlBrasao}')" class="time">${distribuicao.evento.mandante.apelido}</span>
+					<div class="versus">
+						<span class="hora">${date.dateToHourString(distribuicao.evento.data)}</span>
+						<span>X</span>
+					</div>
+					<span style="background-image: url('${distribuicao.evento.visitante.urlBrasao}')" class="time">${distribuicao.evento.visitante.apelido}</span>
+				</div>
+			{else}
+				<div class="evento">
+					<span class="hora">${date.dateToHourString(distribuicao.evento.data)}</span>
+					<span class="nome-evento">${distribuicao.evento.nome}</span>
+				</div>
+			{/if}
+		<ul class="listaCanais">
+			{for canal in canais}
+				<li class="{if utils.find(distribuicao.canais, canal.id)}selecionado{/if}" data-canal="${canal.id}">
+					<span style="background-image: url('../imagens/canal?id=${canal.id}')" class="canal">${canal.nome}</span>
+					<![CDATA[
+					<input id="canal_tabular_${canal.id}" style="display:none" type="checkbox"
+						{if utils.find(distribuicao.canais, canal.id)}checked="checked"{/if} />
+					]]>
+				</li>
+			{/for}
+		</ul>
+		<br></br>
+		<a class="btSave button azul" type="button">${i18n.get('salvar')}</a>
+		<a class="btCancel button azul" type="button">${i18n.get('cancelar')}</a>
+	</template>
+</engine>

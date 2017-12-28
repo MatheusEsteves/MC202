@@ -1,0 +1,37 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector="#popup">
+		<h4>${i18n.get('apagar-comutacao')}</h4>
+		<p style="margin:15px 0;">${i18n.get('confirmacao-apagar-comutacao')}</p>
+		<a id="btnRealizarExclusao" class="button azul">${i18n.get('confirmar')}</a>
+		<a id="btnCancelarExclusao" class="button azul">${i18n.get('cancelar')}</a>
+	</template>
+	<script>
+		<![CDATA[
+			var self = this;
+			$("#popup").xdialog({
+				overlay: '#23557E',
+				alpha: '3',
+				width: '300'
+			});
+			
+			var comutacao = this.comutacao;
+			$('#btnRealizarExclusao').click(function(){
+				$.getJSON("../sidi/comutacao/apagarComutacao",{arg : JSON.stringify(comutacao)}, function(resposta){
+					if(resposta){
+						$('#popup').xundialog();
+						$('html, body').animate({scrollTop:0}, 'fast');
+						if(self.popCallback){
+							self.popCallback(comutacao);
+						}
+						$('.message').message(i18n.get('sucesso-apagar-comutacao'),'success',true);
+						$('.message').attr("data-last-message","sucesso-apagar-comutacao");
+					}
+				});
+			});
+			
+			$('#btnCancelarExclusao').click(function(){
+				$('#popup').xundialog();
+			});
+		]]>
+	</script>
+</engine>

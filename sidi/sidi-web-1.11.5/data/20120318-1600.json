@@ -1,0 +1,4365 @@
+{"data": "12/03/2012",
+	"hora": "16:00",
+	"jogosRodada": {
+		"2012031201": {
+			"campeonato": "Paulista",
+			"mandante": "Corinthians",
+			"siglaMandante": "COR",
+			"escudoMandante": "http://s.glbimg.com/es/sde/f/organizacoes/2010/11/19/corinthians_30x30.png",
+			"visitante": "São Paulo",
+			"siglaVisitante": "SPO",
+			"escudoVisitante": "http://s.glbimg.com/es/sde/f/organizacoes/2010/11/19/sao_paulo_30x30.png",
+			"local": {
+				"estadio": "Pacaembu",
+				"cidade": "São Paulo",
+				"uf": "SP"
+			}
+		},
+		"2012031202": {
+			"campeonato": "Paulista",
+			"mandante": "Guarani",
+			"siglaMandante": "GUA",
+			"escudoMandante": "http://s.glbimg.com/es/sde/f/organizacoes/2010/11/19/guarani_30x30.png",
+			"visitante": "Paulista",
+			"siglaVisitante": "PAU",
+			"escudoVisitante": "http://s.glbimg.com/es/sde/f/organizacoes/2011/01/04/paulista30.png",
+			"local": {
+				"estadio": "Brinco de Ouro",
+				"cidade": "Campinas",
+				"uf": "SP"
+			}
+		},
+		"2012031203": {
+			"campeonato": "Carioca",
+			"mandante": "Flamengo",
+			"siglaMandante": "FLA",
+			"escudoMandante": "http://s.glbimg.com/es/sde/f/organizacoes/2010/11/19/flamengo_30x30.png",
+			"visitante": "Nova Iguaçu",
+			"siglaVisitante": "NIG",
+			"escudoVisitante": "http://s.glbimg.com/es/sde/f/organizacoes/2011/01/12/Nova_Iguacu_30x30.png",
+			"local": {
+				"estadio": "Raulino de Freitas",
+				"cidade": "Volta Redonda",
+				"uf": "RJ"
+			}
+		},
+		"2012031204": {
+			"campeonato": "Baiano",
+			"mandante": "Bahia",
+			"siglaMandante": "BAH",
+			"escudoMandante": "http://s.glbimg.com/es/sde/f/organizacoes/2010/12/02/bahia_30x30.png",
+			"visitante": "Vitória",
+			"siglaVisitante": "VIT",
+			"escudoVisitante": "http://s.glbimg.com/es/sde/f/organizacoes/2010/11/19/vitoria_30x30.png",
+			"local": {
+				"estadio": "Pituaçu",
+				"cidade": "Bahia",
+				"uf": "BA"
+			}
+		},
+		"2012031205": {
+			"campeonato": "Baiano",
+			"mandante": "Juazeiro",
+			"siglaMandante": "JUA",
+			"escudoMandante": "http://s.glbimg.com/es/sde/f/organizacoes/2011/01/19/juazeiro_30x30.png",
+			"visitante": "Juazeirense",
+			"siglaVisitante": "JUZ",
+			"escudoVisitante": "http://s.glbimg.com/es/ge/f/original/2011/12/09/juazeirense-30.png",
+			"local": {
+				"estadio": "Juazeirão",
+				"cidade": "Juazeiro",
+				"uf": "BA"
+			}
+		},
+		"2012031206": {
+			"campeonato": "Paulista",
+			"mandante": "Oeste",
+			"siglaMandante": "OES",
+			"escudoMandante": "http://s.glbimg.com/es/sde/f/organizacoes/2011/01/12/Oeste_30x30.png",
+			"visitante": "Guaratinguetá",
+			"siglaVisitante": "GTA",
+			"escudoVisitante": "http://s.glbimg.com/es/sde/f/organizacoes/2012/01/09/Guaratingueta_30.png",
+			"local": {
+				"estadio": "Itápolis",
+				"cidade": "Itápolis",
+				"uf": "SP"
+			}
+		},
+		"2012031207": {
+			"campeonato": "Catarinense",
+			"mandante": "Criciúma",
+			"siglaMandante": "CRI",
+			"escudoMandante": "http://s.glbimg.com/es/sde/f/organizacoes/2011/01/04/criciuma30.png",
+			"visitante": "Joinville",
+			"siglaVisitante": "JOI",
+			"escudoVisitante": "http://s.glbimg.com/es/sde/f/organizacoes/2011/01/24/jonville_30x30.png",
+			"local": {
+				"estadio": "Criciúma",
+				"cidade": "Criciúma",
+				"uf": "SC"
+			}
+		},
+		"2012031208": {
+			"campeonato": "Paranaense",
+			"mandante": "Iraty",
+			"siglaMandante": "IRA",
+			"escudoMandante": "http://s.glbimg.com/es/sde/f/organizacoes/2011/01/21/iraty_30x30.png",
+			"visitante": "Atlético PR",
+			"siglaVisitante": "CAP",
+			"escudoVisitante": "http://s.glbimg.com/es/sde/f/organizacoes/2010/11/19/Atl_pr_30x30.png",
+			"local": {
+				"estadio": "Iraty",
+				"cidade": "Iraty",
+				"uf": "PR"
+			}
+		},
+		"2012031209": {
+			"campeonato": "Pernambucano",
+			"mandante": "América",
+			"siglaMandante": "AME",
+			"escudoMandante": "http://s.glbimg.com/es/sde/f/organizacoes/2012/02/17/america_30x30.png",
+			"visitante": "Santa Cruz",
+			"siglaVisitante": "SCR",
+			"escudoVisitante": "http://s.glbimg.com/es/sde/f/organizacoes/2011/01/26/santa_cruz_30x30.png",
+			"local": {
+				"estadio": "Recife",
+				"cidade": "Recife",
+				"uf": "PE"
+			}
+		},
+		"2012031210": {
+			"campeonato": "Sul Mato-Grossense",
+			"mandante": "Sete de Setembro",
+			"siglaMandante": "SET",
+			"escudoMandante": "http://s.glbimg.com/es/sde/f/organizacoes/escudo_default_30x30.png",
+			"visitante": "Ivinhema",
+			"siglaVisitante": "IVI",
+			"escudoVisitante": "http://s.glbimg.com/es/sde/f/organizacoes/escudo_default_30x30.png",
+			"local": {
+				"estadio": "Cuiabá",
+				"cidade": "Cuiabá",
+				"uf": "MT"
+			}
+		},
+		"2012031211": {
+			"campeonato": "Gaúcho",
+			"mandante": "Caxias",
+			"siglaMandante": "CAX",
+			"escudoMandante": "http://s.glbimg.com/es/sde/f/organizacoes/2011/01/19/caxias_30x30.png",
+			"visitante": "Internacional",
+			"siglaVisitante": "INT",
+			"escudoVisitante": "http://s.glbimg.com/es/sde/f/organizacoes/2010/11/19/internacional_30x30.png",
+			"local": {
+				"estadio": "Caxias",
+				"cidade": "Caxias",
+				"uf": "RS"
+			}
+		},
+		"2012031212": {
+			"campeonato": "Mineiro",
+			"mandante": "Cruzeiro",
+			"siglaMandante": "CRU",
+			"escudoMandante": "http://s.glbimg.com/es/sde/f/organizacoes/2010/11/19/cruzeiro_30x30.png",
+			"visitante": "Tupi",
+			"siglaVisitante": "TUP",
+			"escudoVisitante": "http://s.glbimg.com/es/sde/f/organizacoes/2011/01/13/tupi_30x30.png",
+			"local": {
+				"estadio": "Arena do Jacaré",
+				"cidade": "Sete Lagoas",
+				"uf": "MG"
+			}
+		},
+		"2012031213": {
+			"campeonato": "Goiano",
+			"mandante": "Itumbiara",
+			"siglaMandante": "ITU",
+			"escudoMandante": "http://s.glbimg.com/es/sde/f/organizacoes/2012/02/16/itumbiara_01_30.png",
+			"visitante": "Anapolina",
+			"siglaVisitante": "ANA",
+			"escudoVisitante": "http://s.glbimg.com/es/sde/f/organizacoes/2011/01/24/anapolina_30x30.png",
+			"local": {
+				"estadio": "Serra Dourada",
+				"cidade": "Goiânia",
+				"uf": "GO"
+			}
+		},
+		"2012031214": {
+			"campeonato": "Cearense",
+			"mandante": "Ceará",
+			"siglaMandante": "CEA",
+			"escudoMandante": "http://s.glbimg.com/es/sde/f/organizacoes/2010/11/19/ceara_30x30.png",
+			"visitante": "Fortaleza",
+			"siglaVisitante": "FOR",
+			"escudoVisitante": "http://s.glbimg.com/es/sde/f/organizacoes/2011/01/28/fortaleza_30x30.png",
+			"local": {
+				"estadio": "Castelão",
+				"cidade": "Fortaleza",
+				"uf": "CE"
+			}
+		},
+		"2012031215": {
+			"campeonato": "Carioca",
+			"mandante": "Vasco",
+			"siglaMandante": "VAS",
+			"escudoMandante": "http://s.glbimg.com/es/sde/f/organizacoes/2010/11/19/vasco_30x30.png",
+			"visitante": "Fluminense",
+			"siglaVisitante": "FLU",
+			"escudoVisitante": "http://s.glbimg.com/es/sde/f/organizacoes/2011/10/14/escudo_flu_30x30_.png",
+			"local": {
+				"estadio": "Engenhão",
+				"cidade": "Rio de Janeiro",
+				"uf": "RJ"
+			}
+		}
+	},
+	"distribuicao": [
+		{
+			"headend": "GVT",
+			"uf": "AL",
+			"operadora": "GVT Maceió",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "",
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "NET Maceió",
+			"uf": "AL",
+			"operadora": "NET Maceió MMDS digital",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "",
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "NET Maceió Big TV",
+			"uf": "AL",
+			"operadora": "NET Maceió (Digital)",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "",
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "NET Maceió Big TV",
+			"uf": "AL",
+			"operadora": "NET Maceió (CABO)",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "OI TV",
+			"uf": "AL",
+			"operadora": "Oi Maceió",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "GVT",
+			"uf": "AM",
+			"operadora": "GVT Manaus",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "",
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "NET Manaus",
+			"uf": "AM",
+			"operadora": "NET Manaus (MMDS Digital)",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "",
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "NET Manaus Vivax",
+			"uf": "AM",
+			"operadora": "NET Manaus (CABO Dig)",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "",
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "OI TV",
+			"uf": "AM",
+			"operadora": "Oi Manaus",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "GVT",
+			"uf": "BA",
+			"operadora": "GVT Salvador",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": 2012031204,
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031205,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Conquista",
+			"uf": "BA",
+			"operadora": "NET Vitória da Conquista MMDS ",
+			"jogos": {
+				"pfc1": 2012031204,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031205,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Feira de Santana",
+			"uf": "BA",
+			"operadora": "NET Feira de Santana",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": 2012031204,
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031205,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Feira de Santana",
+			"uf": "BA",
+			"operadora": "NET Feira de Santana CABO/MMDS ",
+			"jogos": {
+				"pfc1": 2012031204,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031205,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Itabuna",
+			"uf": "BA",
+			"operadora": "NET Itabuna / Ilhéus analógico ",
+			"jogos": {
+				"pfc1": 2012031204,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031205,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Salvador",
+			"uf": "BA",
+			"operadora": "NET Salvador (CABO)",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": 2012031204,
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031205,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Salvador MMDS",
+			"uf": "BA",
+			"operadora": "NET Salvador (MMDS)",
+			"jogos": {
+				"pfc1": 2012031204,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031205,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "OI TV",
+			"uf": "BA",
+			"operadora": "Oi Salvador",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": 2012031204,
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031205,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "GVT",
+			"uf": "CE",
+			"operadora": "GVT Fortaleza",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031214,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Fortaleza HD",
+			"uf": "CE",
+			"operadora": "NET Fortaleza (Digital)",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031214,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Juazeiro do Norte",
+			"uf": "CE",
+			"operadora": "NET Juazeiro do Norte",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031214,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Sobral",
+			"uf": "CE",
+			"operadora": "NET Sobral",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031214,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "OI TV",
+			"uf": "CE",
+			"operadora": "Oi Fortaleza",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031214,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "GVT",
+			"uf": "DF",
+			"operadora": "GVT Brasília",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "",
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "NET Brasília",
+			"uf": "DF",
+			"operadora": "NET Brasília (digital)",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "",
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "NET Brasília",
+			"uf": "DF",
+			"operadora": "NET Brasília (analógica)",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "",
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "OI TV",
+			"uf": "DF",
+			"operadora": "Oi Brasília",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "GVT",
+			"uf": "ES",
+			"operadora": "GVT Vitória",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "",
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "NEOTV São Mateus",
+			"uf": "ES",
+			"operadora": "NET São Mateus",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "",
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "NET Vitória",
+			"uf": "ES",
+			"operadora": "NET Vitória / Vila Velha (Digital)",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "",
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "NET Vitória",
+			"uf": "ES",
+			"operadora": "NET Vitória / Vila Velha CABO",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "",
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "OI TV",
+			"uf": "ES",
+			"operadora": "Oi Vitória",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "GVT",
+			"uf": "GO",
+			"operadora": "GVT Goiânia",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031213,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Anápolis",
+			"uf": "GO",
+			"operadora": "NET Anápolis ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031213,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Goiânia",
+			"uf": "GO",
+			"operadora": "NET Goiânia",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031213,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Goiânia",
+			"uf": "GO",
+			"operadora": "NET Goiânia (digital)",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031213,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "OI TV",
+			"uf": "GO",
+			"operadora": "Oi Goiânia",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031213,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "RTV",
+			"uf": "GO",
+			"operadora": "NET Rio Verde/GO",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031213,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "Supercabo ",
+			"uf": "GO",
+			"operadora": "NET Caratinga/GO",
+			"jogos": {
+				"pfc1": "",
+				"pfc2": "",
+				"pfc3": "",
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031213,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "GVT",
+			"uf": "MA",
+			"operadora": "GVT São Luis",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "",
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "NET São Luís",
+			"uf": "MA",
+			"operadora": "NET São Luis (MMDS dig)",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "",
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "OI TV",
+			"uf": "MA",
+			"operadora": "Oi São Luis",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "ACOM Juiz de Fora",
+			"uf": "MG",
+			"operadora": "NET Juiz de Fora ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031212,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "GVT",
+			"uf": "MG",
+			"operadora": "GVT Belo Horizonte ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": 2012031211,
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031212,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "Mastercabo Divinópolis",
+			"uf": "MG",
+			"operadora": "NET Divinópolis ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": 2012031211,
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031212,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "Mastercabo Itajubá",
+			"uf": "MG",
+			"operadora": "NET Itajubá",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031212,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "Mastercabo Lavras",
+			"uf": "MG",
+			"operadora": "NET Lavras",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031212,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "Mastercabo Montes Claros",
+			"uf": "MG",
+			"operadora": "NET Montes Claros",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031212,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "Mastercabo Passos",
+			"uf": "MG",
+			"operadora": "NET Passos ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031212,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "Mastercabo Pouso Alegre",
+			"uf": "MG",
+			"operadora": "NET Pouso Alegre ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031212,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "Mastercabo Unaí",
+			"uf": "MG",
+			"operadora": "NET Unaí",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031212,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "Mastercado Itaúna",
+			"uf": "MG",
+			"operadora": "NET Itaúna",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031212,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NEOTV Gov. Valadares",
+			"uf": "MG",
+			"operadora": "NET Governador Valadares",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031212,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NEOTV Gov. Valadares",
+			"uf": "MG",
+			"operadora": "NET (Cabo) (Gov. Valadares)",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031212,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Belo Horizonte ",
+			"uf": "MG",
+			"operadora": "NET Belo Horizonte (dig)",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": 2012031211,
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031212,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Belo Horizonte ",
+			"uf": "MG",
+			"operadora": "NET Belo Horizonte ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": "",
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031212,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Araxá",
+			"uf": "MG",
+			"operadora": "NET Araxá ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": 2012031211,
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031212,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Conselheiro Lafaiete",
+			"uf": "MG",
+			"operadora": "NET Conselheiro Lafaiete ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": 2012031211,
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031212,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Formiga",
+			"uf": "MG",
+			"operadora": "NET Formiga ",
+			"jogos": {
+				"pfc1": "",
+				"pfc2": "",
+				"pfc3": "",
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031212,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Ipatinga",
+			"uf": "MG",
+			"operadora": "NET Ipatinga ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031212,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Ituiutaba",
+			"uf": "MG",
+			"operadora": "NET Ituiutaba ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031212,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Jatobá",
+			"uf": "MG",
+			"operadora": "NET Jatoba (Contagem Rib Neves)",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": 2012031211,
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031212,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Jatobá",
+			"uf": "MG",
+			"operadora": "NET Ribeirão das Neves ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": 2012031211,
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031212,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Jatobá",
+			"uf": "MG",
+			"operadora": "NET Contagem ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": 2012031211,
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031212,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Juiz de Fora",
+			"uf": "MG",
+			"operadora": "NET Juiz de Fora ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031212,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Patos de Minas",
+			"uf": "MG",
+			"operadora": "NET Patos de Minas ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031212,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Sete Lagoas",
+			"uf": "MG",
+			"operadora": "NET Sete Lagoas ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": 2012031211,
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031212,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Uberaba",
+			"uf": "MG",
+			"operadora": "NET Uberaba ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031212,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Uberlândia",
+			"uf": "MG",
+			"operadora": "NET Uberlândia ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031212,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "OI TV",
+			"uf": "MG",
+			"operadora": "Oi Belo Horizonte ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031212,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "Supercabo - NEOTV",
+			"uf": "MG",
+			"operadora": "NET Caratinga",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031212,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "ACOM Campo Grande",
+			"uf": "MS",
+			"operadora": "NET Campo Grande",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031210,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "GVT",
+			"uf": "MS",
+			"operadora": "GVT Campo Grande",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031210,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Campo Grande",
+			"uf": "MS",
+			"operadora": "NET Campo Grande (digital)",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031210,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Campo Grande",
+			"uf": "MS",
+			"operadora": "NET Campo Grande",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031210,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "OI TV",
+			"uf": "MS",
+			"operadora": "Oi Campo Grande",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031210,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "GVT",
+			"uf": "MT",
+			"operadora": "GVT Cuiabá",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Cuiabá",
+			"uf": "MT",
+			"operadora": "NET Cuiabá",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Cuiabá",
+			"uf": "MT",
+			"operadora": "NET Cuiabá",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "OI TV",
+			"uf": "MT",
+			"operadora": "Oi Cuiabá",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "GVT",
+			"uf": "PA",
+			"operadora": "GVT Belém",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "",
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "NET Belém HD",
+			"uf": "PA",
+			"operadora": "NET Belém / Ananindeua",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "",
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "OI TV",
+			"uf": "PA",
+			"operadora": "Oi Belém",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "GVT",
+			"uf": "PB",
+			"operadora": "GVT João Pessoa",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "",
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "NET João Pessoa",
+			"uf": "PB",
+			"operadora": "NET João Pessoa (MMDS Digital)",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "",
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "NET João Pessoa Big TV",
+			"uf": "PB",
+			"operadora": "NET João Pessoa (Digital)",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "",
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "NET João Pessoa Big TV",
+			"uf": "PB",
+			"operadora": "NET João Pessoa (CABO)",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "OI TV",
+			"uf": "PB",
+			"operadora": "Oi João Pessoa",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "GVT",
+			"uf": "PE",
+			"operadora": "GVT Recife",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031209,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "NET Petrolina",
+			"uf": "PE",
+			"operadora": "NET Petrolina ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031209,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "NET Recife",
+			"uf": "PE",
+			"operadora": "NET Recife",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031209,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "NET Recife",
+			"uf": "PE",
+			"operadora": "NET Recife",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031209,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "OI TV",
+			"uf": "PE",
+			"operadora": "Oi Recife",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031209,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "GVT",
+			"uf": "PI",
+			"operadora": "GVT Teresina",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "",
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "NET Teresina",
+			"uf": "PI",
+			"operadora": "NET Teresina",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "",
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "OI TV",
+			"uf": "PI",
+			"operadora": "Oi Teresina",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "GVT",
+			"uf": "PR",
+			"operadora": "GVT Curitiba",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031208,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Arapongas",
+			"uf": "PR",
+			"operadora": "NET Arapongas ",
+			"jogos": {
+				"pfc1": "",
+				"pfc2": "",
+				"pfc3": "",
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031208,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Arapongas",
+			"uf": "PR",
+			"operadora": "NET Londrina (Digital) ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031208,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Arapongas",
+			"uf": "PR",
+			"operadora": "NET Londrina ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031208,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Curitiba",
+			"uf": "PR",
+			"operadora": "NET Curitiba (CABO)",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031208,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Curitiba",
+			"uf": "PR",
+			"operadora": "NET Curitiba (cabo-digital)",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031208,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Curitiba",
+			"uf": "PR",
+			"operadora": "NET Curitiba (MMDS)",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031208,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Foz do Iguaçu",
+			"uf": "PR",
+			"operadora": "NET Foz do Iguaçu ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031208,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Maringá",
+			"uf": "PR",
+			"operadora": "NET Maringá ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031208,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET umuarama",
+			"uf": "PR",
+			"operadora": "NET Umuarama ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031208,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "OI TV",
+			"uf": "PR",
+			"operadora": "Oi Curitiba",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031208,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "Sercomtel",
+			"uf": "PR",
+			"operadora": "NET Maringá ",
+			"jogos": {
+				"pfc1": "",
+				"pfc2": "",
+				"pfc3": "",
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031208,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "TVA Curitiba",
+			"uf": "PR",
+			"operadora": "TVA Curitiba",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031208,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "GVT",
+			"uf": "RJ",
+			"operadora": "GVT Rio de Janeiro",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "",
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "NET Angra dos Reis HD",
+			"uf": "RJ",
+			"operadora": "NET Angra dos Reis ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "",
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "NET Campos",
+			"uf": "RJ",
+			"operadora": "NET Campos dos Goytacazes ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "",
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "NET Niterói",
+			"uf": "RJ",
+			"operadora": "NET Niteroí ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "NET Niterói",
+			"uf": "RJ",
+			"operadora": "NET São Gonçalo ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "NET Rio Barra",
+			"uf": "RJ",
+			"operadora": "NET Rio de Janeiro(CABO Barra)",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "",
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "NET Rio Barra",
+			"uf": "RJ",
+			"operadora": "NET Rio de Janeiro (Barra Digital) ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "",
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "NET Rio Barra",
+			"uf": "RJ",
+			"operadora": "NET Rio de Janeiro (Itapiru Digital) ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "",
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "NET Volta Redonda",
+			"uf": "RJ",
+			"operadora": "NET Volta Redonda ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "OI TV",
+			"uf": "RJ",
+			"operadora": "Oi Rio de Janeiro",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "TVA Rio de Janeiro",
+			"uf": "RJ",
+			"operadora": "TVA Rio de Janeiro",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "",
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "GVT",
+			"uf": "RN",
+			"operadora": "GVT Natal",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "",
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "NET Natal",
+			"uf": "RN",
+			"operadora": "NET Natal (MMDS Digital)",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "",
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "OI TV",
+			"uf": "RN",
+			"operadora": "Oi Natal",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "GVT",
+			"uf": "RS",
+			"operadora": "GVT Porto Alegre",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031211,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Bagé",
+			"uf": "RS",
+			"operadora": "NET Bagé ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": "",
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031211,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Bento Gonçalves",
+			"uf": "RS",
+			"operadora": "NET Bento Gonçalves ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": "",
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031211,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Caxias do Sul",
+			"uf": "RS",
+			"operadora": "NET Caxias do Sul ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031211,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Cruz Alta",
+			"uf": "RS",
+			"operadora": "NET Cruz Alta ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": "",
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031211,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Erechim",
+			"uf": "RS",
+			"operadora": "NET Erechim ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": "",
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031211,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Farroupilha",
+			"uf": "RS",
+			"operadora": "NET Farroupilha ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": "",
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031211,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Gravataí",
+			"uf": "RS",
+			"operadora": "NET Gravataí",
+			"jogos": {
+				"pfc1": "",
+				"pfc2": "",
+				"pfc3": "",
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031211,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Lajeado",
+			"uf": "RS",
+			"operadora": "NET Lajeado ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": "",
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031211,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Litoral (Capão Novo)",
+			"uf": "RS",
+			"operadora": "NET Litoral (Capão Novo) ",
+			"jogos": {
+				"pfc1": "",
+				"pfc2": "",
+				"pfc3": "",
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031211,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Novo Hamburgo",
+			"uf": "RS",
+			"operadora": "NET Novo Hamburgo (ANA) ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031211,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Passo Fundo",
+			"uf": "RS",
+			"operadora": "NET Passo Fundo ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031211,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Pelotas",
+			"uf": "RS",
+			"operadora": "NET Pelotas ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031211,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Porto Alegre",
+			"uf": "RS",
+			"operadora": "NET Porto Alegre (DIGITAL)",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031211,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Porto Alegre",
+			"uf": "RS",
+			"operadora": "NET Porto Alegre (MMDS)",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031211,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Porto Alegre",
+			"uf": "RS",
+			"operadora": "NET Porto Alegre (CABO)",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031211,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Porto Alegre",
+			"uf": "RS",
+			"operadora": "NET Canoas (MMDS-dig) ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031211,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Porto Alegre",
+			"uf": "RS",
+			"operadora": "NET Viamão (MMDS-dig) ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031211,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Porto Alegre",
+			"uf": "RS",
+			"operadora": "NET Eldorado (MMDS-dig) ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031211,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Porto Alegre",
+			"uf": "RS",
+			"operadora": "NET Cachoeirinha (MMDS-dig) ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031211,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Porto Alegre",
+			"uf": "RS",
+			"operadora": "NET Esteio (MMDS-dig) ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031211,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Porto Alegre",
+			"uf": "RS",
+			"operadora": "NET Nova Santa Rita (MMDS-dig) ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031211,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Porto Alegre",
+			"uf": "RS",
+			"operadora": "NET Gravatí (MMDS-dig) ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031211,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Porto Alegre",
+			"uf": "RS",
+			"operadora": "NET São Leopoldo (MMDS-digital) ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031211,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Porto Alegre",
+			"uf": "RS",
+			"operadora": "NET Alvorada (MMDS-dig) ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031211,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Porto Alegre",
+			"uf": "RS",
+			"operadora": "NET Guaíba (MMDS-dig) ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031211,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Porto Alegre",
+			"uf": "RS",
+			"operadora": "NET Novo Hamburgo (MMDS-dig) ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031211,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Porto Alegre",
+			"uf": "RS",
+			"operadora": "NET Portão (MMDS-dig) ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031211,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Porto Alegre",
+			"uf": "RS",
+			"operadora": "NET Barra do Ribeiro (MMDS-dig) ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031211,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Porto Alegre",
+			"uf": "RS",
+			"operadora": "NET Campo Bom (MMDS-dig) ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031211,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Rio Grande",
+			"uf": "RS",
+			"operadora": "NET Rio Grande ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031211,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Santa Cruz do Sul",
+			"uf": "RS",
+			"operadora": "NET Santa Cruz do Sul ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": "",
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031211,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Santa Maria",
+			"uf": "RS",
+			"operadora": "NET Santa Maria ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031211,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Uruguaiana",
+			"uf": "RS",
+			"operadora": "NET Uruguaiana ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": "",
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031211,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "OI TV",
+			"uf": "RS",
+			"operadora": "Oi Porto Alegre",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031211,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "TVA Porto Alegre",
+			"uf": "RS",
+			"operadora": "TVA Porto Alegre",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031211,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "GVT",
+			"uf": "SC",
+			"operadora": "GVT Florianópolis ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031207,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Blumenau",
+			"uf": "SC",
+			"operadora": "NET Blumenau ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031207,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Chapecó",
+			"uf": "SC",
+			"operadora": "NET Chapecó ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": "",
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031207,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Concórdia",
+			"uf": "SC",
+			"operadora": "NET Concórdia ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031207,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Criciúma",
+			"uf": "SC",
+			"operadora": "NET Criciúma ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031207,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Florianópolis",
+			"uf": "SC",
+			"operadora": "NET Florianópolis (CABO)",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031207,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Florianópolis",
+			"uf": "SC",
+			"operadora": "NET Florianópolis (DIG)",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031207,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Jaraguá do Sul",
+			"uf": "SC",
+			"operadora": "NET Jaraguá do Sul ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031207,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Joaçaba",
+			"uf": "SC",
+			"operadora": "NET Joaçaba ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031207,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Joinville",
+			"uf": "SC",
+			"operadora": "NET Joinville ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031207,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Lages",
+			"uf": "SC",
+			"operadora": "NET Lages ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031207,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET São José",
+			"uf": "SC",
+			"operadora": "NET São José ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031207,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "OI TV",
+			"uf": "SC",
+			"operadora": "Oi Florianópolis ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031203,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031207,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "GVT",
+			"uf": "SE",
+			"operadora": "GVT Aracaju",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "",
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "NET Aracaju",
+			"uf": "SE",
+			"operadora": "NET Aracaju",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "OI TV",
+			"uf": "SE",
+			"operadora": "Oi Aracaju",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031203,
+				"band": 2012031203
+			}
+		},
+		{
+			"headend": "Catanduva Sistemas",
+			"uf": "SP",
+			"operadora": "NET Catanduva ",
+			"jogos": {
+				"pfc1": "",
+				"pfc2": "",
+				"pfc3": "",
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "GVT",
+			"uf": "SP",
+			"operadora": "GVT São Paulo",
+			"jogos": {
+				"pfc1": 2012031206,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "LINSAT",
+			"uf": "SP",
+			"operadora": "NET Lins",
+			"jogos": {
+				"pfc1": "",
+				"pfc2": "",
+				"pfc3": "",
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "LINSAT",
+			"uf": "SP",
+			"operadora": "LINSAT - Lins",
+			"jogos": {
+				"pfc1": "",
+				"pfc2": "",
+				"pfc3": "",
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Alphaville",
+			"uf": "SP",
+			"operadora": "NET Alphaville ",
+			"jogos": {
+				"pfc1": 2012031203,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Alphaville HD",
+			"uf": "SP",
+			"operadora": "NET Barueri/Santana do Paraiba ",
+			"jogos": {
+				"pfc1": 2012031206,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Bauru",
+			"uf": "SP",
+			"operadora": "NET Bauru ",
+			"jogos": {
+				"pfc1": 2012031203,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Bragança Paulista",
+			"uf": "SP",
+			"operadora": "NET Bragança Paulista ",
+			"jogos": {
+				"pfc1": 2012031203,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Campinas",
+			"uf": "SP",
+			"operadora": "NET Itú",
+			"jogos": {
+				"pfc1": 2012031203,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Campinas",
+			"uf": "SP",
+			"operadora": "NET Indaiatuba",
+			"jogos": {
+				"pfc1": 2012031203,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Campinas",
+			"uf": "SP",
+			"operadora": "NET Campinas/Indaiatuba (Digital) ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Campinas",
+			"uf": "SP",
+			"operadora": "NET Campinas /Indaiatuba (CABO) ",
+			"jogos": {
+				"pfc1": 2012031203,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Campinas",
+			"uf": "SP",
+			"operadora": "NET Hortolandia",
+			"jogos": {
+				"pfc1": 2012031203,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Campinas",
+			"uf": "SP",
+			"operadora": "NET Sumaré",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Campinas",
+			"uf": "SP",
+			"operadora": "NET Americana",
+			"jogos": {
+				"pfc1": 2012031203,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Campinas",
+			"uf": "SP",
+			"operadora": "NET Santa Barbara d Oeste",
+			"jogos": {
+				"pfc1": 2012031203,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Campinas",
+			"uf": "SP",
+			"operadora": "NET Limeira",
+			"jogos": {
+				"pfc1": 2012031203,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Campinas",
+			"uf": "SP",
+			"operadora": "NET Mogi Mirim",
+			"jogos": {
+				"pfc1": 2012031203,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Campinas",
+			"uf": "SP",
+			"operadora": "NET Mogi Guaçu",
+			"jogos": {
+				"pfc1": 2012031203,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Campinas",
+			"uf": "SP",
+			"operadora": "NET Araras",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Campinas",
+			"uf": "SP",
+			"operadora": "NET Rio Claro",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Caraguatatuba",
+			"uf": "SP",
+			"operadora": "NET Ubatuba",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Caraguatatuba",
+			"uf": "SP",
+			"operadora": "NET Caraguatatuba ",
+			"jogos": {
+				"pfc1": 2012031203,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Catanduva",
+			"uf": "SP",
+			"operadora": "NET Catanduva ",
+			"jogos": {
+				"pfc1": "",
+				"pfc2": "",
+				"pfc3": "",
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Franca",
+			"uf": "SP",
+			"operadora": "NET Franca ",
+			"jogos": {
+				"pfc1": 2012031203,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Guarujá",
+			"uf": "SP",
+			"operadora": "NET Guarujá",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Jundiaí",
+			"uf": "SP",
+			"operadora": "NET Jundiaí ",
+			"jogos": {
+				"pfc1": 2012031203,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Marília",
+			"uf": "SP",
+			"operadora": "NET Marilia",
+			"jogos": {
+				"pfc1": 2012031203,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Osasco",
+			"uf": "SP",
+			"operadora": "NET Osasco ",
+			"jogos": {
+				"pfc1": 2012031206,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Piracicaba",
+			"uf": "SP",
+			"operadora": "NET Piracicaba ",
+			"jogos": {
+				"pfc1": 2012031203,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Ribeirão Preto",
+			"uf": "SP",
+			"operadora": "NET Ribeirão Preto (CABO) ",
+			"jogos": {
+				"pfc1": 2012031203,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Ribeirão Preto",
+			"uf": "SP",
+			"operadora": "NET Ribeirão Preto (CABO/DIG) ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET S J dos Campos",
+			"uf": "SP",
+			"operadora": "NET São José dos Campos",
+			"jogos": {
+				"pfc1": 2012031203,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET S J dos Campos",
+			"uf": "SP",
+			"operadora": "NET Jacareí",
+			"jogos": {
+				"pfc1": 2012031203,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET S J dos Campos",
+			"uf": "SP",
+			"operadora": "NET Caçapava",
+			"jogos": {
+				"pfc1": 2012031203,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET S J dos Campos",
+			"uf": "SP",
+			"operadora": "NET Taubaté",
+			"jogos": {
+				"pfc1": 2012031203,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET S J Rio Preto",
+			"uf": "SP",
+			"operadora": "NET São José do Rio Preto ",
+			"jogos": {
+				"pfc1": 2012031203,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Santos",
+			"uf": "SP",
+			"operadora": "NET Cubatão",
+			"jogos": {
+				"pfc1": 2012031203,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Santos",
+			"uf": "SP",
+			"operadora": "NET São Vicente",
+			"jogos": {
+				"pfc1": 2012031203,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Santos",
+			"uf": "SP",
+			"operadora": "NET Praia Grande",
+			"jogos": {
+				"pfc1": 2012031203,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Santos",
+			"uf": "SP",
+			"operadora": "NET Santos (Digital)",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Santos",
+			"uf": "SP",
+			"operadora": "NET Santos ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Santos",
+			"uf": "SP",
+			"operadora": "NET Peruíbe",
+			"jogos": {
+				"pfc1": "",
+				"pfc2": "",
+				"pfc3": "",
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET São Carlos",
+			"uf": "SP",
+			"operadora": "NET São Carlos ",
+			"jogos": {
+				"pfc1": 2012031203,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET São Paulo",
+			"uf": "SP",
+			"operadora": "NET São Paulo (V.Mariana DIG)",
+			"jogos": {
+				"pfc1": 2012031206,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET São Paulo",
+			"uf": "SP",
+			"operadora": "NET São Paulo (Butantã DIG)",
+			"jogos": {
+				"pfc1": 2012031206,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET São Paulo",
+			"uf": "SP",
+			"operadora": "NET São Paulo (V.Mariana CABO)",
+			"jogos": {
+				"pfc1": 2012031206,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET São Paulo",
+			"uf": "SP",
+			"operadora": "NET São Paulo (Butantã CABO)",
+			"jogos": {
+				"pfc1": 2012031206,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET São Paulo",
+			"uf": "SP",
+			"operadora": "NET São Paulo (analógico)",
+			"jogos": {
+				"pfc1": 2012031203,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET São Paulo",
+			"uf": "SP",
+			"operadora": "NET Guarulhos",
+			"jogos": {
+				"pfc1": 2012031206,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET São Paulo",
+			"uf": "SP",
+			"operadora": "NET Mogi das Cruzes",
+			"jogos": {
+				"pfc1": 2012031206,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET São Paulo",
+			"uf": "SP",
+			"operadora": "NET São Caetano do Sul",
+			"jogos": {
+				"pfc1": 2012031206,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET São Paulo",
+			"uf": "SP",
+			"operadora": "NET Diadema",
+			"jogos": {
+				"pfc1": 2012031206,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET São Paulo",
+			"uf": "SP",
+			"operadora": "NET Santo André",
+			"jogos": {
+				"pfc1": 2012031206,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET São Paulo",
+			"uf": "SP",
+			"operadora": "NET São Bernardo do Campo",
+			"jogos": {
+				"pfc1": 2012031206,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET São Paulo",
+			"uf": "SP",
+			"operadora": "NET Maua",
+			"jogos": {
+				"pfc1": 2012031206,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "NET Sorocaba",
+			"uf": "SP",
+			"operadora": "NET Sorocaba ",
+			"jogos": {
+				"pfc1": 2012031203,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "Powerlice Guarujá",
+			"uf": "SP",
+			"operadora": "NET Guarujá",
+			"jogos": {
+				"pfc1": "",
+				"pfc2": "",
+				"pfc3": "",
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "Powerlice Guarujá",
+			"uf": "SP",
+			"operadora": "NET Guaruja (MMDS)",
+			"jogos": {
+				"pfc1": "",
+				"pfc2": "",
+				"pfc3": "",
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "Supermidia Votorantim",
+			"uf": "SP",
+			"operadora": "CABO Votorantim ",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "Telefônica",
+			"uf": "SP",
+			"operadora": "TEL São Paulo Capital",
+			"jogos": {
+				"pfc1": 2012031203,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "Telefônica",
+			"uf": "SP",
+			"operadora": "TEL São Caetano do Sul",
+			"jogos": {
+				"pfc1": 2012031203,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "Telefônica",
+			"uf": "SP",
+			"operadora": "TEL Jundiaí",
+			"jogos": {
+				"pfc1": 2012031203,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "Telefônica",
+			"uf": "SP",
+			"operadora": "TEL Santos",
+			"jogos": {
+				"pfc1": 2012031203,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "Telefônica",
+			"uf": "SP",
+			"operadora": "TEL São José dos Campos",
+			"jogos": {
+				"pfc1": "",
+				"pfc2": "",
+				"pfc3": "",
+				"pfc4": "",
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "Telefônica",
+			"uf": "SP",
+			"operadora": "TEL Campinas",
+			"jogos": {
+				"pfc1": 2012031201,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "Telefônica",
+			"uf": "SP",
+			"operadora": "TEL Mogi Mirim",
+			"jogos": {
+				"pfc1": 2012031203,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "Telefônica",
+			"uf": "SP",
+			"operadora": "TEL Ribeirão Preto",
+			"jogos": {
+				"pfc1": 2012031203,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "Telefônica",
+			"uf": "SP",
+			"operadora": "TEL Marilia",
+			"jogos": {
+				"pfc1": 2012031203,
+				"pfc2": "BBB - 12",
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": "",
+				"pfc6": "",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		},
+		{
+			"headend": "TVA São Paulo",
+			"uf": "SP",
+			"operadora": "TVA São Paulo",
+			"jogos": {
+				"pfc1": 2012031206,
+				"pfc2": 2012031203,
+				"pfc3": 2012031202,
+				"pfc4": 2012031212,
+				"pfc5": 2012031211,
+				"pfc6": "BBB - 12",
+				"pfc7": "",
+				"pfc8": "",
+				"globo": 2012031201,
+				"band": 2012031201
+			}
+		}
+	]
+}

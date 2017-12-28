@@ -1,0 +1,50 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector="#popup">
+		<ul class="message mensagemPopup" id="mensagemPopup"></ul>
+		<h3>${i18n.get('recuperar-senha')}</h3>
+		<form id="frmRecuperarSenha">
+			<ul class='message'/>
+			<fieldset>
+				<ul>
+					<li>
+						<label for="txtLogin"><span class="required">*</span>${i18n.get('login')}</label>
+						<input type="text" id="txtLogin"></input>
+					</li>
+				</ul>
+			</fieldset>
+		</form>
+		<a id="btnCancelar" class="button azul">${i18n.get('cancelar')}</a>
+		<a id="btnRecuperar" class="button azul">${i18n.get('solicitar-alteracao')}</a>
+	</template>
+	<script>
+		$(document).ready(function(){
+			$('#frmRecuperarSenha').form();
+			$('#mensagemPopup').message(i18n.get('informacao-de-solicitacao'),'error',true);
+		});
+		$("#popup").xdialog({
+			overlay: '#23557E',
+			alpha: '3',
+			width: 450
+		});
+		var path = this.path;
+		$('#btnRecuperar').click(function(){
+			if($('#txtLogin').val()==""){
+				$('#mensagemPopup').html('');
+				$('#mensagemPopup').message(i18n.get('informar-login'),'error',true);
+			}else{
+				$.getJSON(path + "recuperarSenha", {usuario : $('#txtLogin').val()},function(sucesso){
+					if(sucesso){
+						$('#mensagemPopup').html('');
+						$('#mensagemPopup').message(i18n.get('sucesso-recuperar-senha'),'success',true);
+						$('#txtLogin').val('');
+						
+					}
+				});
+			}
+		});
+		
+		$('#btnCancelar').click(function(){
+			$('#popup').xundialog();
+		});
+	</script>
+</engine>

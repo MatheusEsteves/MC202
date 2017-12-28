@@ -1,0 +1,11 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector="#popup">
+		<h3>${i18n.get(titulo)}</h3>
+		<p style="padding-top:15px;size:12px;font-family:calibri;padding-bottom:15px;">
+			${i18n.get(mensagem.texto, mensagem.params)}
+		</p>
+		<a id="btnCancelar" class="button azul">${i18n.get('cancelar')}</a>
+		<a id="btnConfirmar" class="button azul">${i18n.get('confirmar')}</a>
+	</template>
+
+</engine>

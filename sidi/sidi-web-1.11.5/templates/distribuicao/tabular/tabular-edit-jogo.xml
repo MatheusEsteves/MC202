@@ -1,0 +1,77 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0"
+	cacheable="true">
+	<template selector="#popup">
+		<ul class="message mensagemPopup" id="mensagemPopup"></ul>
+		<h4>${i18n.get('alterar-jogo')}</h4>
+		<div class="tab">
+			<ul>
+	            <li>
+	                <a href="#">${i18n.get('informacoes-evento')}</a>
+	            </li>
+	            <li>
+	                <a href="#"  id="tab2">${i18n.get('informacoes-operadora')}</a>
+	            </li>
+	        </ul>
+			<div class="container">
+				<form id="frmEditJogo">
+					<div class="container">
+						<div class="confronto">
+							<span style="background-image: url('${evento.mandante.urlBrasao}')" class="time">${evento.mandante.apelido}</span>
+							<div class="versus">
+								<span>X</span>
+							</div>
+							<span style="background-image: url('${evento.visitante.urlBrasao}')" class="time">${evento.visitante.apelido}</span>
+						</div>
+						<fieldset>
+							<ul>
+								<li >
+									<div class="readOnly-field">
+										<label><span class="required">*</span>${i18n.get('campeonato')}:</label>
+										${evento.fase.campeonato.nome}
+									</div>
+								</li>
+								<li >
+									<div class="readOnly-field">
+										<label><span class="required">*</span>${i18n.get('rodada')}:</label>
+										${evento.rodada}
+									</div>
+								</li>
+								<li >
+									<div class="readOnly-field">
+										<label><span class="required">*</span>${i18n.get('fase')}:</label>
+										${evento.fase.nome}
+									</div>
+								</li>
+								<li >
+									<label><span class="required">*</span>${i18n.get('data')}:</label>
+									<input type="text" id="txtNovaData" value="${date.dateToString(evento.data)}" alt="date"
+										class="data" name="data"></input>
+								</li>
+								<li class="required">
+									<label for="txtNovaHora"><span class="required">*</span>${i18n.get('hora')}:
+									</label>
+									<input id="txtNovaHora" type="text" alt="time" value="${date.dateToHourString(evento.data)}"
+										name="hora"></input>
+								</li>
+								<li>
+									<label for="txtNovaHora">${i18n.get('classificacaoJogo')}:
+									</label>
+									<input type="text" name="classificacaoJogo" value="${evento.classificacaoJogo}"/>
+								</li>
+								<li>
+									<label for="estadio">${i18n.get('estadio')}:</label>
+									<input type="text" name="estadio"
+										class="estadio ui-autocomplete-input" value="{if evento.estadio != null}${evento.estadio.nomePopular}{/if}" />
+								</li>
+							</ul>
+						</fieldset>
+					</div>
+				</form>
+			</div>
+			<div id="extraInfo" class="container">
+			</div>
+		</div>
+		<a id="btnCancelarEditJogo" class="button azul">${i18n.get('cancelar')}</a>
+		<a id="btnCriarEditJogo" class="button azul">${i18n.get('confirmar')}</a>
+	</template>
+</engine>

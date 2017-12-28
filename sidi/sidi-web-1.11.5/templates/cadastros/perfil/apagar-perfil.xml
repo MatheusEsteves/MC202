@@ -1,0 +1,35 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector="#popup">
+		<h4>${i18n.get('apagar-perfil')}</h4>
+		<p style="margin:15px 0;">${i18n.get('confirmacao-apagar-perfil')}</p>
+		<a id="btnRealizarExclusao" class="button azul">${i18n.get('confirmar')}</a>
+		<a id="btnCancelarExclusao" class="button azul">${i18n.get('cancelar')}</a>
+	</template>
+	<script>
+		<![CDATA[
+			$("#popup").xdialog({
+				overlay: '#23557E',
+				alpha: '3',
+				width: '300'
+			});
+			
+			var perfil = this.perfil;
+			$('#btnRealizarExclusao').click(function(){
+				$.getJSON("../sidi/perfil/apagarPerfil",{arg : JSON.stringify(perfil)}, function(resposta){
+					if(resposta){
+						$('#popup').xundialog();
+						$('html, body').animate({scrollTop:0}, 'fast');
+						$('.message').message(i18n.get('sucesso-apagar-perfil'),'success',true);
+						$.getJSON("../sidi/perfil/buscarPerfis",function(perfis) {
+							$.holy("../templates/cadastros/perfil/perfis-cadastrados.xml", {'perfis':perfis});
+						});
+					}
+				});
+			});
+			
+			$('#btnCancelarExclusao').click(function(){
+				$('#popup').xundialog();
+			});
+		]]>
+	</script>
+</engine>

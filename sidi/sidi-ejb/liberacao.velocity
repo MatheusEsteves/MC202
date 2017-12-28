@@ -1,0 +1,16 @@
+<html>
+<body>
+<div style="font-family:Verdana; color:#000;">
+<p>Prezados,</p>
+<br>
+<p>Distribuição dos eventos de $data liberada para consulta no SIDI.</p>
+<p>Para acessar o SIDI utilize o endereço: <a href="https://sidi.aws.globosat.com.br">https://sidi.aws.globosat.com.br</a>, e utilize suas credenciais de acesso.</p>
+<p>Utilize o SIDI para solicitar alterações na distribuição sugerida, caso seja necessário.</p>
+<p><span style="font-weight: bold;text-decoration: underline;">Observação</span>: 
+<span style="color:#f00;">$!{observacao}</span></p>
+<br>
+<p>Atenciosamente,</p>
+<p>SIDI – Sistema de Distribuição</p>
+</div>
+</body>
+</html>

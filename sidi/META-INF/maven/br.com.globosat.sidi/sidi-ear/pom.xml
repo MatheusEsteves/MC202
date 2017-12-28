@@ -1,0 +1,59 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>br.com.globosat.sidi</groupId>
+    <artifactId>sidi-ear</artifactId>
+    <version>1.11.5</version>
+    <name>sidi-ear</name>
+    <packaging>ear</packaging>
+    
+	<parent>
+		<artifactId>sidi-parent</artifactId>
+		<groupId>br.com.globosat.sidi</groupId>
+		<version>1.11.5</version>
+		<relativePath>../</relativePath>
+	</parent>
+
+	<dependencies>
+		<dependency>
+			<groupId>br.com.globosat.sidi</groupId>
+			<artifactId>sidi-web</artifactId>
+			<version>${project.version}</version>
+			<type>war</type>
+		</dependency>
+		<dependency>
+			<groupId>br.com.globosat.sidi</groupId>
+			<artifactId>sidi-ejb</artifactId>
+			<version>${project.version}</version>
+			<type>ejb</type>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>sidi</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-ear-plugin</artifactId>
+				<configuration>
+					<version>5</version>
+					<defaultLibBundleDir>lib</defaultLibBundleDir>
+					<modules>
+						<webModule>
+							<groupId>br.com.globosat.sidi</groupId>
+							<artifactId>sidi-web</artifactId>
+							<contextRoot>/sidi</contextRoot>
+						</webModule>
+						<ejbModule>
+							<groupId>br.com.globosat.sidi</groupId>
+							<artifactId>sidi-ejb</artifactId>
+							<bundleFileName>sidi-ejb.jar</bundleFileName>
+						</ejbModule>
+					</modules>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

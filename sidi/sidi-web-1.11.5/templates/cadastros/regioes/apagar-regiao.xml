@@ -1,0 +1,45 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0"
+	cacheable="true">
+	<template selector="#popup">
+		<h4>${i18n.get('apagar-regiao')}</h4>
+		<p style="margin:15px 0;">${i18n.get('confirmacao-apagar-regiao')}</p>
+		<a id="btnRealizarExclusao" class="button azul">${i18n.get('confirmar')}</a>
+		<a id="btnCancelarExclusao" class="button azul">${i18n.get('cancelar')}</a>
+	</template>
+	<script>
+		<![CDATA[
+			$("#popup").xdialog({
+				overlay: '#23557E',
+				alpha: '3',
+				width: '300'
+			});
+			
+			var regiao = this.regiao;
+			$('#btnRealizarExclusao').click(function(){
+				$.getJSON("../sidi/regioes/apagarRegiao",{arg : JSON.stringify(regiao)}, function(resposta){
+					if(resposta){
+						$('#popup').xundialog();
+						$('html, body').animate({scrollTop:0}, 'fast');
+						$('.message').message(i18n.get('sucesso-apagar-regiao'),'success',true);
+						var data = {
+							path : [
+							        '/sidi/regioes/buscarRegioes',
+							 ],
+							 arg : []
+						}
+						$.getJSON("../sidi", data, function(json) {
+							var todasRegioes = json[0];
+							$.holy("../templates/cadastros/regioes/cadastro-regioes.xml", {
+								regioes : todasRegioes
+							});
+						});
+					}
+				});
+			});
+			
+			$('#btnCancelarExclusao').click(function(){
+				$('#popup').xundialog();
+			});
+		]]>
+	</script>
+</engine>

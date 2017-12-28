@@ -1,0 +1,26 @@
+<div class="topo">
+	<div class="titulo">
+		<span class="operadora-selecionada" style="display: inline;">
+			${controller.getNomeOperadoraSelecionada()}
+			<a class="edit ttip selecionar-operadora" title="${i18n.get('selecionar-operadora')}" style="display: none;"></a>
+		</span>
+		<select style="display: none;" class="operadoras-usuario">
+		</select>
+	</div>
+	<div class="separador"></div>
+</div>
+<div class="filtro">
+	<div class="data data-selecionada seletor-de-data">
+		<label for="dataEventos">${i18n.get('jogos-dia')} </label>
+		<input type="text" value="${controller.getDataFormatada()}" class="dataEventos" disabled="disabled">
+		<div class="hora">
+			<span title="${i18n.get('selecionar-horario-ttip')}" class="ttip"> ${controller.getHorarioFormatado()} </span>
+			<select class="horaEventos">
+			</select>
+		</div>
+	</div>
+	<div class="status">
+		<span class="statusAlteracao">${i18n.get('status')}:</span><span class="statusLabel"></span>
+	</div>
+	<div class="clear"></div>
+</div>

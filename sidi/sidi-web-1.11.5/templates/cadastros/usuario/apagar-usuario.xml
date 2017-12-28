@@ -1,0 +1,56 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector="#popup">
+		<h4>${i18n.get('apagar-usuario')}</h4>
+		<p style="margin:15px 0;">${i18n.get('confirmacao-apagar-usuario')}</p>
+		<a id="btnRealizarExclusao" class="button azul">${i18n.get('confirmar')}</a>
+		<a id="btnCancelarExclusao" class="button azul">${i18n.get('cancelar')}</a>
+	</template>
+	<script>
+		<![CDATA[
+			$("#popup").xdialog({
+				overlay: '#23557E',
+				alpha: '3',
+				width: '300'
+			});
+			
+			var usuario   = this.usuario;
+			var idUsuario = this.idUsuario;
+			var usuarios  = this.usuarios;
+			var callback  = this.callback;
+					
+			$('#btnRealizarExclusao').on("click",function(){
+			  var usuarioEmVetor = [usuario];
+			  $.postJSON("../sidi/usuario/apagarUsuarios",[usuarioEmVetor], function(resposta){
+					if(resposta){
+						$('#popup').xundialog();
+						$('html, body').animate({scrollTop:0}, 'fast');
+					    $('#'+usuario.id).detach();
+					    $('.message').message(i18n.get('sucesso-apagar-usuario'),'success',true);
+					    
+				        var usuarioEncontrado = false;
+					    for (var j = 0; j < usuarios.length && !usuarioEncontrado; j++)
+					      if (usuarios[j].id == usuario.id){
+					        usuarios.splice(j,1);
+					        usuarioEncontrado = true;
+					      }
+
+					    if (usuarios.length == 0){
+					      $("#col_todos").hide();
+					      $("#tblListaDeUsuarios tbody").append("<tr><td>"+i18n.get('nenhum-registro-encontrado')+"</td></tr>");
+					    }
+					    
+					    callback(usuarios,1);
+					}
+					else{
+					  $('#mensagemPopup').html('');
+					  $('#mensagemPopup').message(i18n.get('falha-apagar-usuario'), 'error', true);
+				    } 
+		      });
+			});
+			
+			$('#btnCancelarExclusao').click(function(){
+				$('#popup').xundialog();
+			});
+		]]>
+	</script>
+</engine>

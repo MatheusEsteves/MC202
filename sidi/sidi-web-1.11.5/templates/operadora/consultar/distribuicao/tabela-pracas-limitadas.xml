@@ -1,0 +1,194 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0"
+	cacheable="true">
+	<template selector="#pracas-limitadas">
+		<div class="tabela tabela-geral">
+			{for operadoraCanalEventos in json}
+			<div class="oper oper${operadoraCanalEventos.operadora.id}">
+				<div class="header">${operadoraCanalEventos.operadora.nome}</div>
+				<div class="content">
+					<table border="0" cellpadding="0" cellspacing="0">
+						<tr>
+							<th colspan="9">Para os Canais SD</th>
+						</tr>
+						<tr>
+							<th>${i18n.get('distribuicao.operadora.horario')}</th>
+							{if sidi.possuiAutorizacao('CONSULTAR_DISTRIBUICAO', 'GERENCIAR_DISTRIBUICAO', 'LIBERAR_DISTRIBUICAO_OPERADORAS')}
+								<th>Status</th>
+							{/if}
+							<th>${i18n.get('distribuicao.operadora.canal')}</th>
+							<th>${i18n.get('distribuicao.operadora.evento')}</th>
+							<th>${i18n.get('distribuicao.operadora.campeonato')}</th>
+							<th>${i18n.get('distribuicao.operadora.abrir')}</th>
+							<th>${i18n.get('distribuicao.operadora.fechar')}</th>							
+							<th>${i18n.get('distribuicao.operadora.acoes')}</th>
+						</tr>
+						{for horarioCanal in operadoraCanalEventos.horarioCanalEventosSDVOs}
+							{for canalEventos in horarioCanal.canalEventoVOs}
+							<tr class="canal_${canalEventos.canalId} horario_${horarioCanal.dataEvento}">
+								{if canalEventos_index === '0' }
+								<td class="hour" rowspan="${horarioCanal.canalEventoVOs.length}">${date.dateToHourString(horarioCanal.dataEvento)}</td>
+								{/if}
+								{if sidi.possuiAutorizacao('CONSULTAR_DISTRIBUICAO', 'GERENCIAR_DISTRIBUICAO', 'LIBERAR_DISTRIBUICAO_OPERADORAS')}
+									<td class="status_${horarioCanal.dataEvento}">${canalEventos.status ? canalEventos.status : ' - '}</td>
+								{/if}
+								<td class="canal_nome_${horarioCanal.dataEvento}">${canalEventos.nomeCanal || ' - '}</td>
+								<td class="evento_${horarioCanal.dataEvento}">${canalEventos.descricaoEvento || ' - '}</td>
+								<td class="campeonato_${horarioCanal.dataEvento}">${canalEventos.campeonato ? canalEventos.campeonato : ' - '}</td>
+								<td  class="data_inicio_${horarioCanal.dataEvento}">${canalEventos.inicioTransmissao ? date.dateToHourString(canalEventos.inicioTransmissao) : ' - '}</td>
+								<td  class="data_fim_${horarioCanal.dataEvento}">${canalEventos.terminoTransmissao ? date.dateToHourString(canalEventos.terminoTransmissao) : ' - '}</td>
+								
+								{if canalEventos.tipoCanal == 'ABERTO' || sidi.temPerfil('Consulta-GSAT')}
+									<td> - </td>				
+								{else}
+									{if canalEventos.distribuicaoOperadoraId}
+										<td class="edit">
+											<a href="javascript:void(0)" data-canal-id="${canalEventos.canalId}" data-tipo-canal="PPV_SD"
+												data-horario="${horarioCanal.dataEvento}" data-operadora="${operadoraCanalEventos.operadora.id}"
+												data-dist-operadora="${canalEventos.distribuicaoOperadoraId}"
+												data-evento="${canalEventos.eventoId}"
+												data-dist-principal="${canalEventos.distribuicaoPrincipalId}"
+												class="mudarEvento_limitada adicionar">${i18n.get('distribuicao.operadora.alterar.evento')}
+											</a>
+										</td>
+									{else}								
+										<td class="associate">
+											<a href="javascript:void(0)" data-canal-id="${canalEventos.canalId}" data-tipo-canal="PPV_SD"
+												data-horario="${horarioCanal.dataEvento}" data-operadora="${operadoraCanalEventos.operadora.id}"
+												data-dist-operadora="${canalEventos.distribuicaoOperadoraId}"
+												data-evento="${canalEventos.eventoId}"
+												class="mudarEvento_limitada associate">${i18n.get('distribuicao.operadora.associar.evento')}
+											</a>								
+										</td>										
+									{/if}
+								{/if}
+							</tr>
+							{/for}
+						{/for}
+						
+						<tr>
+							<td colspan="9"></td>
+						</tr>
+						<tr>
+							<th colspan="9">Para os Canais HD</th>
+						</tr>
+						<tr>
+							<th>${i18n.get('distribuicao.operadora.horario')}</th>
+							{if sidi.possuiAutorizacao('CONSULTAR_DISTRIBUICAO', 'GERENCIAR_DISTRIBUICAO', 'LIBERAR_DISTRIBUICAO_OPERADORAS')}
+								<th>Status</th>
+							{/if}
+							<th>${i18n.get('distribuicao.operadora.canal')}</th>
+							<th>${i18n.get('distribuicao.operadora.evento')}</th>
+							<th>${i18n.get('distribuicao.operadora.campeonato')}</th>
+							<th>${i18n.get('distribuicao.operadora.abrir')}</th>
+							<th>${i18n.get('distribuicao.operadora.fechar')}</th>							
+							<th>${i18n.get('distribuicao.operadora.acoes')}</th>
+						</tr>
+						{for horarioCanal in operadoraCanalEventos.horarioCanalEventosHDVOs}
+							{for canalEventos in horarioCanal.canalEventoVOs}
+							<tr class="canal_${canalEventos.canalId} horario_${horarioCanal.dataEvento}">
+								{if canalEventos_index === '0' }
+								<td class="hour" rowspan="${horarioCanal.canalEventoVOs.length}">${date.dateToHourString(horarioCanal.dataEvento)}</td>
+								{/if}
+								{if sidi.possuiAutorizacao('CONSULTAR_DISTRIBUICAO', 'GERENCIAR_DISTRIBUICAO', 'LIBERAR_DISTRIBUICAO_OPERADORAS')}
+									<td class="status_${horarioCanal.dataEvento}">${canalEventos.status ? canalEventos.status : ' - '}</td>
+								{/if}
+								<td class="canal_nome_${horarioCanal.dataEvento}">${canalEventos.nomeCanal || ' - '}</td>
+								<td class="evento_${horarioCanal.dataEvento}">${canalEventos.descricaoEvento || ' - '}</td>
+								<td class="campeonato_${horarioCanal.dataEvento}">${canalEventos.campeonato ? canalEventos.campeonato : ' - '}</td>
+								<td  class="data_inicio_${horarioCanal.dataEvento}">${canalEventos.inicioTransmissao ? date.dateToHourString(canalEventos.inicioTransmissao) : ' - '}</td>
+								<td  class="data_fim_${horarioCanal.dataEvento}">${canalEventos.terminoTransmissao ? date.dateToHourString(canalEventos.terminoTransmissao) : ' - '}</td>
+								
+								{if canalEventos.tipoCanal == 'ABERTO'}
+									<td> - </td>				
+								{else}
+									{if canalEventos.distribuicaoOperadoraId != null }
+										<td class="edit">
+											<a href="javascript:void(0)" data-canal-id="${canalEventos.canalId}" data-tipo-canal="PPV_HD"
+												data-horario="${horarioCanal.dataEvento}" data-operadora="${operadoraCanalEventos.operadora.id}"
+												data-dist-operadora="${canalEventos.distribuicaoOperadoraId}"
+												data-evento="${canalEventos.eventoId}"
+												data-dist-principal="${canalEventos.distribuicaoPrincipalId}"
+												class="mudarEvento_limitada adicionar">${i18n.get('distribuicao.operadora.alterar.evento')}
+											</a>
+										</td>
+									{else}						
+										<td class="associate">
+											<a href="javascript:void(0)" data-canal-id="${canalEventos.canalId}" data-tipo-canal="PPV_HD"
+												data-horario="${horarioCanal.dataEvento}" data-operadora="${operadoraCanalEventos.operadora.id}"
+												data-dist-operadora="${canalEventos.distribuicaoOperadoraId}"
+												data-evento="${canalEventos.eventoId}"
+												class="mudarEvento_limitada associate">${i18n.get('distribuicao.operadora.associar.evento')}
+											</a>								
+										</td>										
+									{/if}
+								{/if}
+							</tr>
+							{/for}
+						{/for}
+						
+					</table>
+				</div>
+			</div>
+			{/for}
+		</div>
+	</template>
+
+	<script>
+		<![CDATA[  
+		var json = this.json;
+
+		$('.header').click(function(){
+			if(!$(this).closest('div.oper').hasClass('active')){
+				$('.oper').removeClass('active');
+				$(this).closest('div.oper').addClass('active');
+			} else {
+				$('.oper').removeClass('active');
+			}
+		});
+				
+		$('.mudarEvento_limitada').click(function() {
+			var canalId = $(this).data('canal-id');
+			var horario = $(this).data('horario');
+			var operadoraId = $(this).data('operadora');
+			var distOperadora = $(this).data('dist-operadora');
+			var eventoId = $(this).data('evento');
+			var distPrincipal = $(this).data('dist-principal');
+			var tipoCanal = $(this).data('tipo-canal');
+			
+			var dataSelecionada = $('#dataEventos').val();
+			dataSelecionada = dataSelecionada ? date.stringToDate(dataSelecionada).getTime() : null;
+			horario = horario && horario != '' ? parseInt(horario) : null;
+			
+			if (!dataSelecionada) {
+				$('.message').message(i18n.get('erro-consulta-operadora-tabular'), 'error');
+				return;
+			}
+			
+			var args = {
+				dia : dataSelecionada,
+				horario : horario,
+				tipoCanal : tipoCanal,
+				canalId : canalId
+			};
+			
+			$.postJSON('../sidi/distribuicao-operadora/buscarDistribuicoesPPV', [args],
+   				function(distsDisponiveis) {
+					var json = {
+						distsDisponiveis : distsDisponiveis,
+						canalId : canalId,
+						operadoraId : operadoraId,
+						distOperadoraId : distOperadora != 0 ? distOperadora : null,
+						eventoId : eventoId,
+						distPrincId : distPrincipal,
+						horario : horario
+					};
+
+					$.holy("../templates/distribuicao/selecao-jogos-operadora.xml", json);
+					
+			});
+		});
+		
+		$('<div class="tabela-coluna dinamico">' + i18n.get('acoes') + '</div>').appendTo($('#headerDinamico'));
+		]]>
+	</script>
+</engine>

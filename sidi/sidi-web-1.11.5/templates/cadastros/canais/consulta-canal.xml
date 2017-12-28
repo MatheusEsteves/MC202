@@ -1,0 +1,52 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector="#divConsulta">
+			<div id="divCanaisCadastrados" class="lista-de-exibicao">
+					<div class="content">
+						<form id="frmCanaisCadastrados">
+							<table id="tblCanaisCadastrados" class="datatable">
+								<thead>
+									<th scope="col">Nome</th>
+									<th scope="col">Tipo Canal</th>
+									<th scope="col">Temporario</th>
+									<th scope="col">Data Início</th>
+									<th scope="col">Data Fim</th>
+									<th scope="col">URL</th>
+									<th scope="col">Ações</th>
+								</thead>
+
+								<tbody>
+								{for canal in canais}
+									<tr id="${canal.id}">
+										<td>${canal.nome}</td>
+										<td>${canal.tipoCanal}</td>
+										{if canal.temporario}
+											<td>${i18n.get('sim')}</td>
+										{else}
+											<td>${i18n.get('nao')}</td>
+										{/if}
+										<td>{if canal.dataInicio}${date.dateToString(canal.dataInicio)}{/if}</td>
+										<td>{if canal.dataFim}${date.dateToString(canal.dataFim)}{/if}</td>
+										<td> - </td>
+										<td class="action">
+											{if sidi.possuiAutorizacao('GERENCIAR_CANAIS')}
+											<a id="editarCanal_${canal_index}" class="edit ttip" title="${i18n.get('alterar')}"></a>
+											<a id="apagarCanal_${canal_index}" class="delete ttip" title="${i18n.get('apagar')}"></a>
+											{/if}
+										</td>
+									</tr>
+								{forelse}
+									<tr>
+										<td colspan="4">${i18n.get('nenhum-registro-encontrado')}</td>
+									</tr>
+								{/for}
+								</tbody>
+							</table>
+
+							{if sidi.possuiAutorizacao('GERENCIAR_CANAIS')}
+							<input type="button" id="salvarOrdenacao" value="Salvar Ordenacao" />
+							{/if}
+						</form>
+					</div>
+				</div>
+	</template>
+</engine>

@@ -1,0 +1,70 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector="#popup">
+		<h3>${i18n.get('notificacao-previa-email')}</h3>
+		<form id="frmNotificacaoPreview">
+			<ul class='message'/>			
+			<fieldset>
+				<legend>${i18n.get('periodo')}</legend>
+				<ul>
+					<li class="required">						
+						<label for="txtDataInicial">
+							<span class="required">*</span>
+							${i18n.get('data')}:
+						 </label>
+						<input type="text" id="txtDataInicialPopup" name="inicio" title="${i18n.get('informe-data-jogos-inicio')}" alt="date"
+							class="data" />						
+						<span class="required">*</span>
+						<span> ${i18n.get('ate')} </span>						
+						<input type="text" id="txtDataFinalPopup" name="fim"
+							title="${i18n.get('informe-data-jogos-fim')}" alt="date" class="data" />
+					</li>
+				</ul>
+			</fieldset>
+			<fieldset>
+				<legend>${i18n.get('assunto')}</legend>
+				<ul>
+					<li class="required">						
+						<label for="txtDataInicial">						
+							<span class="required">*</span>
+							${i18n.get('assunto-email')}:							
+						 </label>					
+						<input type="text" id="txtAssunto" title="${i18n.get('assunto-hint')}" maxlength="300"/>
+					</li>
+				</ul>
+			</fieldset>
+			<fieldset>
+				<legend>${i18n.get('mensagem')}</legend>
+				<ul>
+					<li class="required">						
+						<label id="lblTxtMensagem" for="txtMensagem" class="require" >
+							<span class="required">*</span>
+							${i18n.get('mensagem-liberacao')}
+						 </label>
+						<textarea id="txtMensagem" title="${i18n.get('justificativa-hint')}" maxlength="2500" class="maxlength text-area-mensagem"></textarea>
+					</li>
+				</ul>
+			</fieldset>
+			<fieldset>
+				<legend>${i18n.get('notificacao-sms')}</legend>
+				<ul>
+					<li>
+						<label id="lblNotificacaoSMS">
+							<input type="checkbox" id="enviarSMS" />
+							${i18n.get('enviar-sms-previa')}
+						</label>
+						
+						<form id="formConfigSMS" class="forms liquidForm">						
+							<ul>
+								<li>
+									<label id="lblTxtMensagemSMS" for="txtMensagemSMS" class="require" >${i18n.get('mensagem-sms')}</label>
+									<textarea id="txtMensagemSMS" maxlength="160" class="maxlength"></textarea>									
+								</li>
+							</ul>				
+						</form>
+					</li>
+				</ul>
+			</fieldset>
+		</form>
+		<a id="btnEnviarNotificacao" class="showDialog button azul">${i18n.get('enviar-notificacao')}</a>
+	</template>
+</engine>

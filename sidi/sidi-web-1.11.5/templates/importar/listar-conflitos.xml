@@ -1,0 +1,91 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector="#content-info">
+		<div class="topo">
+			<div class="titulo">${i18n.get('conflito-importacao')}</div>
+			<div class="separador"></div>
+		</div>
+	</template>
+	<template selector="#content-details">
+		<style>
+			.times{
+				font-weight:bold;
+			}
+		</style>
+		<div class="lista-conflitos-importacao lista-de-exibicao">
+			<form id="frmConflitos">
+				<fieldset>
+					<table class="datatable">
+						<thead>
+							<th scope="col"><input type="checkbox" id="ckAtualizarTodos" /></th>
+							<th scope="col">${i18n.get('nome-jogo')}</th>
+							<th scope="col">${i18n.get('data-atual')}</th>
+							<th scope="col">${i18n.get('nova-data')}</th>
+						</thead>
+						{for objeto in listaDeConflitos}
+							<tr>
+								<td>
+									<input type="checkbox" class="ckAtualizar" id="ckAtualizar_${objeto.idJogo}"/>
+								</td>
+								<td>									
+									${objeto.nomeAbreviadoJogo}
+								</td>
+								<td>									
+									<label>Rodada nº ${objeto.rodadaAnterior}</label>
+									{if objeto.dataAnterior != null} 	 
+										<label>${date.dateToString(objeto.dataAnterior)} ${date.dateToHourString(objeto.dataAnterior)}</label>
+									{else}
+										<label>-</label>
+									{/if}									
+								</td>
+								<td>									
+									<label>Rodada nº ${objeto.rodadaAlterada}</label>									
+									{if objeto.dataAlterada != null}
+										<label>${date.dateToString(objeto.dataAlterada)} ${date.dateToHourString(objeto.dataAlterada)} </label>
+									{else}
+										<label>-</label>
+									{/if}																	
+								</td>
+							</tr>
+						{/for}
+					</table>
+					<a class="button azul" id="btnImportar">${i18n.get('alterar')}</a>
+					<a class="button azul" id="btnCancelar">${i18n.get('cancelar')}</a>
+				</fieldset>
+			</form>
+		</div>
+	</template>
+	<script>		
+		$('#frmConflitos').form();
+		var listaConflitos = this.listaDeConflitos;
+		$('.message').message('Jogos novos foram salvos com sucesso. Verifique os conflitos encontrados em jogos existentes.', 'success', true);
+
+		$('#ckAtualizarTodos').click(function() {
+			if ($('#ckAtualizarTodos').is(':checked'))
+				$('.ckAtualizar').attr('checked',true);
+			else
+				$('.ckAtualizar').attr('checked',false);
+		});
+		
+		$('#btnCancelar').click(function(){
+			location.reload();
+		});
+
+		$('#btnImportar').click(function() {
+			var lista = [];
+
+			$.each(listaConflitos, function(index, elemento){
+				if($('#ckAtualizar_' + elemento.idJogo).is(':checked')){
+					lista.push(elemento);
+				}
+			});
+
+			$.postJSON("../sidi/jogos/salvarJogosAlteradosImportacao", [lista], function(resposta) {
+				if (resposta) {
+					$('.message').message('Alterações feitas com sucesso', 'success', true);
+					location.reload();
+				} else
+					$('.message').message('Algo deu errado...', 'error', true);
+			});
+		});
+	</script>
+</engine>

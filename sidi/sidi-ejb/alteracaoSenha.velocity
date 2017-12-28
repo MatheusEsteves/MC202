@@ -1,0 +1,12 @@
+<html>
+<body>
+<div style="font-family:Verdana; color:#000;">
+<p>${usuario},</p>
+<br>
+<p>Sua senha foi alterada conforme solicitação. Sua nova senha é: ${senha}</p>
+<p>Acesse o SIDI pelo endereço: <a href="https://sidi.aws.globosat.com.br">https://sidi.aws.globosat.com.br</a></p>
+<br>
+<p>SIDI – Sistema de Distribuição</p>
+</div>
+</body>
+</html>

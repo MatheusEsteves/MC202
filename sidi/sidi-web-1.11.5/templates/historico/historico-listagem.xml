@@ -1,0 +1,145 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector="#content-details">
+		<fieldset id="historico">
+			<![CDATA[
+			{var temDistribuicao = distribuicoes && distribuicoes.length > 0}
+			]]>
+			
+			{if temDistribuicao}
+				{var added = []}
+				{for d in distribuicoes}
+					{for dOp in d.distribuicoes}
+						{if jQuery.inArray(dOp.horario, added) == -1}
+							{eval}
+								added.push(dOp.horario);
+							{/eval}
+						{/if}
+					{/for}
+				{/for}
+				{eval}added.sort(){/eval}
+			<div class="topo-abas">
+				<table class="abas">
+					<tbody>
+						<tr>
+							{for a in added}
+		                    	<td><a href="javascript:void(0);" id="${a}">${date.dateToHourString(a)}</a></td>
+							{/for}
+		                </tr>
+	            	</tbody>
+	           	</table>
+	        </div>
+				
+			{for a in added}
+				<div id="table-historico_${a}" class="table-historico">
+					<table class="distribuicao-operadoras datatable">
+						<thead>
+							<tr>
+								<th class="headend">${i18n.get('headend')}</th>
+								<th class="regiao">${i18n.get('regiao')}</th>
+								<th class="uf">${i18n.get('uf')}</th>
+								<th class="operadora">${i18n.get('operadora')}</th>
+								{for canal in canais}
+									<th class="canal coluna_canal_${canal.id}">${canal.nome}</th>
+								{/for}
+								<th class="actions">${i18n.get('acoes')}</th>
+							</tr>
+						</thead>
+						<tbody>
+							{for distOp in distribuicoes}
+								<tr id="distOp_${distOp_index}" class="uf_${distOp.operadora.estado} headend_${distOp.operadora.headEnd.id} operadora_${distOp.operadora.id} horario_${a}">
+									<td class="headend">${distOp.operadora.headEnd.nome}</td>
+									<td class="uf">${distOp.operadora.estado}</td>
+									<td class="regiao">${distOp.operadora.regiao ? distOp.operadora.regiao.nome : ''}</td>
+									<td class="operadora">${distOp.operadora.nome}</td>
+									{for canal in canais}
+										{var dist = distribuicao.buscarDistribuicao(distOp.distribuicoes, canal, a)}
+										{if dist}
+											<td class="confronto coluna_canal_${canal.id}${dist ? dist.conflito ? ' distribuicaoconflito dist' + dist.id : '' : ''}">
+												{if dist.evento}
+													{if dist.evento.tipoEvento == "JOGO"}
+														<span class="time mandante">
+															<img src="${dist.evento.mandante.urlBrasao}"></img>
+															<div>${dist.evento.mandante.apelido}</div>
+														</span>
+														<div class="versus">
+															<span>X</span>
+														</div>
+														<span class="time visitante">
+															<img src="${dist.evento.visitante.urlBrasao}"></img>
+															<div>${dist.evento.visitante.apelido}</div>
+														</span>
+													{else}
+														${dist.evento.nome}
+													{/if}
+												{elseif dist.alternativo}
+													${dist.alternativo}
+												{/if}
+											</td>
+										{else}
+											<td></td>
+										{/if}
+									{/for}
+									<td class="action buttons">
+										<a href="javascript:void(0)" class="btView btaction" title="${i18n.get('visualizar-historico')}"></a>
+									</td>
+								</tr>
+							{forelse}
+							<tr>
+								<td colspan="${(3 + canais.length)}">${i18n.get('sem-distribuicao')}</td>
+							</tr>
+							{/for}
+						</tbody>
+					</table>
+				</div>
+				{/for}
+			{else}
+				<h3 class="sem-historico">${i18n.get('nenhum-historico')}</h3>
+			{/if}
+		</fieldset>
+	</template>
+	<script>
+		<![CDATA[
+		$('.table-historico').each(function(){
+			$(this).hide();
+		});
+		$($('table.abas tr td')[0]).addClass('selected');
+		$($('.table-historico')[0]).show();
+		
+		$('table.abas tr td a').each(function(){
+			var idAba = $(this).attr('id');
+			
+			$(this).click(function(){
+				$('table.abas tr td').removeClass('selected');
+				$('.table-historico').hide();
+				
+				$('#table-historico_' + idAba).show();
+				$(this).parent('td').addClass('selected');
+			});
+		});
+		
+		var json = this;
+		
+		$(".distribuicao-operadoras tr").each(function() {
+			$(this).find('.btView').click(function() {
+				var classes = $(this).closest("tr").attr("class").split(' ');
+				var horario = null;
+				for (var classe in classes) {
+					if (classes[classe].indexOf("horario_") != -1) {
+						horario = classes[classe].split("_")[1];
+					}
+				}
+				
+				var operadora = null;
+				for (var classe in classes) {
+					if (classes[classe].indexOf("operadora_") != -1) {
+						operadora = classes[classe].split("_")[1];
+					}
+				}
+			
+				location.hash = 'historico/operadora/' + operadora + '/' + horario;
+				return false;
+			});
+		});
+		]]>
+	</script>
+</engine>

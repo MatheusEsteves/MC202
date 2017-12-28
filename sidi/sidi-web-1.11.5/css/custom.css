@@ -1,0 +1,869 @@
+background-color: #77AE02;
+padding: 10px;
+margin: 15px;
+color: #fff;
+font-size: 15px;
+letter-spacing: 0;
+line-height: 18px;
+}
+#content h4.comentariosEditor span {
+font-weight: bold;
+font-size: 17px;
+}
+#content h4.comentariosEditor a {
+color: #fff;
+}
+#content h4.comentariosEditor a:hover {
+color: #333;
+}
+#content .resposta-distribuicao {
+display: none;
+padding: 15px;
+}
+#content .resposta-distribuicao textarea {
+width: 955px;
+height: 60px;
+border: 1px solid #77AE02;
+}
+#content h5 {
+font: bold 16px "Trebuchet MS", Arial, Helvetica, sans-serif;
+text-transform: uppercase;
+letter-spacing: 2px;
+color: #777;
+}
+#content h5.net {
+background: url("../images/logo-net.png") no-repeat 0 0;
+padding-top: 30px;
+}
+#content #content-info .data-selecionada {
+position: absolute;
+width: 560px;
+top: 65px;
+right: 20px;
+text-align: right;
+font-size: 0;
+}
+#content #content-info .data-selecionada h4 {
+display: inline-block;
+margin: 0 10px;
+vertical-align: middle;
+*display: inline;
+zoom: 1;
+}
+#content #content-info .data-selecionada div {
+display: inline-block;
+*display: inline;
+zoom: 1;
+margin: 0 10px;
+vertical-align: middle;
+width: 112px;
+font-size: 20px;
+height: 26px;
+color: #fff;
+letter-spacing: -1px;
+text-align: center;
+}
+#content #content-info .data-selecionada input {
+display: block;
+border: none;
+background: transparent;
+font: normal 20px Arial, Helvetica, sans-serif;
+line-height: 26px;
+height: 26px;
+letter-spacing: -1px;
+color: #fff;
+text-align: center;
+padding: 0;
+width: 112px;
+}
+#content #content-info .data-selecionada .data {
+background: url("../images/icone-calendario.png") no-repeat 0 0;
+padding: 8px 0 4px 47px;
+line-height: 26px;
+}
+#content #content-info .data-selecionada .hora {
+background: url("../images/icone-relogio.png") no-repeat 0 0;
+padding: 8px 0 6px 36px;
+}
+#content #content-info .data-selecionada .hora select {
+width: 80px;
+display: none;
+vertical-align: middle;
+margin: 0;
+}
+#content #content-info .data-selecionada .hora span {
+line-height: 27px;
+}
+#content ul, #content .jogos-disponiveis {
+clear: both;
+}
+
+#content .jogos-disponiveis {
+min-height: 200px;
+}
+#content ul.canais {
+padding-bottom: 30px;
+}
+#content ul li.clear {
+float: none !important;
+background-color: transparent !important;
+width: auto !important;
+height: auto !important;
+padding: 0 !important;
+margin: 0 !important;
+clear: both;
+}
+#content ul.canais li {
+float: left;
+background-color: #ccc;
+width: 176px;
+height: 246px;
+padding: 2px;
+margin: 15px 0 0 15px;
+position: relative;
+}
+#content ul.canais li div.canal {
+background: url("../images/fundo-canal.png") repeat-x 0 0;
+height: 240px;
+padding-top: 6px;
+font-size: 0;
+position: relative;
+}
+#content ul.canais li div.canal h6 {
+font: normal 10px Arial, Helvetica, sans-serif;
+text-transform: uppercase;
+color: #666;
+padding-top: 40px;
+text-align: center;
+}
+.distribuicao-principal tr td div, .historico tr td div {
+text-align: center;
+}
+.distribuicao-principal tr td.pfc24h {
+border-left: 10px solid #f22;
+}
+.distribuicao-principal tr td.pfc1 {
+border-left: 10px solid #0F0;
+}
+.distribuicao-principal tr td.pfc2 {
+border-left: 10px solid #cff;
+}
+.distribuicao-principal tr td.pfc3 {
+border-left: 10px solid #00f;
+}
+.distribuicao-principal tr td.pfc4 {
+border-left: 10px solid #f90;
+}
+.distribuicao-principal tr td.pfc5 {
+border-left: 10px solid #ff0;
+}
+.distribuicao-principal tr td.pfc6 {
+border-left: 10px solid #800000;
+}
+.distribuicao-principal tr td.pfc7 {
+border-left: 10px solid #c0c0c0;
+}
+.distribuicao-principal tr td.pfc8 {
+border-left: 10px solid #000;
+}
+.distribuicao-principal tr td.globo {
+border-left: 10px solid #eee;
+}
+.distribuicao-principal tr td.band {
+border-left: 10px solid #eee;
+}
+
+#content ul.canais li.globo div.canal h6, .distribuicao-principal tr td span.canal, .historico tr td span.canal ,.dialog span.canal {
+background: no-repeat center 0;
+}
+
+#content ul.canais li div.canal h6 {
+background: no-repeat center 0;
+}
+/*
+#content ul.canais li.globo div.canal h6, .distribuicao-principal tr td.globo span.canal {
+background: url("../images/logo-globo.png") no-repeat center 0;
+}
+#content ul.canais li.band div.canal h6, .distribuicao-principal tr td.band span.canal {
+background: url("../images/logo-band.png") no-repeat center 2px;
+}
+#content ul.canais li.sportv div.canal h6, .distribuicao-principal tr td.sportv span.canal {
+background: url("../images/logo-sportv.png") no-repeat center 10px;
+}
+#content ul.canais li.sportv2 div.canal h6, .distribuicao-principal tr td.sportv2 span.canal {
+background: url("../images/logo-sportv2.png") no-repeat center 10px;
+}
+#content ul.canais li.sportv3 div.canal h6, .distribuicao-principal tr td.sportv3 span.canal {
+background: url("../images/logo-sportv3.png") no-repeat center 10px;
+}
+#content ul.canais li.pfc1 div.canal h6, .distribuicao-principal tr td.pfc1 span.canal {
+background: url("../images/logo-pfc-1.png") no-repeat center 4px;
+}
+#content ul.canais li.pfc2 div.canal h6, .distribuicao-principal tr td.pfc2 span.canal {
+background: url("../images/logo-pfc-2.png") no-repeat center 4px;
+}
+#content ul.canais li.pfc3 div.canal h6, .distribuicao-principal tr td.pfc3 span.canal {
+background: url("../images/logo-pfc-3.png") no-repeat center 4px;
+}
+#content ul.canais li.pfc4 div.canal h6, .distribuicao-principal tr td.pfc4 span.canal {
+background: url("../images/logo-pfc-4.png") no-repeat center 4px;
+}
+#content ul.canais li.pfc5 div.canal h6, .distribuicao-principal tr td.pfc5 span.canal {
+background: url("../images/logo-pfc-5.png") no-repeat center 4px;
+}
+#content ul.canais li.pfc6 div.canal h6, .distribuicao-principal tr td.pfc6 span.canal {
+background: url("../images/logo-pfc-6.png") no-repeat center 4px;
+}
+#content ul.canais li.pfc7 div.canal h6, .distribuicao-principal tr td.pfc7 span.canal {
+background: url("../images/logo-pfc-7.png") no-repeat center 4px;
+}
+#content ul.canais li.pfc8 div.canal h6, .distribuicao-principal tr td.pfc8 span.canal {
+background: url("../images/logo-pfc-8.png") no-repeat center 4px;
+}
+*/
+.distribuicao-principal tr td span.canal,.historico tr td span.canal,.dialog span.canal {
+padding-top: 38px;
+text-align: center;
+display: inline-block;
+width: 180px;
+}
+
+.distribuicao-principal .adicionar {
+text-align: center;
+}
+.right {
+text-align: right;
+}
+.bloqueado {
+opacity: 0.9;
+}
+.jogo-container, .jogo-tip {
+width: 156px;
+padding: 2px;
+margin: 10px 0 0 8px;
+min-height: 162px;
+display: inline-block;
+zoom: 1;
+*display: inline;
+z-index: 0 !important;
+}
+
+.jogo-tip {
+top: 240px;
+left: 0px;
+position: absolute;
+background-color: #aaa;
+border: 1px dashed #333;
+}
+#content ul li.selecionavel .vazio {
+    background-color: #fff;
+    font: normal 12px Arial, Helvetica, sans-serif;
+    color: #999;
+    line-height: 162px;
+    text-align: center;
+    overflow: hidden;
+}
+
+.jogo-container .programa, .jogo-tip .programa {
+font-size: 16px;
+text-align: center;
+color: #666;
+padding-top: 65px;
+}
+.jogos-disponiveis .jogo-container {
+margin: 15px 18px 0 17px;
+cursor: move;
+}
+#content ul li.selecionavel .jogo-container {
+cursor: move;
+}
+.jogo-container .jogo, .jogo-tip .jogo {
+padding: 1px;
+min-height: 160px;
+}
+#content ul li.sem-jogo .jogo-container {
+background-color: #f3f3f3;
+}
+#content ul li.selecionavel .jogo-container, #content ul li.selecionavel .jogo-tip {
+background-color: #fff;
+font: normal 12px Arial, Helvetica, sans-serif;
+color: #999;
+text-align: center;
+overflow: hidden;
+}
+#content div.jogos-disponiveis .jogo-container, #content ul li.selecionavel .jogo-container, #content ul li.selecionavel .jogo-tip {
+background-color: #ccc;
+}
+#content ul li.selecionavel .droppable {
+height: 100%;
+}
+#content ul li.selecionavel .jogo, #content div.jogos-disponiveis .jogo {
+background-color: #fff;
+}
+.jogos-disponiveis .jogo-container .jogo .torneio, .jogos-disponiveis .jogo-container .jogo .local,
+li.selecionavel .jogo-container .jogo .torneio, li.selecionavel .jogo-container .jogo .local {
+background: url("../images/fundo-azul-degrade.png") repeat-x 0 0;
+color: #fff;
+}
+.jogo .torneio, .jogo .local {
+background-color: #dcdcdc;
+font-size: 16px;
+color: #666;
+letter-spacing: -1px;
+text-align: center;
+line-height: 24px;
+}
+
+.jogo-tip .jogo .local {
+background-color: #dcdcdc;
+}
+
+.jogo .confronto {
+padding: 6px 0 12px;
+text-align: center;
+}
+.jogo .time {
+background-repeat: no-repeat;
+display: inline-block;
+vertical-align: middle;
+width: 58px;
+font: normal 23px "Trebuchet MS", Arial, Helvetica, sans-serif;
+letter-spacing: -1px;
+color: #666;
+text-align: center;
+}
+.jogo .time .escudo {
+background-repeat: no-repeat;
+background-position: top center;
+width: 64px;
+height: 36px;
+}
+.jogo .versus {
+background: url("../images/confronto-versus.png") no-repeat center bottom;
+display: inline-block;
+vertical-align: middle;
+width: 20px;
+height: 30px;
+padding-top: 64px;
+font: bold 23px "Trebuchet MS", Arial, Helvetica, sans-serif;
+color: #666;
+text-indent: -9999px;
+overflow: hidden;
+}
+.jogos-disponiveis {
+font-size: 0;
+padding-left: 8px;
+}
+#footer {
+clear: both;
+margin-top: 30px;
+padding: 10px;
+background-color: #ACACAC;
+color: #fff;
+text-align: center;
+font-size: 13px;
+}
+.ui-datepicker {
+font-size: 12px;
+}
+div.acoes {
+clear: both;
+text-align: right;
+padding: 20px 20px 0;
+}
+#content-details.distribuicao-geral div.acoes {
+padding: 40px 0 0;
+}
+div.acoes a, div.acoes input {
+background: url("../images/botao-confirma.png") no-repeat 0 0;
+width: 300px;
+border: none;
+height: 70px;
+overflow: hidden;
+display: inline-block;
+color: #fff;
+text-shadow: 0px 2px 3px #333;
+letter-spacing: -1.6px;
+font-size: 34px;
+text-decoration: none;
+text-align: center;
+line-height: 60px;
+cursor: pointer;
+}
+div.acoes a.restaurar {
+background: url("../images/botao-restaura.png") no-repeat 0 0;
+}
+div.acoes a:hover {
+background-position: 0 -70px;
+color: #fff;
+}
+table {
+font-size: 12px;
+border-collapse: separate;
+border-spacing: 2px;
+}
+table.distribuicao-principal, table.historico {
+border: 1px solid #ccc;
+padding: 1px;
+margin: 0 auto;
+}
+table.distribuicao-operadoras {
+table-layout: fixed;
+border: 1px solid #ccc;
+padding: 1px;
+width: 100%;
+}
+td {
+padding: 4px 1px;
+background-color: #fff;
+vertical-align: middle;
+line-height: 16px;
+}
+table.distribuicao-principal th, table.historico th {
+text-align: center;
+}
+table.distribuicao-principal td, table.historico td {
+text-transform: capitalize;
+}
+table.distribuicao-principal th.campeonato {
+width: 230px;
+}
+table.distribuicao-principal td.campeonato {
+text-align: center;
+}
+td.confronto {
+white-space: nowrap;
+width: 73px;
+text-align: center;
+}
+td.confronto.futebol {
+background: #fff url("../images/confronto-versus-distribuicao.gif") no-repeat center 30px;
+}
+th {
+padding: 6px 3px;
+background-color: #0073CE;
+font-weight: bold;
+color: #fff;
+}
+th.canal {
+text-align: center;
+}
+td span.time, li span.time {
+padding-top: 36px;
+width: 34px;
+text-transform: uppercase;
+background-repeat: no-repeat;
+background-position: center top;
+text-align: center;
+cursor: pointer;
+}
+td span.time, li span.time {
+padding-top: 36px;
+width: 34px;
+text-transform: uppercase;
+background-repeat: no-repeat;
+background-position: center top;
+text-align: center;
+display: inline-block;
+}
+
+.confronto .time, .confronto .versus {
+display: inline-block;
+zoom: 1;
+*display: inline;
+vertical-align: middle;
+}
+#estadosDialog .confronto {
+text-align: center;
+}
+
+#estadosDialog .confronto span.time {
+width: 200px;
+padding-top: 35px;
+background-position: top center;
+background-repeat:no-repeat;
+text-align: center;
+text-transform:uppercase;
+}
+
+#horariosCanalDialog .confronto {
+text-align: center;
+}
+
+#horariosCanalDialog .horario {
+width: 500px;
+}
+
+#horariosCanalDialog .grade-horarios {
+list-style: none;
+margin: 15px 0px 15px 25px;
+}
+
+#horariosCanalDialog .confronto span.time {
+width: 200px;
+padding-top: 35px;
+background-position: top center;
+background-repeat:no-repeat;
+text-align: center;
+text-transform:uppercase;
+}
+
+.versus span {
+display: block;
+text-align: center;
+line-height: 20px;
+}
+
+table.distribuicao-principal td span.time, table.historico td span.time {
+width: 160px;
+}
+select {
+margin-right: 20px;
+font: normal 12px Arial, Helvetica, sans-serif;
+color: #333;
+}
+fieldset {
+background-color: #fff;
+border: 1px solid #ccc;
+padding: 15px;
+}
+#content fieldset h6 {
+font-size: 12px;
+padding: 20px 0 10px;
+color: #333;
+}
+legend {
+font-size: 13px;
+font-weight: bold;
+color: #666;
+}
+label {
+font-size: 12px;
+color: #333;
+}
+.checkCanais label {
+margin-right: 20px;
+}
+th.uf, td.uf {
+text-align: center;
+}
+p.expandir {
+font-size: 11px;
+text-align: right;
+margin: 0;
+padding: 20px 0 5px;
+}
+.cabecalho-data {
+background-color: #77AE02;
+padding: 10px;
+margin-top: 10px;
+height: 22px;
+}
+.cabecalho-data h6 {
+font-size: 22px;
+color: #fff;
+letter-spacing: -0.5px;
+float: right;
+}
+.cabecalho-data h6:first-child {
+float: left;
+}
+
+#jogosDialog div.jogosList {
+	width: auto;
+	max-width: 500px;
+}
+
+#jogosOperadoraDialog > div, #estadosDialog > div {
+width: 575px;
+}
+.dialog h4 {
+border-bottom: 2px solid #0073CE;
+padding: 10px 0;
+font-size: 18px;
+letter-spacing: -0.3px;
+color: #0073CE;
+margin-bottom: 20px;
+}
+
+#jogosDialog li, #jogosOperadoraDialog li, .dialog ul.estados li, #horariosCanalDialog ul.grade li {
+float: left;
+background-color: #f0f0f0;
+margin: 10px 0 0 10px;
+padding: 10px;
+font-size: 11px;
+cursor: pointer;
+}
+#jogosDialog li:hover, #jogosOperadoraDialog li:hover, #estadosDialog li:hover {
+background-color: #ccc;
+}
+#jogosDialog li span.time {
+font-size: 11px;
+width: 100px;
+}
+#jogosOperadoraDialog li span.time {
+font-size: 11px;
+width: 40px;
+}
+#jogosOperadoraDialog .alternativo {
+display: inline-block;
+margin: 20px 0px 0px 10px;
+}
+
+.dialog li.estado {
+font-size: 11px;
+width: 50px;
+}
+
+table.distribuicao-operadoras tbody tr {
+height: 55px;
+}
+
+table.distribuicao-operadoras td.pfc1 {
+background: #c4ffc4;
+}
+
+table.distribuicao-operadoras td.pfc2 {
+background: #e3ffff;
+}
+
+table.distribuicao-operadoras td.pfc3 {
+background: #ababff;
+}
+
+table.distribuicao-operadoras td.pfc4 {
+background: #ffdaa3;
+}
+
+table.distribuicao-operadoras td.pfc5 {
+background: #ffff9e;
+}
+
+table.distribuicao-operadoras td.pfc6 {
+background: #db8686;
+}
+
+table.distribuicao-operadoras td.pfc7 {
+background: #e6e6e6;
+}
+
+table.distribuicao-operadoras td.pfc8 {
+background: #dedede;
+}
+
+#content-details div.togglePanel h3,
+#content-details div#tglNovoJogo h3,
+#content-details div#tglFiltroJogos h3,
+div.togglePanel h3 { color: white; background: #0073CE; font-size: 20px; font-weight: bold; padding: 10px; }
+
+#content-details div.togglePanel h3.active,
+#content-details div#tglNovoJogo h3.active,
+#content-details div#tglFiltroJogos h3.active,
+div.togglePanel h3 { font-weight: normal; }
+
+#content-details div.togglePanel h3 span {font-size: 20px; font-weight: normal;}
+
+#popup textarea { width: 300px; }
+
+#popupJustificativa textarea { height: 100px; width: 400px;}
+
+#errorMessage span.login-error { color: #CC0000; }
+
+#frmAlternativo ul li { width: 80%; }
+
+#frmAlternativo ul li label { width: 120px; }
+
+#content-details h4.sem-distribuicao {
+text-align: center;
+margin-top: 30px;
+}
+
+.distribuicaoconflito {border: 1px solid #cf1111; cursor: pointer;}
+
+.id {display: none;}
+
+#estadosDialog div.selectall {text-align: right; padding: 5px; font-size: 11px; margin-top: 25px;}
+
+.tab.horarioTab li.active a {font-weight: bold; }
+
+.tab.horarioTab li a {text-decoration: none;}
+
+#content-details .statusDistribuicao {
+margin-bottom: 10px;
+}
+
+#content-details .statusAlteracao .pendente, #content-details .statusDistribuicao .nao-liberada {
+color: goldenrod !important;
+}
+
+#content-details .statusAlteracao .aprovado, #content-details .statusDistribuicao .liberada {
+color: green !important;
+}
+
+#content-details .statusAlteracao .rejeitado {
+color: red !important;
+}
+
+#content-details .grade-sugerida {
+float: left;
+margin-top: 0px !important;
+}
+
+#content-details .jogo-tip .box {
+padding-top: 10px !important;
+padding-bottom: 5px !important;
+color: black !important;
+font-weight: bold !important;
+}
+
+#content-details .tituloPickList {
+color: #555555;
+font-weight:bold;
+margin-bottom: 5px;
+font-size: 20px;
+}
+
+#content-details .picklist br.clear {
+clear: both;
+}
+
+#content-details div.picklistDiv {
+margin-left: 10px;
+margin-top: 50px;
+}
+
+#content-details div.picklistDiv #picklistOperadora {
+margin-top: 10px;
+}
+
+#tglCamposOpcionais div.operadorasCheckbox {height: 80px;}
+
+#tglCamposOpcionais div #txtRodada {margin-right: 120px;}
+
+.ulnovojogo #sltCampeonatoCadastro {margin-right: 28px;}
+
+.ulnovojogo #txtData {margin-right: 35px;}
+
+#content-details h3.sem-historico {
+text-align: center;
+margin-top: 40px !important;
+}
+
+#botoesEdicaoTabular{
+margin-left:20px;
+}
+
+.historico.datatable td.colCanal {
+width: 150px;
+}
+
+.hidden {
+display: none;
+}
+
+#tblJogosCadastrados tr.alterado, #tTabulacao tr.alterado input {
+color: red !important;
+}
+
+#popup .avisoJaLiberado {
+width: 500px;
+text-align:center;
+color: red;
+margin-top: 10px;
+margin-bottom: 10px;
+}
+/* distribuicao tabular */
+#divTblJogosTabular tr td.genero {
+width: 100px;
+}
+
+#divTblJogosTabular tr td.campeonato {
+width: 85px;
+}
+
+#divTblJogosTabular tr td.fase span {
+width: 90px;
+display: inline-block;
+text-align: center;
+}
+
+#divTblJogosTabular tr td.data {
+width: 75px;
+}
+
+#divTblJogosTabular tr td.hora {
+width: 40px;
+}
+
+#divTblJogosTabular tr td.rodada {
+width: 25px;
+}
+
+#divTblJogosTabular tr td.menor_tamanho {
+width: 40px;
+}
+
+#divTblJogosTabular tr td.estadio {
+width: 120px;
+}
+
+#divTblJogosTabular tr td.ap {
+width: 65px;
+}
+
+#divTblJogosTabular tr td.distCapital {
+width: 60px;
+}
+
+#divTblJogosTabular tr td.fase {
+width: 60px;
+}
+
+#divTblJogosTabular #jogosTabularFixo {
+float: left;
+}
+
+#divTblJogosTabular table thead tr {
+height: 40px;
+}
+
+#jogosTabularOverflow {
+overflow-y: auto;
+}
+
+#divTblJogosTabular .tabelas {
+    max-height: 600px;
+    overflow-x: auto;
+}
+
+#divTblJogosTabular table tr td.action .canal {
+text-align: center;
+}
+
+#divTblJogosTabular table tr td.erro {
+background-color: #FFBABA;
+}
+
+.dialog .canaisList li {
+display: inline-block;
+background-color: #F0F0F0;
+cursor: pointer;
+margin: 10px 0 0 10px;
+padding: 10px;
+}
+
+.dialog .canaisList li.selecionado {
+background-color: #ccc;
+}
+
+input[alt=integer] {
+text-align: left !important;
+}
+
+.alterado, .alterado td {
+background-color: #bff4a6
+}
+
+form#frmEditarInformacoesBasicas fieldset legend, form#frmEditarInformacoesTecnicas fieldset legend {
+margin: 10px 10px;
+}

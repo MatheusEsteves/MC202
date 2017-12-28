@@ -1,0 +1,753 @@
+
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0"
+	cacheable="true">
+	<template selector="#content-details .operadoras">
+		<div id="jogosOperadoraDialog" class="dialog" style="display: none;">
+			<h4>${i18n.get('selecione-jogo')}:</h4>
+			<div class="jogosList"></div>
+		</div>
+		<div id="nova-tabela"></div>
+		<div id="consultar-distribuicao-paginacao"></div>
+		<div class="topo">
+			<div class="acoes">
+				<a id="download" href="javascript:void(0)" target="_blank" class="acao selected">${i18n.get('planilha_completa')}</a>
+				<a id="download_resumida" href="javascript:void(0)" target="_blank" class="acao selected">${i18n.get('planilha_resumida')}</a>
+				{if sidi.possuiAutorizacao('GERENCIAR_DISTRIBUICAO', 'LIBERAR_DISTRIBUICAO_OPERADORAS')}
+				<a id="gravar" href="javascript:void(0)" class="acao selected">${i18n.get('gravar-alteracoes')}</a>
+				{/if}
+				{if sidi.possuiAutorizacao('LIBERAR_DISTRIBUICAO_OPERADORAS')}
+				<a id="liberar" href="javascript:void(0)" class="acao selected">${i18n.get('liberar-distribuicao-lower')}</a>
+				{/if}
+			</div>
+		</div>
+	</template>
+	<script>
+			<![CDATA[
+		var distribuicao = this.distribuicaoJson;
+
+		distribuicaoOperadoraTemplate.initTabelaFixa();
+		distribuicaoOperadoraTemplate.initTabelaDinamica(distribuicao.canais);
+
+        var distribuicaoOperadora = new sidi.DistribuicaoOperadora(distribuicao);
+		var length = distribuicaoOperadora.length;
+		var distribuicaoAuxDadosAlterados =  jQuery.extend(true, {}, distribuicaoOperadora);
+		var distribuicaoDadosAlterados = new Array();
+			
+		var colunas = distribuicaoOperadora.header;
+		var todasLinhas = distribuicaoOperadora.range(0, length);
+		var linhas = todasLinhas;
+			
+ 		var indexOperadora = distribuicaoOperadora.indexOf("nome");
+ 		var hiddenColumns = [];
+		   
+		var paginationContainer = $("#consultar-distribuicao-paginacao");
+		var pagination = new sidi.Pagination(paginationContainer);
+		var paginaAtual = 0;
+			
+		var render = function(linhas, pagina, scroll) {
+			pagina = pagina || 0;
+			paginaAtual = pagina;
+		   
+			var criaPaginacaoOnclick = function(pagina) {
+				return function() {
+					var scroll = $('.dataTables_scrollBody').scrollLeft();
+					render(linhas, pagina, scroll);
+				}
+			};
+		   
+			var elementosPorPagina = 20;
+			var inicio = pagina * elementosPorPagina;
+			var fim = Math.min(inicio + elementosPorPagina, linhas.length);
+		   
+			if (linhas.length > elementosPorPagina) {
+				pagination.render(linhas, pagina, elementosPorPagina, criaPaginacaoOnclick);
+				paginationContainer.show();
+			} else {
+				paginationContainer.hide();
+			}
+		   
+			$.holy("../templates/distribuicao/tabela-distribuicao-operadora.xml", {
+				"colunas" : colunas,
+				"linhas" : linhas.slice(inicio, fim),
+				"indexOperadora" : indexOperadora,
+				"mostrarRemover" : function(celula) {
+					return celula.canal && !celula.ppv && celula.display; 
+				},
+				"hiddenColumns" : hiddenColumns,
+				"scroll" : scroll
+			});
+		};
+		
+		var selecionaEvento = function(td, operadora, canal, evento, eventoAlternativo) {
+			
+			var clubes = distribuicao.clubes;
+			var eventosDisponiveis = distribuicao.eventosDisponiveis;
+			var horario = distribuicaoOperadora.horario;
+			var horarioEventos = distribuicaoOperadora.horarioEventos;
+			var operadoraEventos = horarioEventos.operadoras[operadora].eventoPorCanal;
+
+			$.getJSON('../sidi/distribuicao/buscaEventosPossiveisPara', {
+				arg : [horario, operadora, canal]
+				
+			}, function(eventosIds) {
+				var eventos = [];
+				for (var i = 0; i < eventosIds.length; i++) {
+					var e = eventosDisponiveis[eventosIds[i]];
+					e.id = eventosIds[i];
+					eventos.push(e);
+				}
+				
+				$.holy("../templates/distribuicao/selecao-jogos-operadora-novo.xml", {
+					eventosDisponiveis : eventos,
+					clubes : clubes,
+					canalId : canal,
+					operadoraId : operadora,
+					eventoId : evento,
+					eventoAlternativo: eventoAlternativo
+					
+				}).then(function() {
+					
+					$('#jogosOperadoraDialog ul li').corner();
+					$('#jogosOperadoraDialog').xdialog({
+						overlay: '#333',
+						alpha: '3',
+						width: '655px'
+					});
+
+					var canalId = this.canalId;
+					var operadoraId = this.operadoraId;
+					var eventosDisponiveis = this.eventosDisponiveis;
+
+					$('#selecao-jogos .confronto').click(function() {
+						$('#selecao-jogos .confronto.evento-selecionado').removeClass('evento-selecionado');
+						$('#txtAlternativo').val("");
+						$(this).addClass('evento-selecionado');
+					});
+					
+					$('#salvar').click(function() {
+						
+						var alternativo = $.trim($('#txtAlternativo').val());
+
+						var aplicarParaFiltro = $('#cbDistribuirFiltro').attr('checked')
+						var eventoSelecionado = $('#selecao-jogos .confronto.evento-selecionado');
+						var eventoId;
+						var descricao;
+						if (alternativo.length > 0) {
+							descricao = alternativo;
+							eventoId = null;
+						} else if (eventoSelecionado.length > 0) {
+							eventoId = $('#selecao-jogos .confronto.evento-selecionado').data('evento-id');
+							descricao = $('#selecao-jogos .confronto.evento-selecionado').data('evento-descricao');
+						}
+						
+						var refresh = false;
+						if (aplicarParaFiltro) {
+							for (var i = 0; i < linhas.length; i++) {
+								var linha = linhas[i];
+								var operadoraId = linha[indexOperadora].val;
+								setEvento(td,operadoraId, canal, eventoId, descricao);
+							}
+							refresh = true;
+							
+						} else {
+							setEvento(td,operadora, canal, eventoId, descricao);
+							$(td).data("evento", eventoId);
+							if (descricao && descricao.trim()) {
+								$(td)[0].title = descricao;
+								$(td).find("span").html(descricao);
+								$(td).find("a").css("visibility", "visible");
+							} else {
+								$(td).title("");
+								$(td).find("span").html("");
+								$(td).find("a").css("visibility", "hidden");
+							}
+						}
+						
+						todasLinhas = distribuicaoOperadora.range(0, length);
+						applyFilters(paginaAtual, refresh);
+						$("#jogosOperadoraDialog").xundialog();
+					});
+					
+				});
+			});
+		};
+		
+
+
+
+		var setDistribuicaoValoresAlterados = function(operadoraAlteradaId){
+			
+			if(distribuicaoDadosAlterados[0] == undefined){
+				$.each(distribuicaoOperadora.horarioEventos, function(propriedade,group) {
+	         
+	  				if(propriedade == 'operadoras'){
+	      
+					    $.each(group,function(operadoraId,dados)
+					    {			      
+					      	if(operadoraId != operadoraAlteradaId)
+					      	{			        
+					        	delete 
+					        	distribuicaoAuxDadosAlterados.
+					        	 horarioEventos.operadoras[operadoraId];
+					      	}					
+					    });
+
+					     distribuicaoDadosAlterados.push(jQuery.extend(true, {},distribuicaoAuxDadosAlterados.horarioEventos));				     
+					     distribuicaoDadosAlterados[0].operadoras = new Array();
+					     distribuicaoDadosAlterados[0].operadoras.push(jQuery.extend(true, {},distribuicaoOperadora.horarioEventos.operadoras[operadoraAlteradaId]));
+
+						}		
+					});				
+			 }
+			 else{
+				distribuicaoDadosAlterados[0].operadoras.push(jQuery.extend(true, {},distribuicaoOperadora.horarioEventos.operadoras[operadoraAlteradaId]));
+			 }
+			 
+			 distribuicaoAuxDadosAlterados = jQuery.extend(true, {},distribuicaoOperadora);
+		}
+		
+
+		var conflitoNesseItemClick = function(td,operadora,canal) {
+		
+			distribuicaoOperadora.horarioEventos.operadoras[operadora].temConflito = true;
+			distribuicaoOperadora.horarioEventos.operadoras[operadora].eventoPorCanal[canal].conflito = true;
+			
+			setDistribuicaoValoresAlterados(operadora);
+			
+			distribuicaoOperadora.horarioEventos.operadoras[operadora].temConflito = false;
+			distribuicaoOperadora.horarioEventos.operadoras[operadora].eventoPorCanal[canal].conflito = false;	
+										
+			for(var i =0; i <= linhas.length;i++)
+			{
+				var operadoraId = linhas[i][indexOperadora].val;
+				
+				if(operadoraId == operadora)
+				{
+					for(var j = 9 ; j <= colunas.length - 1;j++)
+					{
+						if(linhas[i][j].ppv)
+							linhas[i][j].conflito = false;
+					}					
+					break;
+				}
+			} 
+			
+			td.removeClass('conflito_nesse_item');
+			td.addClass('conflito_nesse_item_resolvido');
+			td.attr('title', i18n.get('conflito-resolvido-nao-salvo'));
+			td.data('conflito-resolvido', true);
+		};	
+		
+		function removeJogo() {
+			$(this).removeClass('conflito_nesse_item_resolvido');
+			td.addClass('conflito_nesse_item_resolvido_desativado');
+			$(this).data("ativo", false);
+		}
+			
+		var setEvento = function(coluna ,operadora, canal, eventoId, descricao) {
+			
+			if (!distribuicaoOperadora.horarioEventos.operadoras[operadora].eventoPorCanal[canal]) {
+				distribuicaoOperadora.horarioEventos.operadoras[operadora].eventoPorCanal[canal] = {
+					"conflito" : false
+				};
+			}
+
+			distribuicaoOperadora.horarioEventos.operadoras[operadora].eventoPorCanal[canal].display = descricao;
+			distribuicaoOperadora.horarioEventos.operadoras[operadora].eventoPorCanal[canal].evento = eventoId;
+			distribuicaoOperadora.horarioEventos.operadoras[operadora].eventoPorCanal[canal].alternativo = eventoId ? null : descricao;
+			distribuicaoOperadora.horarioEventos.operadoras[operadora].eventoPorCanal[canal].novoEvento = true;
+			
+			setDistribuicaoValoresAlterados(operadora);
+			
+			var index = $(coluna).index();
+			
+			if(index != undefined)
+			{
+				for(var i =0; i <= linhas.length;i++)
+				{						
+					var operadoraId = linhas[i][indexOperadora].val;
+					
+					if(operadoraId == operadora)
+					{ 
+						linhas[i][index].display = descricao;
+						linhas[i][index].evento = eventoId; 
+						linhas[i][index].alternativo = eventoId ? null : descricao;
+						break;			
+					}
+				} 
+			}
+			
+			render(linhas);			
+		};
+				 
+ 		var podeGerenciarJogos = sidi.possuiAutorizacao('GERENCIAR_JOGOS');
+				 
+		var findCanal = function(cell) {
+			var column = Array.prototype.indexOf.call(cell.parentNode.children, cell);
+			var th = $("#nova-tabela table tr")[0].children[column];
+			var canal = $(th).data("canal");
+			return canal;
+		};
+				 
+		var findOperadora = function(cell) {
+			return $(cell.parentNode).data("operadora");
+		};
+		
+		var clickEvento = function(event) {
+			if (!podeGerenciarJogos) return false;
+			
+			var target = event.target;
+			var td = target.tagName === "TD" ? target : $(target).parents("td")[0];
+			var remover = target.tagName === "A" && $(target).hasClass("remover-distribuicao");
+			
+			
+			
+			if (td && !remover) {
+				var conflito = $(td).hasClass("conflito_nesse_item");
+				var conflitoResolvido = $(td).hasClass("conflito_nesse_item_resolvido");
+				var conflitoResolvidoDesativado = $(td).hasClass("conflito_nesse_item_resolvido_desativado");
+				var ppv_desativado = $(td).hasClass("ppv_desativado");
+				var ppv = $(td).hasClass("ppv");
+				var canal = findCanal(td);
+				var operadora = findOperadora(td);
+				
+				if (canal && !ppv && !conflito && !conflitoResolvido && !conflitoResolvidoDesativado && !ppv_desativado) {
+					var evento = $(td).data("evento") || 0;
+					var eventoAlternativo = (evento == 0) ? $(td).text().trim() : undefined;
+					
+					selecionaEvento(td, operadora, canal, evento, eventoAlternativo);				
+				} 
+				else if(conflito)
+				{
+					conflitoNesseItemClick($(td),operadora,canal);
+				}
+				else if (conflitoResolvido)
+				{	
+					var evento = $(td).data("evento") || 0;
+					$(td).removeClass('conflito_nesse_item_resolvido');
+					$(td).addClass('conflito_nesse_item_resolvido_desativado');
+					pendenteItem(true,operadora,canal,evento);
+				}
+				else if(conflitoResolvidoDesativado)
+				{
+					var evento = $(td).data("evento") || 0;
+					$(td).removeClass('conflito_nesse_item_resolvido_desativado');
+					$(td).addClass('conflito_nesse_item_resolvido');
+					pendenteItem(false,operadora,canal,evento);
+
+				}
+				else if (ppv) {
+					var title = $(td).attr('title');
+					var index = $(td).data("evento") || 0;
+					var evento = distribuicao.eventosDisponiveis[index];
+					 if (evento && evento.tipoEvento === "MOSAICO") {
+						abrirPopupMosaico(operadora, canal, evento);
+					}
+					else if(title && title != '' && title != 'Canal não disponível'){
+						var evento = $(td).data("evento") || 0;
+						$(td).removeClass('ppv');
+						$(td).addClass('ppv_desativado');
+						pendenteItem(true,operadora,canal,evento);
+					}
+				}
+				else if (ppv_desativado)
+				{
+					var evento = $(td).data("evento") || 0;
+					$(td).removeClass('ppv_desativado');
+					$(td).addClass('ppv');
+					pendenteItem(false,operadora,canal,evento);
+				}
+				
+			} else if (remover) {
+				clickRemoveEvento(event);
+			}
+			
+			return false;
+		};
+		
+		
+		var pendenteItem = function (isPendente,operadora,canal,evento)
+		{
+			if(isPendente)
+			{
+
+				distribuicaoOperadora.horarioEventos.operadoras[operadora].temPendencia = true;
+				distribuicaoOperadora.horarioEventos.operadoras[operadora].eventoPorCanal[canal].pendente = true;
+			
+				setDistribuicaoValoresAlterados(operadora);
+											
+				for(var i =0; i <= linhas.length;i++)
+				{
+					var operadoraId = linhas[i][indexOperadora].val;
+
+					if(operadoraId == operadora)
+					{
+						for(var j = 9 ; j <= colunas.length - 1;j++)
+						{
+							if(linhas[i][j].evento && linhas[i][j].evento == evento &&
+								linhas[i][j].canalId == canal)
+							{
+								linhas[i][j].pendente = true;
+								break;
+							}
+								
+						}					
+						break;
+					}
+				} 
+			}
+			else
+			{
+				distribuicaoOperadora.horarioEventos.operadoras[operadora].temPendencia = true;
+				distribuicaoOperadora.horarioEventos.operadoras[operadora].eventoPorCanal[canal].pendente = false;
+			
+				setDistribuicaoValoresAlterados(operadora);	
+											
+				for(var i =0; i <= linhas.length;i++)
+				{
+					var operadoraId = linhas[i][indexOperadora].val;
+					
+					if(operadoraId == operadora)
+					{
+						for(var j = 9 ; j <= colunas.length - 1;j++)
+						{
+							if(linhas[i][j].evento && linhas[i][j].evento == evento &&
+								linhas[i][j].canalId == canal)
+							{
+								linhas[i][j].pendente = false;
+								break;
+							}
+						}					
+						break;
+					}
+				} 
+			}
+
+		}
+
+
+						 
+		var applyFilters = function(pagina, refresh) {
+		
+			restringeFiltros();
+			
+			var filtered = todasLinhas;
+			
+			$(".filtro-operadora-novo").each(function() {
+				var coluna = $(this).data("coluna");
+				var value = $(this).val();
+				
+				if (!coluna || !value) return;
+					
+				value = value.split("_").slice(1).join(" ");
+								
+				var index = distribuicaoOperadora.indexOf(coluna);
+				filtered = filtered.filter(function(linha) {
+					return value == (linha[index].val || linha[index].display || linha[index]);
+				});
+			});
+
+			var numerosPPV = $("#seletorNumeroPPV").data("selecao").slice(0, -1).split(",");
+			var ppvIndex = distribuicaoOperadora.indexOf("numeroPPV");
+
+			filtered = filtered.filter(function(linha) {
+				
+			    var valido = $('#filtroConflito').is(':checked');
+
+			    if(valido)
+			    {
+				    for(var i = ppvIndex + 1 ;i < colunas.length -1 ; i++)
+				    {
+				    	if(linha[i].conflito)
+				    		return true;		    
+				    }
+				    
+				    return false;
+			    }
+			    
+				var value = (linha[ppvIndex].val || linha[ppvIndex].display || linha[ppvIndex] );
+				return numerosPPV.indexOf(value) > -1;
+			});
+						
+			linhas = filtered;
+			
+			if (refresh !== false) {
+				var page = typeof pagina == "number" ? pagina : 0;
+				render(linhas, page);
+			}
+		};
+				 
+		var clickRemoveEvento = function(event) {
+			var td = event.target.parentNode;
+			var canal = findCanal(td);
+			var operadora = findOperadora(td);
+			var dataset = td.dataset || {};
+			
+			removeEvento(td,operadora, canal);
+			
+			$(td).empty();
+			$(td).removeData("evento");
+			td.title = "";
+			delete dataset.evento;
+		};
+				 
+		$("#nova-tabela").unbind("click").click(clickEvento);
+		$(".filtro-operadora-novo").unbind("change").change(applyFilters);
+				 
+		var preparaJsonParaEnvio = function(liberando) {
+
+			for (var id in distribuicaoOperadora.horarioEventos.operadoras) {
+				var operadoraEvento = distribuicaoOperadora.horarioEventos.operadoras[id];
+				operadoraEvento.liberar = liberando || operadoraEvento.liberar;
+				operadoraEvento.liberandoAgora = liberando && operadoraEvento.status != "LIBERADA";
+				if (!operadoraEvento.liberar) {
+					operadoraEvento.justificativa = "";
+				}
+			}			
+		};
+		
+		if (sidi.possuiAutorizacao('GERENCIAR_DISTRIBUICAO', 'LIBERAR_DISTRIBUICAO_OPERADORAS')) {
+			$('#gravar').click(function() {
+				setTimeout(function() {
+					preparaJsonParaEnvio(false);
+
+					$.postJSON({
+						type: 'POST',
+						url: '../sidi/distribuicao/salvarDistribuicoesOperadorasNova',
+						data: [distribuicao.data, distribuicaoDadosAlterados]
+					}).success(function() {
+						$('.message').message(i18n.get('distribuicao-sucesso'), 'success', true);
+						$('html, body').animate({scrollTop:0}, 'fast');						
+					}).error(function(x) {
+						console.log(x);
+					}).done(function(){
+						if(distribuicaoDadosAlterados[0])
+					    	distribuicaoDadosAlterados[0].operadoras = new Array();
+					})
+				}, 0);
+			});
+		}
+
+		if (sidi.possuiAutorizacao('LIBERAR_DISTRIBUICAO_OPERADORAS')) {
+			$('#liberar').click(function() {
+				setTimeout(function() {
+					preparaJsonParaEnvio(true);
+					$.holy("../templates/distribuicao/popup-justificativa-novo.xml", {
+						data : distribuicao.data,
+						distribuicao : distribuicao.distribuicaoOperadora.horarios,
+						distribuicaoJson: distribuicao
+					})
+				}, 0);
+			});
+		}
+				 
+		var setStatus = function() { // status global
+			var $iconeStatus =  $('.status .icone-status');
+			var naoLiberados = $iconeStatus.filter('.nao-liberado').length;
+			var liberados = $iconeStatus.filter('.LIBERADA').length;
+			var finalizadas = $iconeStatus.filter('.FINALIZADA').length;
+			var todos = $iconeStatus.length;
+
+			var cssClass;
+			var msg;
+			if (naoLiberados == todos) {
+				cssClass = "nao-liberado";
+				msg = "status-nao-liberado";
+			} else if (liberados == todos) {
+				cssClass = "liberada";
+				msg = "status-liberada";
+			}  else if (finalizadas == todos) {
+				cssClass = "finalizada";
+				msg = "status-finalizada";
+			} else {
+				cssClass = "liberada-parcialmente";
+				msg = "status-liberada-parcialmente";
+			}
+
+			var status = $("#div-status span").attr("class", "").addClass(cssClass).text(i18n.get(msg));   
+		}
+				 
+		var abrirPopupMosaico = function(operadoraId, canalId, evento) {
+			
+			var operadoraEventos = distribuicaoOperadora.horarioEventos.operadoras[operadoraId].eventoPorCanal;
+			
+			$.holy("../templates/distribuicao/popup-visualizacao-mosaico.xml", {
+				"canal" :  distribuicaoOperadora.canal(canalId),
+				"canais" : function(indice) {
+					if (evento.canais && evento.canais[indice]) {
+						return evento.canais[indice];
+					} 
+					return ""; 
+				},
+				"evento" : evento,
+				"eventoCanal" : function(indice) {
+					var canal = evento.canais[indice];
+					var eventoCanal = operadoraEventos[canal.id.toString()] || {};
+					var e = distribuicao.eventosDisponiveis[eventoCanal.evento] || {};
+					var descricao = e.descricaoEventoAbreviado || eventoCanal.alternativo || "";
+
+					return descricao;
+				},
+				"indices" : (evento.divisaoMosaico == 'QUATRO') ? [0,1,2,3] : [0,1],
+				"operadora" : distribuicaoOperadora.operadora(operadoraId)
+				
+			}).then(function() {
+			
+				$("#popup").css("z-index", 100);
+				
+				$("#popup").xdialog({
+					overlay: '#333',
+					alpha: '3',
+					width: 650
+				});
+			});
+		
+		};
+				 
+		var restringeFiltros = function() {
+			 
+			var filtroEstado = $('#filtroEstado').val();
+			var filtroRegiao = $('#filtroRegiao').val();
+			var filtroHeadendOperadora = $('#filtroHeadendOperadora').val();
+	
+			$('#filtroOperadora option').slice(1).show().each(function() {
+				var $this = $(this);
+				if ((filtroEstado != '' && $this.data('uf') != filtroEstado) ||	
+					(filtroHeadendOperadora != '' && $this.data('headend') != filtroHeadendOperadora) ||
+					(filtroRegiao != '' && $this.data('regiao') != filtroRegiao))
+					$this.hide();
+			});
+
+			var filtroOperadora = $('#filtroOperadora').val();
+			
+			var estado = filtroEstado.slice(filtroEstado.indexOf("_") + 1);
+			var regiao = filtroRegiao.slice(filtroRegiao.indexOf("_") + 1);
+			var operadora = filtroOperadora.slice(filtroOperadora.indexOf("_") + 1);
+			
+			var filter = distribuicao.filter;
+			var map = distribuicao.map;
+			
+			var operadoras = distribuicao.distribuicaoOperadora.operadoras.filter(filter.semAfiliada);	
+			
+			var todasAfiliadas = operadoras.map(map.afiliadas).sort().filter(filter.duplicates);
+			
+			var afiliadas = operadoras.filter(filter.uf(estado))
+								.filter(filter.regiao(regiao))
+								.filter(filter.id(operadora))
+								.map(map.afiliadas)
+								.sort()
+								.filter(filter.duplicates);
+			
+			var showAfiliada = {};
+			
+			var j = 0;
+			for (var i = 0; i < todasAfiliadas.length; i++) {
+				var afiliada = todasAfiliadas[i];
+				var id = afiliada.replace(/ /g, '_');
+				var show = false;
+				
+				if (j < afiliadas.length) {
+					if (afiliada === afiliadas[j]) {
+						show = true;
+						j++;
+					}
+				}
+				
+				showAfiliada[id] = show;
+			}
+			
+			$("#filtroAfiliada option").slice(1).show().each(function() {
+				var self = $(this);
+				var val = self.val();
+				var id = val.slice(val.indexOf("_") + 1);
+				
+				if (!showAfiliada[id]) {
+					self.hide();
+				}
+			});
+		};
+				 
+		applyFilters(0, true);
+				 
+		$('#download').attr('href', '../sidi/planilha?data=' +  date.stringToDate($("#dataEventos").val()).getTime());
+		$('#download_resumida').attr('href', '../sidi/planilha?data=' +  date.stringToDate($("#dataEventos").val()).getTime() + '&resumida=true');
+			
+		$("#tabelaCarregando").hide();
+		$("#abasLiberacaoDistribuicao").hide();
+		$("#content-details .principal").hide();
+		$("#content-details .operadoras, #div-filtro").show();
+			
+		if ($("#filtroHorario").children().size() > 0) {
+			$("#horarioHidden").val($($("#filtroHorario").children()[0]).val());
+		}
+
+	 	setStatus();
+				 
+		var distribuicaoJson = this.distribuicaoJson;
+		$("#btnSeletorColuna").unbind("click").click(function() {
+		
+			var colunasIndexadas = colunas.map(function(v, i) {
+				if (v.canal) {
+					v.index = i + 1;
+					return v;
+				}
+				return {
+					"display": v,
+					"index": i + 1
+				}
+			});
+			
+			$.holy("../templates/distribuicao/seletor-colunas.xml", {
+				"colunas" : colunasIndexadas
+				
+			}).then(function() {
+				for (var i = 0; i < hiddenColumns.length; i++) {
+					$("#coluna-" + hiddenColumns[i]).prop("checked", false);
+				}
+				
+				$("#popup .btSave").unbind("click").click(function() {
+					var hidden = [];
+					$("#popup .listaColunas input:not(:checked)").each(function() {
+						hidden.push(parseInt($(this).data("index")));
+					})
+					hiddenColumns = hidden;
+					$("#popup").xundialog();
+					render(linhas);
+					
+					//$.cookie('distribuicao-seletor-coluna-visivel', seletorColuna.visivel.substring(0, seletorColuna.visivel.length - 2), {expires: 999});
+					//$.cookie('distribuicao-seletor-coluna-oculto', seletorColuna.oculto.substring(0, seletorColuna.oculto.length - 2), {expires: 999});
+
+				});
+
+				
+			});
+		});
+				 
+		$("#seletorNumeroPPV").unbind("click").click(function() {
+			$.holy("../templates/distribuicao/seletor-numero-canais-ppv.xml", {
+				"numeroPPV" : distribuicao.numeroPPV
+			}).then(function() {
+				$('#popup .btSave').unbind("click").click(function() {
+					$.pushLoading();
+
+					setTimeout(function() {
+						var numerosPPV = '';
+						$('#popup input[type=checkbox]').each(function() {
+							if (this.checked)
+								numerosPPV += $(this).data('numero') + ',';
+						});
+
+						$('#seletorNumeroPPV').data('selecao', numerosPPV);
+						applyFilters(0, true);
+						
+					}, 0);
+
+					$("#popup").xundialog();
+				});
+			
+			});
+		});
+
+		]]>
+	</script>
+</engine>

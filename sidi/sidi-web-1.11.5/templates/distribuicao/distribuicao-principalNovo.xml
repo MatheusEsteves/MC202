@@ -1,0 +1,437 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0">
+	<template selector="#content-details .principal">
+		{if !jQuery.isEmptyObject(distribuicaoJson.eventosDisponiveis)}
+			<table class="lista-de-jogos-distribuicao">
+	            <tbody>
+	            <![CDATA[
+					{for canal in distribuicaoJson.canais}
+						{var canalId = canal.id}
+						{var eventos = distribuicaoJson.distribuicaoPrincipal.eventosPorCanal[canalId]}
+						{if eventos}
+							{for eventoDistribuicao in eventos}
+									{var eventoId = eventoDistribuicao.eventoId}
+									{var distribuicaoPrincipalId = eventoDistribuicao.distribuicaoPrincipalId}
+									{var evento = distribuicaoJson.eventosDisponiveis[eventoId] ? distribuicaoJson.eventosDisponiveis[eventoId] : null}
+				                     <tr>
+				                     	{if eventoDistribuicao_index == 0}
+				                        <td class="canal" rowspan="${distribuicaoJson.distribuicaoPrincipal.eventosPorCanal[canalId].length + 1}" data-canal-id="${canalId}">
+				                            <img src="../imagens/canal?id=${canalId}" title="${canal.nome}"/>
+				                        </td>
+				                        {/if}
+										<td class="times {if eventoDistribuicao.alterado} alterado {/if} confronto" id="teste_canal_${canalId}_evento_${evento.id}">
+										{if evento != null}
+											{if evento.tipoEvento == 'JOGO'}
+												{var mandante = distribuicaoJson.clubes[evento.mandante]}
+												{var visitante = distribuicaoJson.clubes[evento.visitante]}
+												<span class="mandante time">
+													<img src="${mandante.urlBrasao}" />${mandante.apelido}
+												</span>
+												<div class="versus">
+													<span class="hora">${date.dateToHourString(evento.data)}</span>
+													<span>X</span>
+												</div>
+												<span class="visitante time">
+													<img src="${visitante.urlBrasao}" />${visitante.apelido}
+												</span>
+											{/if}
+											{if evento.tipoEvento != 'JOGO'}
+												<div class="versus">
+													<span class="hora">${date.dateToHourString(evento.data)}</span>
+													<span>${evento.descricaoEvento}</span>
+												</div>
+											{/if}
+										{/if}
+										</td>
+			                        	<td class="campeonato" id="teste_canal_${canalId}_campeonato_${evento.id}">
+			                        		{if evento != null}
+				                           		${eventoDistribuicao.comutacao == null  ? evento.campeonato : evento.campeonato ? evento.campeonato  + ' - COMUTAÇÃO' : '' }
+				                            {/if}
+						                    {if evento != null && evento.tipoEvento == "MOSAICO" && sidi.possuiAutorizacao('GERENCIAR_DISTRIBUICAO', 'LIBERAR_DISTRIBUICAO_OPERADORAS')}
+				                            <div>
+				                                <ul id="lista-canais-mosaico_${canalId}_${eventoId}" class="lista-canais-mosaico">
+				                               	{if evento != null}
+					                                  {for canalMosaico in evento.canais}
+					                                    {if canalMosaico}
+					                                    <li>${canalMosaico.nome}</li>
+					                                    {/if}
+					                                  {/for}
+				                                 {/if}
+				                                 </ul>
+				                                 <input id="editar-mosaico_${canalId}_${eventoId}" class="button azul editar-canais-mosaico" value="${i18n.get('editar-canais')}" type="button"/>
+				                            </div>
+				                            {/if}
+				                            
+				                            {if sidi.possuiAutorizacao('GERENCIAR_DISTRIBUICAO', 'LIBERAR_DISTRIBUICAO_OPERADORAS')}
+					                             <span class="acoes">
+					                            	<a title="${i18n.get('remover-jogo-distribuicao')}" href="javascript:void(0)" id="remover-jogo-campeonato_${canalId}_${eventoId}">${i18n.get('remover-jogo-abrev')}</a>
+				                                 	{if (canal.tipoCanal !== 'ABERTO')}
+				                                		<a title="${i18n.get('alterar-estados')}" href="javascript:void(0)" id="editar-estados-transmissao_${canalId}_${eventoId}">${i18n.get('alterar-estados-abrev')}</a>
+				                                	{else}
+				                                		<a title="${i18n.get('alterar-afiliadas')}" href="javascript:void(0)" id="editar-afiliadas-transmissao_${canalId}_${eventoId}">${i18n.get('alterar-afiliadas-abrev')}</a>
+					                            	{/if}
+													{if canal.tipoCanal == 'PPV_SD' || canal.tipoCanal == 'PPV_HD' || canal.tipoCanal == 'PPV' || canal.tipoCanal == 'FECHADO'}
+						                                {if evento != null && evento.tipoEvento != 'MOSAICO'}
+						                                <a title="${i18n.get('alterar-horarios')}" href="javascript:void(0)" id="editar-horarios-transmissao_${canalId}_${eventoId}">${i18n.get('alterar-horarios-abrev')}</a>
+						                            	{/if}
+					                            	{/if}
+					                            	<a title="${i18n.get('salvar')}" href="javascript:void(0)" data-distribuicao-id="${distribuicaoPrincipalId}" 
+					                            		data-evento-id="${eventoId}" data-canal-id="${canalId}" class="salvar-distribuicao">${i18n.get('salvar')}</a>
+				                           	     </span>
+				                           {/if}
+				                        </td>
+				                    </tr>
+							{/for}
+						{/if}
+							<tr>
+		                     	{if !eventos}
+		                        <td class="canal">
+		                            <img src="../imagens/canal?id=${canalId}" title="${canal.nome}"/>
+		                        </td>
+		                        {/if}
+		                        <td colspan="3">
+		                        	{if sidi.possuiAutorizacao('GERENCIAR_DISTRIBUICAO', 'LIBERAR_DISTRIBUICAO_OPERADORAS')}
+		                            <div class="buttons adicionar">
+		                                <input data-canal-id="${canalId}" class="button azul selecionar-jogos" id="selecionar-jogo${canalId}" value="${i18n.get('selecionar-jogo')}" type="button"/>
+		                            </div>
+		                            {/if}
+		                        </td>
+							</tr>
+						{/for}
+					]]>
+	             </tbody>
+	        </table>
+			{if sidi.possuiAutorizacao('GERENCIAR_DISTRIBUICAO','LIBERAR_DISTRIBUICAO_OPERADORAS','CONSULTAR_COMUTACAO','GERENCIAR_COMUTACAO')}
+			<div class="topo">
+				<div class="acoes">
+					<a href="javascript:void(0)" class="acao selected" id="avancar-distribuicao">${i18n.get('salvar')}</a>
+				</div>
+			</div>
+			{/if}
+		{else}
+		<span>${i18n.get('nenhum-jogo-disponivel')}</span>
+		{/if}
+	</template>
+	<script>
+	<![CDATA[   	
+		var comutacaoJson = this.comutacao;
+		var distribJson = this.distribuicaoJson;
+		
+		if (!$.isEmptyObject(distribJson.eventosDisponiveis)) {
+
+			$.each(distribJson.canais, function(idx, canal) {
+				var canalId = canal.id;
+				var eventos = distribJson.distribuicaoPrincipal.eventosPorCanal[canalId];
+
+				if (eventos) {
+				    $.each(eventos, function(idx, eventoDistribuicao) {
+				    	var eventoId = eventoDistribuicao.eventoId;
+				    	var evento = distribJson.eventosDisponiveis[eventoId];
+				    	if(evento != null){
+	 						for (var i = 0; i < comutacaoJson.length; i++) {
+								if(eventoDistribuicao.comutacao != null  && eventoDistribuicao.comutacao.id == comutacaoJson[i].id &&
+									comutacaoJson[i].data != evento.data && comutacaoJson[i].canalPrincipal.id == canalId){
+									eventoDistribuicao.comutacao = null;
+								}
+								if(comutacaoJson[i].data == evento.data && comutacaoJson[i].canalPrincipal.id == canalId){
+									eventoDistribuicao.comutacao = { id: comutacaoJson[i].id };
+								}
+							}
+						}
+		   				$('#remover-jogo-campeonato_' + canalId + '_' + eventoId).click(function() {
+		   				
+		   					if(eventoDistribuicao.distribuicaoPrincipalId){
+			   					$.postJSON('../sidi/distribuicaoPrincipal/deletar', {'id' : eventoDistribuicao.distribuicaoPrincipalId}, function(resultadoSalvar) {
+									if (resultadoSalvar == true) {
+										$('.message').message(i18n.get('distribuicao-sucesso'), 'success', true);
+									} else {
+										$('.message').message(i18n.get('processo-erro'), 'error', true);
+									}
+								});
+							}
+
+		   					var canal = utils.find(distribJson.canais, canalId);
+		   					var eventosCanal = utils.removeByField(eventos, 'eventoId' , eventoId);
+
+		   					if (eventosCanal.length == 0) {
+		   						delete distribJson.distribuicaoPrincipal.eventosPorCanal[canalId];
+		   					} else {
+		   						distribJson.distribuicaoPrincipal.eventosPorCanal[canalId] = eventosCanal;
+		   					}
+		   					
+		   					if(canal.relacionado){
+		   						var eventosCanalRel = distribJson.distribuicaoPrincipal.eventosPorCanal[canal.relacionado.id];
+		   						if(eventosCanalRel){
+				   					eventosCanalRel = utils.removeByField(eventosCanalRel, 'eventoId' , eventoId);
+				   					if(eventosCanalRel){
+					   					if (eventosCanalRel.length == 0) {
+						   					delete distribJson.distribuicaoPrincipal.eventosPorCanal[canal.relacionado.id];
+					   					} else {
+						   					distribJson.distribuicaoPrincipal.eventosPorCanal[canal.relacionado.id] = eventosCanalRel;
+					   					}
+				   					}
+			   					}
+		   					}
+		   					
+							$.holy("../templates/distribuicao/distribuicao-principalNovo.xml", {'distribuicaoJson' : distribJson, 'comutacao': comutacaoJson });
+						});
+		   				$('#editar-estados-transmissao_' + canalId + '_' + eventoId).click(function() {
+		   					var json = {
+		   						'evento' : evento,
+		   						'canal' : canal,
+		   						'distribuicao' : distribJson,
+		   						'eventoDistribuicao' : eventoDistribuicao,
+		   						'comutacao': comutacaoJson
+		   					};
+	          				$.holy("../templates/distribuicao/selecao-estados-novo.xml", json );	   					
+						});
+		   				$('#editar-afiliadas-transmissao_' + canalId + '_' + eventoId).click(function() {
+		   					var json = {
+		   						'evento' : evento,
+		   						'canal' : canal,
+		   						'distribuicao' : distribJson,
+		   						'eventoDistribuicao' : eventoDistribuicao,
+		   						'comutacao': comutacaoJson
+		   					};
+	          				$.holy("../templates/distribuicao/selecao-afiliadas-novo.xml", json );	   					
+						});
+		   				$('#editar-horarios-transmissao_' + canalId + '_' + eventoId).click(function() {
+		   					var json = {
+		   						'evento' : evento,
+		   						'canal' : canal,
+		   						'distribuicao' : distribJson,
+		   						'eventoDistribuicao' : eventoDistribuicao,
+		   						'comutacao': comutacaoJson
+		   					};
+	          				$.holy("../templates/distribuicao/selecao-horarios-novo.xml", json);
+						});
+						
+		   				$('#editar-mosaico_' + canalId + '_' + eventoId).unbind('click').click(function() {
+		   					var json = {
+		   						'evento' : evento,
+		   						'canal' : canal,
+		   						'distribuicao' : distribJson,
+		   						'eventoDistribuicao' : eventoDistribuicao,
+		   						'canais' : function(indice) {
+		   							if (evento.canais && evento.canais[indice]) {
+		   								return evento.canais[indice];
+		   							} 
+		   							return ""; 
+		   						},
+		   						'indices' : (evento.divisaoMosaico == 'QUATRO') ? [0,1,2,3] : [0,1]
+		   					};
+		   					
+	          				$.holy("../templates/distribuicao/popup-selecao-mosaico.xml", json).then(function() {
+	          				  		$("#popup").xdialog({
+										overlay: '#333',
+										alpha: '3'
+									});
+									
+									$('#popup .close, #btnCancelar-editar-mosaico').unbind("click").click(function() {
+										$('#popup').xundialog();
+										return false;
+									});
+									
+									var fragments = $('ul.display-canais-mosaico li');
+									var containerCanais = $(".seleciona-canal-mosaico");
+									var canais = $('.seleciona-canal-list input');
+									
+									var logoCanal = function(id, nome) {
+										if (!nome || !id) {
+											return "";
+										}
+										var canalId = id.split("-").pop();
+										
+										return '<img class="icone-mosaico" src="../imagens/canal?id=' + canalId + '" title="' + nome + '"/>';
+									};
+									
+									var disableSelected = function() {
+										canais.prop("disabled", false);
+										canais.parent().css("color", "");
+									
+										fragments.each(function(i, v) {
+											var fragment = $(v);
+											if (fragment.data("id")) {
+												var canal = $("#" + fragment.data("id"));
+												if (!canal.prop("checked")) {
+													canal.prop("disabled", true);
+													canal.parent().css("color", "lightgray");
+												}
+											}
+										});
+									};
+									
+									var selectFragment = function(fragment) {
+										var self = $(fragment);
+										
+										fragments.removeClass("selected");
+										self.addClass("selected");
+										
+										var checked = self.data("id") ?  $("#" + self.data("id")) : $("#seleciona-canal-empty");
+										checked.prop("checked", true);
+										disableSelected();
+										
+										containerCanais.show();
+										
+										canais.unbind("change").change(function() {
+											self.data("id", this.value ? this.id : "");
+											self.data("canalId", this.value ? this.id.split("-").pop() : "");
+											self.data("canalNome", this.value);
+											self.find(".canal").html(logoCanal(this.id, this.value) + this.value);
+											disableSelected();
+										});									
+									};
+
+									fragments.unbind("click").click(function() {
+										selectFragment(this);									
+									});
+									
+									selectFragment(fragments[0]);
+									
+									$('#btnOK-editar-mosaico').unbind("click").click(function() {
+										var canais = [];
+										var list = "";
+										fragments.each(function(i, v) {
+											var fragment = $(v);
+											var indice = parseInt(fragment.data("indice"));
+											var canalId = fragment.data("canalId");
+											var nome = fragment.data("canalNome");
+											
+											canais[indice] = canalId ? {"id" : parseInt(canalId), "nome" : nome} : null;
+											if (canalId) {
+												list = list + "<li>" + fragment.data("canalNome") + "</li>";
+											}
+										});
+										
+										eventoDistribuicao.canais = canais;
+										eventoDistribuicao.alterouMosaico = true;
+										evento.canais = canais;
+										$("#lista-canais-mosaico_" + canalId + '_' + eventoId).html(list);
+										$('#popup').xundialog();
+									});
+	          				});
+						});
+				    });
+			    }
+			});
+
+
+
+			$('#avancar-distribuicao').click(function() {
+				$.holy("../templates/distribuicao/confirmar-alteracao-distribuicao-novo.xml", {'distribJson':distribJson });
+			});
+			
+			$('.salvar-distribuicao').click(function() {
+				var distribuicaiId = $(this).data('distribuicao-id');
+				var canalId = $(this).data('canal-id');
+				var eventoId = $(this).data('evento-id');
+				
+				var canal = utils.findByField(distribJson.canais, 'id', canalId);
+				
+				var distribuicoes = new Array();
+				var eventosDoCanal =  distribJson.distribuicaoPrincipal.eventosPorCanal[canalId];
+				var eventoDoCanal = utils.findByField(eventosDoCanal, "eventoId", eventoId);
+ 				var tipoEvento = distribJson.eventosDisponiveis[eventoDoCanal.eventoId].tipoEvento;
+	  			var evento = {'id': eventoDoCanal.eventoId, 'tipoEvento' : tipoEvento};
+	  			
+	  			if(tipoEvento === 'MOSAICO'){
+	  				evento.canais = distribJson.eventosDisponiveis[eventoDoCanal.eventoId].canais;
+	  			}
+
+	  			var comutacao = {};
+	  			if(eventoDoCanal.comutacao != null){
+	  				comutacao.id = eventoDoCanal.comutacao.id;
+	  			}
+	  			
+	  			var distPrincipal = {
+		  			'id' : eventoDoCanal.distribuicaoPrincipalId,
+		  			'dataInicioTransmissao' : eventoDoCanal.dataInicioTransmissao,
+		  			'dataTerminoTransmissao': eventoDoCanal.dataTerminoTransmissao,		  			
+					'canal' : {'id' : canalId},
+					'comutacao' : eventoDoCanal.comutacao,
+					'afiliadasExcluidas' : eventoDoCanal.afiliadasExcluidas,
+					'distribuicao' : {'id' : eventoDoCanal.distribuicaoId},
+					'evento' : evento,
+					'alterado' : eventoDoCanal.alterado,
+					'comutacao' :  comutacao
+	  			};
+	  		
+	  			var estados = eventoDoCanal.estados;
+	  			var distribuicaoEstados = new Array();
+	  			for(var keyEstados in estados){
+	  				distribuicaoEstados.push({'estado' : estados[keyEstados], 'selecionado' : true})
+	  			}
+
+				distPrincipal.distribuicaoEstados = distribuicaoEstados;
+	  			distribuicoes.push(distPrincipal);
+
+				if(canal.relacionado){
+					var eventosDoCanalRelacionado =  distribJson.distribuicaoPrincipal.eventosPorCanal[canal.relacionado.id];
+					var eventoDoCanalRelacionado = utils.findByField(eventosDoCanalRelacionado, "eventoId", eventoId);
+					
+		  			var comutacaoRelacionado = {};
+		  			if(eventoDoCanalRelacionado.comutacao != null){
+		  				comutacaoRelacionado.id = eventoDoCanalRelacionado.comutacao.id;
+						distPrincipal.comutacao = comutacaoRelacionado;
+		  			}
+		  			
+		  			var distPrincipalRel = {
+			  			'id' : eventoDoCanalRelacionado.distribuicaoPrincipalId,
+			  			'dataInicioTransmissao' : eventoDoCanalRelacionado.dataInicioTransmissao,
+			  			'dataTerminoTransmissao': eventoDoCanalRelacionado.dataTerminoTransmissao,		  			
+						'canal' : {'id' : canal.relacionado.id},
+						'comutacao' : eventoDoCanalRelacionado.comutacao,
+						'afiliadasExcluidas' : eventoDoCanalRelacionado.afiliadasExcluidas,
+						'distribuicao' : {'id' : eventoDoCanalRelacionado.distribuicaoId},
+						'evento' : evento,
+						'alterado' : eventoDoCanalRelacionado.alterado,
+						'comutacao' :  comutacaoRelacionado
+		  			};
+		  		
+					distPrincipalRel.distribuicaoEstados = distribuicaoEstados;
+		  			distribuicoes.push(distPrincipalRel);
+				}
+				
+				distribuicao.salvar(distribuicoes);
+			});
+			
+			$('.selecionar-jogos').click(function() {
+				
+				var canalId = $(this).data("canal-id");
+				var eventosPorCanal = distribJson.distribuicaoPrincipal.eventosPorCanal[canalId];
+				
+				$.getJSON('../sidi/distribuicao/buscaEventosPossiveisParaCanal', {arg : [distribJson.data, canalId]},
+    				function(eventosIds) {
+						var eventos = [];
+						for (var idx = 0; idx < eventosIds.length; idx++) {
+							var evento = distribJson.eventosDisponiveis[eventosIds[idx]];
+							evento.id = eventosIds[idx];
+		
+							var encontrou = false;
+							if (eventosPorCanal) {
+								for (var i = 0; i < eventosPorCanal.length; i++) {
+									if (eventosPorCanal[i].eventoId == evento.id) {
+										encontrou = true;
+									}
+								}
+							}
+							
+							if (!encontrou)
+								eventos.push(evento);
+						}
+						
+						var json = {
+							'eventosDisponiveis' : eventos,
+							'clubes' : distribJson.clubes,
+							'canalId' : canalId,
+				   			'distribuicao' : distribJson,
+				   			'comutacao': comutacaoJson
+						};
+		
+						$.holy("../templates/distribuicao/selecao-jogos-novo.xml", json);
+			    });
+			});
+
+		}
+	]]>
+	</script>
+</engine>

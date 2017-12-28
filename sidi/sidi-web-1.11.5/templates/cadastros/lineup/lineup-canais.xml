@@ -1,0 +1,175 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+    <template selector=".message">
+	</template>
+	<template selector="#content-details">
+		<div class="topo" id="topo">
+	      <div class="titulo">${i18n.get('cadastro-de-lineup')}</div>	      
+	    </div>
+		<div id="divListaLineup">
+		
+			<div class="tabela tabela-geral">
+				{for matrizAgrup in matrizes}
+					<div class="oper" >
+						<div class="header">${matrizAgrup.matriz}</div>
+						<div class="content">
+						  <div class = "edicao_lineup_distribuicao"> 
+						    <div class = "checkboxDistribuicao">
+						      {if matrizAgrup.editarlineupdistribuicao}
+						        <input class = "checkbox" type = "checkbox" id = "${matrizAgrup.matriz}" checked = "checked"></input>
+						      {else}
+					            <input class = "checkbox" type = "checkbox" id = "${matrizAgrup.matriz}"></input>
+						      {/if}
+						      <label>${i18n.get('titulo-editar-lineup-distribuicao')}</label>
+						    </div>
+						  </div>
+							<table border="0" cellpadding="0" cellspacing="0">							
+								<tr>							
+									<th>${i18n.get('lineup.canal')}</th>
+									<th>${i18n.get('lineup.numero')}</th>								
+								</tr>
+								{for opCanal in matrizAgrup.operadoraCanais}									
+									<tr class="canalOp_${opCanal.id}">									
+										<td class="canal_nome_${opCanal.canais.id}" id = "nomeCanal">${opCanal.canais.nome}</td>
+										<td class="">
+											{if sidi.possuiAutorizacao('GERENCIAR_LINEUP')}
+											  {if opCanal.editarlineupdistribuicao}
+								                <input type="text" style="width: 35px;" class="canalNumInput_limit numeric" 
+													value="${opCanal.lineUp ? opCanal.lineUp : ''}" maxlength="3" disabled = "disabled" id="${opCanal.canais.id}"
+													data-id-canal="${opCanal.canais.id}" data-matriz="${matrizAgrup.matriz}"/>
+											  {else}
+											    <input type="text" style="width: 35px;" class="canalNumInput_limit numeric" 
+													value="${opCanal.lineUp ? opCanal.lineUp : ''}" maxlength="3" id="${opCanal.canais.id}"
+													data-id-canal="${opCanal.canais.id}" data-matriz="${matrizAgrup.matriz}"/>    
+											  {/if}
+										      <div class="feedback" style="display:inline;"></div>
+											{else}
+												${opCanal.lineUp ? opCanal.lineUp : ' - '}
+											{/if}
+										</td>										
+									</tr>
+								{/for}																					
+							</table>
+						</div>
+					</div>
+				{/for}
+			</div>
+		</div>
+	</template>
+	<script>
+		<![CDATA[   
+			var matrizes = this.matrizes;
+			var editarlineupdistribuicao = false;
+			
+			var preencherLineup = function(matriz){
+			  $.each(matrizes, function(i, matrizAgrup){
+			    if (matrizAgrup.matriz == matriz){
+			      $.each(matrizAgrup.operadoraCanais, function(j, opCanal){
+			        var texto = opCanal.lineUp?opCanal.lineUp.toString():'';
+			        $('#' + opCanal.canais.id.toString()).text(texto);
+			        $('#' + opCanal.canais.id.toString()).val(texto);
+			      });
+			    }
+			  });
+			};
+			
+			$(document).on('input', '.numeric', function() {
+			    this.value = this.value.replace(/[^\d\-]/g,'');
+			});
+			
+			$('.header').click(function(){
+				if(!$(this).closest('div.oper').hasClass('active')){
+					$('.oper').removeClass('active');
+					$(this).closest('div.oper').addClass('active');
+				} else {
+					$('.oper').removeClass('active');
+				}
+			});	
+			
+			$('.canalNumInput_limit').blur(function(){
+				var canalNumInput = $(this);
+				var lineup = Number($(this).val());
+				var idCanal = $(this).data('id-canal');
+				var matriz = $(this).data('matriz'); 
+								
+				$(canalNumInput).parent('td').find('div.feedback img').remove();
+				if($.isNumeric(lineup)) {
+				    var editarlineupdistribuicao = $("#"+matriz).is(":checked");
+					$.postJSON("../sidi/operadora-canal/alterarLineupOperadoraCanalPorMatriz", [idCanal, matriz, lineup], function(resp) {
+						if(resp === true){
+							$(canalNumInput).parent('td').find('div.feedback').append('<img src="../images/ok.png"/>');
+						} else {
+							$(canalNumInput).parent('td').find('div.feedback').append('<img src="../images/nok.png"/>');
+						}
+					
+					});
+				}
+			});
+			
+			var habilitarCanais = function(habilitar,table,matriz){
+			  table.find("tbody tr").each(function(){
+			    var linha = $(this);
+			    linha.find("td").each(function(){
+			      if (this.id != "nomeCanal"){
+			        var coluna = $(this);
+			        var campoTexto = coluna.find("input[type=text]");
+			        if (habilitar){
+			          campoTexto.removeAttr("disabled");
+			        }
+			        else{
+			          campoTexto.attr("disabled","disabled");
+			          campoTexto.parent("td").find('div.feedback img').remove();
+			        }
+			      } 
+			    });
+			  });
+			  if (habilitar)
+			    preencherLineup(matriz);
+			};
+			
+			var existeLineupPreenchido = function(tabela){
+			  var lineupPreenchido = false;
+			  tabela.find("tbody tr").each(function(){
+			    var linha = $(this);
+			    linha.find("td").each(function(){
+			      if (this.id != "nomeCanal"){
+			        var coluna = $(this);
+			        var campoTexto = coluna.find("input[type=text]");
+			        if (campoTexto.val() != "")
+			          lineupPreenchido = true;
+			      }
+			    });
+			  });
+			  return lineupPreenchido;
+			};
+			
+			$('.checkbox').change(function(){
+			  var matriz = this.id;
+			  var editarlineupdistribuicao = $("#"+matriz).is(":checked");
+			  var tabela = $("#"+matriz).parent().parent().parent().find("table");
+			  $("#"+matriz).removeAttr("checked"); 
+			  if (existeLineupPreenchido(tabela) && editarlineupdistribuicao){
+			    $.holy("../templates/cadastros/lineup/confirmar-edicao-lineup-distribuicao.xml",{
+			      "matriz" : matriz, 
+			      "editarlineupdistribuicao" : editarlineupdistribuicao,
+			      "tabela" : tabela,
+			      "callback" : habilitarCanais
+			    });
+			  }
+			  else{ 
+			    $.postJSON("../sidi/operadora-canal/setEdicaoLineupDistribuicaoPorMatriz", [matriz, editarlineupdistribuicao], function(resp) {
+			      var mensagem = ' para a matriz ' + matriz;
+			      if (editarlineupdistribuicao){
+			    	    $('.message').message(i18n.get('editar-lineup-distribuicao') + mensagem, 'success', true);
+			    	    habilitarCanais(false,tabela,matriz);
+			    	    $("#"+matriz).attr("checked","checked");
+			    	  }
+			    	  else{
+			    	    $('.message').message(i18n.get('nao-editar-lineup-distribuicao') + mensagem, 'success', true);
+			    	    habilitarCanais(true,tabela,matriz);
+			    	  }
+			    });
+			  }
+			});
+		]]>
+	</script>
+</engine>

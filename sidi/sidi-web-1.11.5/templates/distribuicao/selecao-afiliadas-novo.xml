@@ -1,0 +1,351 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector="#popup">
+	<a href="${window.location.hash}" class="close">(x)</a>
+	<ul id="dialogMessages" class="message"></ul>
+            <form class="forms">
+                <div class="confronto">
+                	{if evento.tipoEvento == 'JOGO'}
+						{var mandante = distribuicao.clubes[evento.mandante]}
+						{var visitante = distribuicao.clubes[evento.visitante]}
+	                    <span class="time" style="background-image: url('${mandante.urlBrasao}')">${mandante.apelido}</span>
+	                    <div class="versus">
+	                        <span class="hora">${date.dateToHourString(evento.data)}</span>
+	                        <span>X</span>
+	                    </div>
+	                    <span class="time" style="background-image: url('${visitante.urlBrasao}')">${visitante.apelido}</span>
+					{else}
+					<div class="versus">
+						<span class="hora">${date.dateToHourString(evento.data)}</span>
+						<span>${evento.descricaoEvento}</span>
+					</div>
+					{/if}
+            </div>
+            <fieldset>
+	            <div class="selectall" style="padding-top: 0;">
+	                <span>Selecionar todos</span>
+	                <input type="checkbox"/>
+	            </div>
+	            <div class="estadosList">
+	                <ul class="estados">
+						{for estado in distribuicao.estados}
+							<li title="${i18n.get('estado-' + estado)}" class="estado">
+								<input type="checkbox" id="estado_${estado}" value="${estado}" />
+								${estado}
+							</li>
+						{/for}
+						{if canal.tipo == 'FECHADO'}
+						<li id="listItemProgramacaoAlternativa" class="hidden">
+							<label for="programacaoAlternativa">
+								<span class="required">* </span>
+								${i18n.get('programacao-alternativa')}:
+							</label>
+							<input type="text" id="programacaoAlternativa" value="${eventoDistribuicao.programacaoAlternativa}" maxlength="40"/>
+						</li>
+						{/if}
+	                 </ul>
+	            </div>
+            </fieldset>
+            
+            <div class="afiliadasList">
+				<fieldset>
+	   				<ul>
+		   				<h3>
+							<span class="separador-data">Afiliadas Bloqueadas</span>
+						</h3>
+					</ul>
+					<ul>
+						<li>
+							<label for="sltAfiliadas" style=" width: 110px;">
+								<span class="required">*</span>
+								${i18n.get('afiliada-tvg')}
+							</label>
+							<select id="sltAfiliadas" class="chzn-results">
+								<option></option>
+							</select>
+						</li>
+						<li>
+							<img title="${i18n.get('adicionar')}" id="imgAddAfiliada"
+								src="../images/adicionar.png" />
+						</li>
+					</ul>
+					<table id="tblAfiliadasBloqueadas" class="datatable">
+						<thead>
+							<th scope="col">${i18n.get('nome')}</th>
+							<th scope="col">${i18n.get('acoes')}</th>
+						</thead>
+						<tbody>
+							<tr class="template-row">
+								<td class="field-column nome" data-field="nome"></td>
+								<td class="action-column">
+									<a href="javascript:void(0)" class="cancel ttip act-remove" style="width: 12px; height: 12px;">i18n.get("excluir")</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</fieldset>
+            </div>
+            <div class="buttons right">
+                <input id="btnCancelar-afiliadas" class="buttons" value="Cancelar" type="button"/>
+                <input id="btnOK-afiliadas" class="buttons" value="OK" type="button"/>
+            </div>
+        </form>
+	</template>
+	<script>
+		<![CDATA[
+		var self = this;
+		$("#popup div.afiliadasList li").corner();
+		$("#popup").xdialog({
+			overlay: '#333',
+			alpha: '3'
+		});
+
+		var eventoDistribuicao = this.eventoDistribuicao;
+		var distribuicao = this.distribuicao;
+		var comutacaoJson = this.comutacao;
+		var afiliadasExcluidas = new Array();
+		var afiliadasAgrupadas = new Array();
+		
+		$.each(distribuicao.estados, function(idxEstado, estado) {
+			if (eventoDistribuicao.estados && eventoDistribuicao.estados.indexOf(estado) >= 0) {
+				$('#estado_' + estado).attr('checked', 'checked').parent('li').addClass('selecionado');
+			}
+
+			$('#estado_' + estado).bind('sidi.estado.check',function() {
+				if (this.checked) {
+					$('#estado_' + estado).parent('li').addClass('selecionado');
+				} else {
+					$('#estado_' + estado).parent('li').removeClass('selecionado');
+				}
+
+				if ($('#popup .estadosList input:checkbox:checked').length == distribuicao.estados.length) {
+					$('#listItemProgramacaoAlternativa').addClass('hidden');	
+					$("#popup div.selectall input").prop('checked', true);
+				} else {
+					$('#listItemProgramacaoAlternativa').removeClass('hidden');
+					$("#popup div.selectall input").prop('checked', false);
+				}
+			});
+
+    		$('#estado_' + estado).click(function() {
+				$(this).trigger("sidi.check");
+				if(this.checked) {
+					addOptionsAfiliadas();
+				} else {
+					removeOptionsAfiliadas(this.value);
+				}
+			});
+		});
+		
+		function addOptionsAfiliadas(){
+			populateComboAfiliadas();
+		}
+		
+		function removeOptionsAfiliadas(uf){
+			var combo = $.find("#sltAfiliadas");
+			$.each(afiliadasAgrupadas,function(key, value) {
+				var aux =  $.find("#sltAfiliadas #uf_"+key);
+				if(aux.length!==0){
+					if(uf === key){
+						var afiliadas = value;
+						$(combo).find("#uf_"+key).remove();
+						$(afiliadas).each(function(key, value) {
+							$(combo).find("#afiliada_"+value.id).remove();
+						});
+					}
+				}
+			});
+			
+			$(combo).chosen({
+			    create_option: true,
+			    persistent_create_option: true,
+			    placeholder_text: 'Selecione afiliada'
+			});
+			$(combo).trigger("chosen:updated");
+			$(combo).trigger("liszt:updated");
+		}
+		
+		$("#popup div.selectall input").click(function() {
+			if (this.checked) {
+				$('#popup .estadosList input:checkbox').prop('checked', true)
+					.trigger("sidi.check").parent('li').addClass('selecionado');
+    			addOptionsAfiliadas();
+			} else {
+				$('#popup .estadosList input:checkbox').prop('checked', false)
+					.trigger("sidi.check").parent('li').removeClass('selecionado');
+    			removeOptionsAfiliadas(this.value);
+			}
+		});
+		
+		function estadoSelecionado(key){
+			var estadosSelecionados = $.find('.selecionado input[type="checkbox"]');
+			var estaSelecionado = false;
+			$(estadosSelecionados).each(function(){
+				if($(this).val() === key){
+					estaSelecionado = true;
+				}
+			});
+			
+			return estaSelecionado;
+		}
+		
+		function populateComboAfiliadas(){
+			var combo = $.find("#sltAfiliadas");
+			$.each(afiliadasAgrupadas,function(key, value) {
+				var aux =  $.find("#sltAfiliadas #uf_"+key);
+				if(aux.length===0){
+					if(estadoSelecionado(key)){
+						var afiliadas = value;
+						var estado = $(new Option("Afiliadas de "+key), key);
+						estado.addClass("category");
+						estado.addClass("uf_"+key);
+						estado.attr("id", "uf_"+key);
+						estado.data({group:true, id:key});
+						$(combo).append(estado);
+						$(afiliadas).each(function(key, value) {
+							var afiliada = $(new Option(value.nome), JSON.stringify(value));
+							afiliada.addClass("item");
+							afiliada.addClass("afiliada_"+value.codigo);
+							afiliada.attr("id", "afiliada_"+value.id);
+							afiliada.data(value);
+							$(combo).append(afiliada);
+						});
+					}
+				}
+			});
+			
+			$(combo).chosen({
+			    create_option: true,
+			    persistent_create_option: true,
+			    placeholder_text: 'Selecione afiliada'
+			});
+			$(combo).trigger("chosen:updated");
+			$(combo).trigger("liszt:updated");
+		}
+		
+		setTimeout(function(){
+			var combo = $.find("#sltAfiliadas");
+			$.getJSON("../sidi/afiliada/buscarAfiliadasAgrupadasUF", [], function(result) {
+				afiliadasAgrupadas = result;
+				$(combo).empty().append(new Option("",""));
+				populateComboAfiliadas();
+			});
+			self.page.find("#imgAddAfiliada").click(function() {
+				var selectedValue = self.page.find("#sltAfiliadas option:selected").data();
+				var tabela = self.page.find("#tblAfiliadasBloqueadas");
+				if (selectedValue.group || selectedValue.codigo) {
+					if(!selectedValue.group){
+						if (duplicado(selectedValue)) {
+							self.page.find('.message').message(i18n.get('afiliada-ja-existe-comutacao'), 'error', true);
+						} else {
+							addAfiliada(selectedValue, tabela);
+						}
+					}else{
+						var afiliadas = afiliadasAgrupadas[selectedValue.id];
+						$(afiliadas).each(function(){
+							var afiliada = self.page.find("#sltAfiliadas option[id=afiliada_"+this.id+"]").data();
+							if (!duplicado(afiliada)) {
+								addAfiliada(afiliada, tabela);
+							}
+						});
+					}
+				    $('#sltAfiliadas option').prop('selected', false);
+				    $('#sltAfiliadas').trigger('liszt:updated');
+				} else {
+					self.page.find('.message').message(i18n.get('selecionar-afiliada-comutacao'), 'error', true);
+				}
+			});
+		}, 1);
+		
+		$(eventoDistribuicao.afiliadasExcluidas).each(function(key, value) {
+			var afiliada = value;
+			var tabela = self.page.find("#tblAfiliadasBloqueadas");
+			addAfiliada(afiliada, tabela)
+		});
+
+		function removeAfiliada(line){
+			var tupleId = line.attr("id").replace("line_","");
+			var index = getIndexAfiliadaById(tupleId);
+			afiliadasExcluidas.splice(index, 1);
+			line.remove();
+		}	
+		
+		function addAfiliada(afiliada, tabela){
+			afiliadasExcluidas.push(afiliada);
+			adicionarTuplaTabela(tabela, afiliada.id, afiliada,{".act-remove":removeAfiliada});
+		}
+		
+		function adicionarTuplaTabela(table, tuplaId, tupla, actions) {
+			var linhaTemplate = table.find(".template-row").clone();
+			linhaTemplate.attr("id","line_"+ tuplaId);
+			linhaTemplate.removeClass("template-row");
+			linhaTemplate.addClass("removable");
+			
+			fillFieldColumns(linhaTemplate, tupla);
+			fillActionColumn(linhaTemplate, actions);
+			
+			table.find("tbody:last").append(linhaTemplate);
+		}	
+		
+
+		function getIndexAfiliadaById (afiliadaId){
+			for (var i in afiliadasExcluidas) {
+				if (afiliadasExcluidas[i].id == afiliadaId) {
+					return i;
+				}
+			}
+			return -1;
+		}
+					
+		function duplicado(tupla) {
+			for (var i in afiliadasExcluidas) {
+				if (afiliadasExcluidas[i].id == tupla.id) {
+					return true;
+				}
+			}
+			return false;
+		}
+
+		function fillFieldColumns(linhaTemplate, tupla){
+			var fieldColumns = linhaTemplate.find(".field-column");
+			for(var i=0; i < fieldColumns.size();i++){
+				var fieldColumn = fieldColumns.eq(i);
+				var fieldName = fieldColumn.attr("data-field");
+				var tupleValue = tupla[fieldName];
+				fieldColumn.html(tupleValue);
+			}
+		}
+		
+		function fillActionColumn(linhaTemplate, actions){
+			var actionsColumn = linhaTemplate.find("action-column");
+			$.each(actions, function(actionClass, actionFunction){
+				console.info(actionClass, actionFunction);
+				linhaTemplate.find(actionClass).click(function() {
+					actionFunction(linhaTemplate)
+				});
+			});
+		}		
+		
+		$('#btnCancelar-afiliadas, #popup .close').click(function(){
+			$('#popup').xundialog();
+        });
+
+        $('#btnOK-afiliadas').click(function() {
+       		eventoDistribuicao.estados = [];
+			var estadosSelecionados = $('#popup .estadosList input:checkbox:checked');
+			var todosSelecionados = estadosSelecionados.length == distribuicao.estados.length;
+			var alternativa = $.trim($('#programacaoAlternativa').val());
+
+			eventoDistribuicao.programacaoAlternativa = (alternativa.length > 0 && !todosSelecionados)? alternativa : null;
+			eventoDistribuicao.alterado = true;
+
+			$('#popup .estadosList input:checkbox:checked').each(function(idx, input) {
+				eventoDistribuicao.estados.push($(input).val());
+			});        
+        	eventoDistribuicao.afiliadasExcluidas = afiliadasExcluidas;
+			$.holy("../templates/distribuicao/distribuicao-principalNovo.xml", {'distribuicaoJson' : distribuicao, 'comutacao': comutacaoJson });
+			$('#popup').xundialog();
+        });
+
+		]]>
+	</script>
+</engine>

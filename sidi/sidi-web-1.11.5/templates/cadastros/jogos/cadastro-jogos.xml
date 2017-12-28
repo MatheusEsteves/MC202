@@ -1,0 +1,365 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector=".message">
+	</template>
+
+	<template selector="#content-details">
+		<div class="topo" id="topo">
+	      <div class="titulo">${i18n.get('cadastro-de-jogos')}</div>
+	      <div class="separador"></div>
+	      <div class="acoes">
+	        <a href="javascript:void(0)" id="btnBuscaDeJogos" class="acao selected">${i18n.get('buscar-jogos')}</a>
+	        {if sidi.possuiAutorizacao('GERENCIAR_JOGOS')}
+	        <a href="javascript:void(0)" id="btnNovoJogo" class="acao">${i18n.get('novo-jogo')}</a>
+	        {/if}
+	        {if sidi.possuiAutorizacao('GERENCIAR_JOGOS', 'GERENCIAR_CAMPEONATOS')}
+	        <a id="btnImportarJogos" class="acao" href="#">${i18n.get('importar-jogos')}</a>
+	        {/if}
+	      </div>
+	    </div>
+	    
+	    <div id="filtroJogos" style="display: none;">
+	        <div class="filtro">
+		      <span class="seletor-de-data required"></span>
+		      <span class="icone-data"></span>
+				<input type="text" id="txtDataInicial"
+					title="${i18n.get('informe-data-jogos-inicio')}" alt="date"
+					class="data" />
+	      			<span>${i18n.get('ate')}</span>
+				<input type="text" id="txtDataFinal"
+					title="${i18n.get('informe-data-jogos-fim')}" alt="date" class="data" />
+									
+				<select id="sltCampeonatoFiltro" title="${i18n.get('informe-campeonato')}">
+					<option>${i18n.get('todos')}</option>
+					{for campeonato in campeonatos}
+						<option value="${campeonato.id}">${campeonato.nome}</option>
+					{/for}
+				</select>
+	
+				<a id="btnFiltrarJogos" class="button small">${i18n.get('filtrar')}</a>
+		    </div>
+	    	<div class="lista-de-jogos">
+			    <table id="tblJogosCadastrados">
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	    
+	    <div>
+			</div>
+
+		<div id="divNovoJogo" style="display: none;">
+			<div class="content lista-de-exibicao crud">
+				<form id="frmNovoJogo">
+					<fieldset>
+						<ul>
+							<li class="required">
+								<label for="sltCampeonatoCadastro"><span class="required">*</span>${i18n.get('campeonato')}: </label>
+								<select id="sltCampeonatoCadastro">
+									<option></option>
+									{for campeonato in campeonatos}
+									<option value="${campeonato.id}">${campeonato.nome}</option>
+									{/for}
+								</select>
+							</li>
+							<li class="required">
+								<label for="sltFaseCampeonato"><span class="required">*</span>${i18n.get('fase')}: </label>
+								<select id="sltFaseCampeonato" name="fase">
+									<option></option>
+								</select>
+							</li>
+						</ul>
+						<ul>
+							<li class="required">
+								<label for="txtData"><span class="required">*</span>${i18n.get('data')}: </label>
+								<input type="text" id="txtData" title="${i18n.get('informe-jogo')}" alt="date" class="data" />
+							</li>
+							<li class="required">
+								<label for="txtHoraInicio"><span class="required">*</span>${i18n.get('inicio')}: </label>
+								<input type="text" id="txtHoraInicio" title="${i18n.get('informe-horario')}" alt="time" />
+							</li>
+						</ul>
+						<ul>
+							<li class="required">
+								<label for="sgsMandante"><span class="required">*</span>${i18n.get('time-mandante')}: </label>
+								<input type="text" id="sgsMandante" title="${i18n.get('time-mandante-partida')}" class="time ui-autocomplete-input" name="mandante"/>
+							</li>
+							<li class="required">
+								<label for="sgsVisitante"><span class="required">*</span>${i18n.get('time-visitante')}: </label>
+								<input type="text" id="sgsVisitante" title="${i18n.get('time-mandante-partida')}" class="time ui-autocomplete-input" name="visitante"/>
+							</li>
+							<li>
+								<label for="sgsEstadio">${i18n.get('estadio')}: </label>
+								<input type="text" id="sgsEstadio" title="${i18n.get('estadio-partida')}" class="ui-autocomplete-input" name="estadio" />
+							</li>
+						</ul>
+					</fieldset>
+					
+					<div id="tglCamposOpcionais" class="lista-de-jogos">
+						<h3>
+							<span class="separador-data">${i18n.get('informacoes-operadora')}</span>
+						</h3>
+						<div class="operadorasCheckbox">
+							<ul>
+								<li>
+									<label for="cbxOff">${i18n.get('off')}: </label>
+									<input type="checkbox" id="cbxOff" name="off" />
+								</li>
+								<li>
+									<label for="cbxPfi">${i18n.get('pfi')}: </label>
+									<input type="checkbox" id="cbxPfi" name="pfi"/>
+								</li>
+								<li>
+									<label for="cbxHd">${i18n.get('hd')}: </label>
+									<input type="checkbox" id="cbxHd" name="hd"/>
+								</li>
+							</ul>
+							<ul>
+								<li>
+									<label for="cbxProdDeslocamento">${i18n.get('producao-local-deslocamento')}: </label>
+									<input type="checkbox" id="cbxProdDeslocamento" name="producaoLocalDeslocamento"/>
+								</li>
+								<li>
+									<label for="cbxOffDeslocamento">${i18n.get('off-deslocamento')}: </label>
+									<input type="checkbox" id="cbxOffDeslocamento" name="offDeslocamento"/>
+								</li>
+							</ul>
+						</div>
+						<div class="clearfix">
+							<ul>
+								<li>
+									<label for="txtRodada">${i18n.get('rodada')}: </label>
+									<input type="text" id="txtRodada" title="${i18n.get('informe-rodada')}" alt="integer" name="rodada"/>
+								</li>
+								<li>
+									<label for="txtGenero">${i18n.get('genero')}: </label>
+									<input type="text" id="txtGenero" name="genero"/>
+								</li>
+								<li>
+									<label for="txtAp">${i18n.get('ap')}: </label>
+									<input type="text" id="txtAp" name="ap"/>
+								</li>
+								<li>
+									<label for="txtProdutoras">${i18n.get('produtoras')}: </label>
+									<input type="text" id="txtProdutoras" name="produtoras"/>
+								</li>
+								<li>
+									<label for="txtProd">${i18n.get('prod')}: </label>
+									<input type="text" id="txtProd" name="prod"/>
+								</li>
+								<li>
+									<label for="txtCam">${i18n.get('cam')}: </label>
+									<input type="text" id="txtCam" alt="integer" name="cam" />
+								</li>
+								<li>
+									<label for="txtPre">${i18n.get('pre')}: </label>
+									<input type="text" id="txtPre" name="pre"/>
+								</li>
+								<li>
+									<label for="txtMm">${i18n.get('mm')}: </label>
+									<input type="text" id="txtMm" name="mm"/>
+								</li>
+								<li>
+									<label for="txtPos">${i18n.get('pos')}: </label>
+									<input type="text" id="txtPos" name="pos"/>
+								</li>
+								<li>
+									<label for="txtClassificacao">${i18n.get('classificacao')}: </label>
+									<input type="text" id="txtClassificacao" name="classificacaoJogo"/>
+								</li>
+								<li>
+									<label for="txtDistanciaCapital">${i18n.get('distancia-capital')}: </label>
+									<input type="text" id="txtDistanciaCapital" alt="integer" name="distanciaCapital"/>
+								</li>
+								<li>
+									<label for="txtObservacao">${i18n.get('observacao')}: </label>
+									<textarea id="txtObservacao" name="observacao" class="maxlength" maxlength="255"/>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</form>
+				<div class="buttons">
+					<input type="button" class="azul" id="btnAdicionarNovoJogo" value="${i18n.get('cadastrar')}" />
+				</div>
+			</div>
+
+		</div>
+
+	</template>
+
+	<script>
+		$('#content-info').html('');
+		$('#frmNovoJogo').form({ liquid: true });
+		$('#frmNovoJogo [title]').tipsy({trigger: 'focus', gravity: 'w', fade: true});
+
+		$('#frmFiltroJogos').form({ liquid: true });
+		$('#frmFiltroJogos [title]').tipsy({trigger: 'focus', gravity: 'w', fade: true});
+
+		$('input:text').setMask();
+		$('.data').datepicker();
+
+		$('.maxlength').each(function() {
+			$(this).charCount({
+				allowed: parseInt($(this).attr('maxlength') || 20),
+				warning: 1,
+				counterText: 'Caracteres restantes: '
+			});
+        });
+
+		$.getJSON("../sidi/clubes/buscarClubes", function(json) {
+			var equipes = [];
+			$(json).each(function() {
+				equipes.push({'label': this.apelido, 'value': this.id});
+			});
+
+			$('.time').sidiAutocomplete({
+				source: equipes
+			}, json);
+		});
+		
+		$.getJSON("../sidi/jogos/todosEstadios", function(json){
+			var estadios = [];
+			$(json).each(function() {
+				estadios.push({"label": this.nomePopular, "value": this.id});
+			});
+			
+			$('#sgsEstadio').sidiAutocomplete({
+				source: estadios
+			}, json);
+		});
+		
+		var campeonatos = {};
+		$.getJSON("../sidi/campeonatos/buscarCampeonatosAtivos",function(json){			
+			campeonatos = json;
+		});
+				
+		$('#btnImportarJogos').click(function() {							
+			$.holy('../templates/cadastros/jogos/importar-jogos.xml', {'campeonatos' : campeonatos});
+			return false;			
+		});
+		
+		<![CDATA[
+		$('#btnAdicionarNovoJogo').click(function() {
+			var json = {};
+			var form = $('#frmNovoJogo');
+			if (utils.validate(form)) {
+				var mandante = $('#sgsMandante').data('sidi.autocomplete');
+				var visitante = $('#sgsVisitante').data('sidi.autocomplete');
+				var estadio = $('#sgsEstadio').data('sidi.autocomplete');
+				
+				if (!mandante || !visitante) {
+					$('.message').message(i18n.get('time-inexistente.erro'), 'error', true);
+					return;
+				}
+				
+				if ($('#sgsEstadio').val() != "" && !estadio) {
+					$('.message').message(i18n.get('estadio-inexistente.erro'), 'error', true);
+					return;
+				}
+				
+				if (mandante && visitante) {
+					if (mandante.id != visitante.id) {
+						var optionFase = $('#sltFaseCampeonato').children('option:selected');
+						var fase = {};
+						fase.id = optionFase.val();
+						$('#sltFaseCampeonato').data({'sidi.select': fase});
+					
+						utils.bind(form, json);
+						
+						var data = date.stringToDate($('#txtData').val());
+						var hora = $('#txtHoraInicio').val().split(':')[0];
+						var min  = $('#txtHoraInicio').val().split(':')[1];
+						
+						if (data) {
+							data.setMinutes(min);
+							data.setHours(hora);
+							json.data = data.getTime();
+						}
+						
+						$.postJSON("../sidi/jogos/novo", json, function(json) {
+							$('.message').message(i18n.get('registro-salvo-sucesso', $('#btnNovoJogo').html()), 'success', true);
+							$('html, body').animate({scrollTop:0}, 'fast');
+							utils.clear(form);
+							$('#btnBuscaDeJogos').click();
+						});
+					} else {
+						$('.message').message(i18n.get('novo-jogo-times-iguais.erro'), 'error', true);
+					}
+				} 					
+			}
+		});
+		
+		var campeonatos = this.campeonatos;
+		$('#sltCampeonatoCadastro').change(function(){
+			var campeonato = {};
+			
+			$(campeonatos).each(function () {
+				if (this.id == $('#sltCampeonatoCadastro').val()) {
+					campeonato = this;
+					return;
+				}
+			});
+			
+			$.getJSON("../sidi/campeonatos/buscarFases", {arg: JSON.stringify(campeonato)}, function(json){
+				$("#sltFaseCampeonato").html('');
+				
+				$(json).each(function() {
+					var fase = this;
+					$('#sltFaseCampeonato').append(
+						$('<option>').val(fase.id).html(fase.nome)
+					);
+					
+				});
+			});
+		});
+
+		$('#btnFiltrarJogos').click(function() {
+			var dataInicial = $('#txtDataInicial').val();
+			var dataFinal = $('#txtDataFinal').val();
+			var campId = $('#sltCampeonatoFiltro').val();
+
+			var filtro = {
+				'dataInicial' : dataInicial ? date.stringToDate(dataInicial).getTime() : null,
+				'dataFinal' : dataFinal ? date.stringToDate(dataFinal).getTime() : null,
+				'campeonatoId' : campId ? parseInt(campId) : null
+			};
+			
+			
+			if (filtro.dataInicial <= filtro.dataFinal) {
+				$.getJSON("../sidi/jogos/buscarJogos", {arg : JSON.stringify(filtro)}, function(json) {					
+					$.getJSON("../sidi/campeonatos/buscarCampeonatos",function(camps){
+						$.holy("../templates/cadastros/jogos/jogos-cadastrados.xml", {'jogosCadastrados' : json, 'campeonatosCadastrados':camps});
+					});
+				});
+			} else {
+				$('.message').message(i18n.get('data-inicial-final-invalida'), 'error', true);
+				$.holy("../templates/cadastros/jogos/jogos-cadastrados.xml", {'jogosCadastrados' : ''});
+			}
+		});
+		
+		$(document).ready(function(){
+			$('#divBuscaDeJogos').show();
+			$('#filtroJogos').show();
+			$('#frmFiltroJogos').form({ liquid: true });
+		});
+		
+		$('#btnNovoJogo').click(function(){
+			$('#divBuscaDeJogos, #filtroJogos').hide();
+			$('#divNovoJogo').show();
+			$('#frmNovoJogo').form({ liquid: true });
+			$('#btnNovoJogo').addClass('selected');
+			$('#btnBuscaDeJogos').removeClass('selected');
+		});
+		
+		$('#btnBuscaDeJogos').click(function(){
+			$('#filtroJogos, #divBuscaDeJogos').show();
+			$('#divNovoJogo').hide();
+			$('#frmFiltroJogos').form({ liquid: true });
+			$('#btnNovoJogo').removeClass('selected');
+			$('#btnBuscaDeJogos').addClass('selected');
+		});
+		  
+		]]>
+	</script>
+</engine>

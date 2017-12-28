@@ -1,0 +1,50 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+
+	<template selector="table#tblCampeonatosCadastrados tbody">
+	{for campeonato in campeonatosCadastrados}
+		<tr>
+			<td>${campeonato.nome}</td>
+			<td>{if (campeonato.dataInicio != null)}${date.dateToString(campeonato.dataInicio)}{/if}</td>
+			<td>{if (campeonato.dataFim != null)}${date.dateToString(campeonato.dataFim)}{/if}</td>
+			<td>${campeonato.peso ? campeonato.peso + '%' : '' }</td>
+			<td>${campeonato.apagado ? 'Sim' : 'Não'}</td>
+			<td>
+				{if sidi.possuiAutorizacao('GERENCIAR_CAMPEONATOS')}
+				<a href="#distribuicao/configuracao/${campeonato.id}" id="configurar_campeonato_${campeonato.id}" original-title="${i18n.get('configurar-campeonato')}" class="conf ttip"></a>
+				<a href="javascript:void(0)" id="alterar_campeonato_${campeonato.id}" original-title="${i18n.get('alterar')}" class="edit ttip"></a>
+				<a href="javascript:void(0)" id="apagar_campeonato_${campeonato.id}" original-title="${i18n.get('apagar')}" class="delete ttip"></a>
+				{/if}
+			</td>
+		</tr>
+	{forelse}
+		<tr>
+			<td colspan="4">${i18n.get('nenhum-registro-encontrado')}</td>
+		</tr>
+	{/for}
+	</template>
+
+	<script>
+		$('a.btaction').tipsy({trigger: 'focus', gravity: 'w', fade: true});
+		json = this;
+		
+		$('.ttip').tipsy();
+		
+		var campCadastrados = this.campeonatosCadastrados;
+		
+		$.each(campCadastrados, function(idx, campeonato){
+			$('#alterar_campeonato_' + campeonato.id).click(function() {
+				$.getJSON("../sidi/campeonatos/buscarFasesVO", {arg : JSON.stringify(campeonato)}, function(json) {
+					$.holy("../templates/cadastros/campeonato/alterar-campeonatos.xml", {'campeonatoJson':campeonato, 'fasesCampeonato' : json});
+				});
+			});
+		});
+		
+		$.each(campCadastrados, function(idx, campeonato){
+			$('#apagar_campeonato_' + campeonato.id).click(function(){
+				$.holy("../templates/cadastros/campeonato/apagar-campeonato.xml", {'campeonatoJson':campeonato});
+			});
+		});
+		
+	</script>
+
+</engine>

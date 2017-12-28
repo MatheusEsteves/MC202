@@ -1,0 +1,66 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector="#jogosDialog .jogosAoVivo">
+		<div id="selecao-jogos">
+			<ul>
+			{for evento in eventosDisponiveis}
+				<li id="jogo_disponivel_${evento.id}" class="confronto ao-vivo" data-evento-descricao="${evento.descricaoAbreviadaEvento}" data-evento-id="${evento.id}">
+				<div class="div-selecao-ao-vivo">
+					${evento.nomeCanal}	
+				</div>
+				{if evento.tipoEvento == 'JOGO'}
+					<span class="time" style="background-image: url('${evento.mandante.urlBrasao}')">${evento.mandante.apelido}</span>
+					<div class="versus">
+						<span class="hora">${date.dateToHourString(evento.data)}</span>
+						<span>X</span>
+					</div>
+					<span class="time" style="background-image: url('${evento.visitante.urlBrasao}')">${evento.visitante.apelido}</span>
+				{else}
+					<div class="versus">
+						<span class="hora">${date.dateToHourString(evento.data)}</span>
+						<span>${evento.descricaoEvento}</span>
+					</div>
+				{/if}
+				</li>
+			{forelse}
+				${i18n.get('sem-jogos-disponiveis')}
+			{/for}
+			</ul>
+		</div>
+	</template>
+	
+	<script>
+		<![CDATA[
+			var eventosAgrupados = this.eventosDisponiveis;
+			var callback = this.popCallback;			
+			
+			$('#jogosDialog ul li').corner();
+	
+			$('#jogosDialog').xdialog({
+	            overlay: '#333',
+	            alpha: '3',
+	            width: '670px'
+	        });
+	        
+	        
+	        $('#selecao-jogos .confronto.ao-vivo').click(function() {
+				
+				var eventoId = $(this).data("evento-id");			
+				var index = -1;
+				
+				for (var i = 0; i < eventosAgrupados.length; i++){
+					
+					if (eventosAgrupados[i].id == eventoId) {
+						index = i;					
+					}
+				}
+				
+				var eventoSelecionado = eventosAgrupados[index]; 
+				
+	        	if(callback){	        		
+					callback(eventoSelecionado);
+				}
+			});
+        
+        ]]>
+	</script>
+</engine>

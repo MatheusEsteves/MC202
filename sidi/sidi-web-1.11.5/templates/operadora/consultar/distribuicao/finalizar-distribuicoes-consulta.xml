@@ -1,0 +1,134 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0">
+	<template selector="#popupFinalizar">
+		<h3>${i18n.get('finalizar-distribuicao-operadora')}</h3>
+		<form id="frmFinalizar">
+			<ul class="message"/>
+			<div class="listacanais">
+				${i18n.get('informe-numeros-canais')}
+				<fieldset>
+					<ul>
+						{var ppv = 0}
+						{var canaisTP = []}
+						{for dist in distribuicoes}
+						
+							{if dist.canal.ppv}
+								{var encontrou = false}
+								{for idCanal in canaisTP }
+									{if idCanal == dist.canal.id}
+										{var encontrou = true}
+									{/if}
+								{/for}
+
+								{if !encontrou}
+									{eval}canaisTP.push(dist.canal.id){/eval}
+									{eval}ppv++{/eval}
+									<li class="required">
+										<label title="${dist.canal.nome}" class="evento">
+											${utils.trim(dist.canal.nome, 40)}
+										</label>
+										<input type="text" class="numerocanal" canalId="${dist.canal.id}" distribuicaoId="${dist.id}" value=""/>
+									</li>
+								{/if}
+							{/if}
+						
+						{/for}
+						{if ppv == 0}
+						<li>
+							${i18n.get('nenhum-canal-ppc')}
+						</li>
+						{/if}
+					</ul>
+				</fieldset>
+			</div>
+			<div class="topo">
+				<div class="acoes">
+					<a id="btnCancelar" class="acao selected" href="#">${i18n.get('cancelar')}</a>
+					<a id="btConfirmar" class="acao selected" href="#">${i18n.get('finalizar')}</a>
+				</div>
+			</div>
+		</form>
+	</template>
+
+	<script>
+		<![CDATA[
+		   
+		var dists = this.distribuicoes;
+		var alteracaoId = this.alteracaoId;
+		
+		$('#frmFinalizar').form();
+
+		$(".numerocanal").setMask('999999999');
+
+		$("#btConfirmar").click(function() {
+
+			var ok = true;
+			var canais = [];
+			var ids = [];
+			$(".numerocanal").each(function() {
+				var value = parseInt($(this).val());
+				var idDistribuicao = parseInt($(this).attr("distribuicaoId"));
+				var idCanal = parseInt($(this).attr("canalId"));
+				
+				if (isNaN(value)) {
+					ok = false;
+				}
+
+				for (var i = 0; i < dists.length; i++) {
+					var distrib = dists[i];
+					if (distrib.canal.ppv && distrib.canal.id == idCanal) {
+						if (!existeDistribuicaoNaLista(ids, distrib.id)) {
+							ids.push(distrib.id);
+							canais.push(value);
+						}
+					}
+				}
+				
+			});
+			
+			function existeDistribuicaoNaLista(distribuicoes, id) {
+				for (var i = 0; i < distribuicoes.length; i++) {
+					if (distribuicoes[i] == id) 
+						return true;
+				}
+				
+				return false;
+			}
+
+			if (!ok) {
+				$('#frmFinalizar .message').message(i18n.get('informe-todos-numeros-canais'), 'error', true);
+			} else {
+				$.postJSON("../sidi/distribuicao-operadora/finalizaOperacoes", 
+					[alteracaoId, dists, canais, ids], function(resultado) {
+					$("#btnGravarAlteracoes").remove();
+					$("#btnFinalizar").remove();
+
+					$('.message').message(i18n.get('distribuicoes-finalizadas-com-sucesso'), 'success', true);
+					$("#popupFinalizar").xundialog();
+					$('html, body').animate({scrollTop:0}, 'fast');
+					$('#btnFiltrar').click();
+				});
+			}
+	
+			return false;
+		});
+
+		$("#btnCancelar").click(function() {
+			$("#popupFinalizar").xundialog();
+			return false;
+		});
+
+		$("#popupFinalizar").xdialog({
+			overlay: '#23557E',
+			alpha: '3',
+			width: 450
+		});
+		
+		$.each(dists, function(idx, dist) {
+			if (dist.numeroCanal != null) {
+				$('input[distribuicaoid=' + dist.id + ']').val(dist.numeroCanal);
+			}
+		});
+		]]>
+	</script>
+
+</engine>

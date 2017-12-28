@@ -1,0 +1,316 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector=".message">
+	</template>
+
+	<template selector="#content-details">
+		<div class="topo" id="topo">
+	      <div class="titulo">${i18n.get('cadastro-de-regioes')}</div>
+	      <div class="separador"></div>
+	      <div class="acoes">
+	        <a href="javascript:void(0)" id="btnListaDeRegioes" class="acao">${i18n.get('lista-de-regioes')}</a>
+	        <a href="javascript:void(0)" id="btnCadastrarRegiao" class="acao selected">${i18n.get('nova-regiao')}</a>
+	      </div>
+	    </div>
+	    
+	    <div id = "filtroRegioes">
+		   <div class = "filtro">
+		     <input type = "text" class = "txt_nome" placeholder="${i18n.get('informe-nome-regiao')}"></input>
+		     <a class = "button small" id = "btnFiltrar">${i18n.get('filtrar')}</a>
+		     <a class = "button small" id = "btnTodos">${i18n.get('todos')}</a>
+		   </div>
+	    </div>
+	    
+		<form id="frmNovaRegiao">
+			<div id="divNovaRegiao" class="lista-de-exibicao">
+				<fieldset>
+					<ul>
+						<li class="required">
+							<label for="txtNomeRegiao"><span class="required">*</span>${i18n.get('nome-regiao')}: </label>
+							<input type="text" name="nome" id="txtNomeRegiao" maxlength="50"></input>
+						</li>
+					</ul>					
+				</fieldset>
+				
+				<div id="divNotificacao" class="lista-de-exibicao">
+					<ul>
+						<input type="checkbox" id="ckEnviarEmail">${i18n.get('notificar-email')}</input>
+						<input type="checkbox" id="ckEnviarSMS">${i18n.get('notificar-sms')}</input>
+					</ul>
+				</div>
+				
+				<div class="lista-de-jogos">
+					<h3><span class="separador-data">${i18n.get('adicionar-cidades')}</span></h3>
+					<fieldset>
+						<ul>
+							<li>
+								<label for="sltEstado">
+									${i18n.get('estados')}
+								</label>
+								<select id="sltEstado" > <!-- title="${i18n.get('selecione-estado-jogo')}" -->
+									<option></option>
+									<option value="AC">${i18n.get('estado-AC')}</option>
+									<option value="AL">${i18n.get('estado-AL')}</option>
+									<option value="AP">${i18n.get('estado-AP')}</option>
+									<option value="AM">${i18n.get('estado-AM')}</option>
+									<option value="BA">${i18n.get('estado-BA')}</option>
+									<option value="CE">${i18n.get('estado-CE')}</option>
+									<option value="DF">${i18n.get('estado-DF')}</option>
+									<option value="ES">${i18n.get('estado-ES')}</option>
+									<option value="GO">${i18n.get('estado-GO')}</option>
+									<option value="MA">${i18n.get('estado-MA')}</option>
+									<option value="MT">${i18n.get('estado-MT')}</option>
+									<option value="MS">${i18n.get('estado-MS')}</option>
+									<option value="MG">${i18n.get('estado-MG')}</option>
+									<option value="PA">${i18n.get('estado-PA')}</option>
+									<option value="PB">${i18n.get('estado-PB')}</option>
+									<option value="PR">${i18n.get('estado-PR')}</option>
+									<option value="PE">${i18n.get('estado-PE')}</option>
+									<option value="PI">${i18n.get('estado-PI')}</option>
+									<option value="RJ">${i18n.get('estado-RJ')}</option>
+									<option value="RN">${i18n.get('estado-RN')}</option>
+									<option value="RS">${i18n.get('estado-RS')}</option>
+									<option value="RO">${i18n.get('estado-RO')}</option>
+									<option value="RR">${i18n.get('estado-RR')}</option>
+									<option value="SC">${i18n.get('estado-SC')}</option>
+									<option value="SP">${i18n.get('estado-SP')}</option>
+									<option value="SE">${i18n.get('estado-SE')}</option>
+									<option value="TO">${i18n.get('estado-TO')}</option>
+								</select>
+							</li>
+						</ul>
+												
+						<div style="max-height: 300px; width: 400px; overflow-y: auto; margin-left: 0px; margin-top: 40px;" id="divCidades">
+							<table id="tblCidades" class="datatable listagem">
+						    	<thead>
+						    		<th scope="col" style="width:10%;"><input type="checkbox" class="selecionado" id="ckSelecionarTodos"/></th>							
+									<th scope="col">${i18n.get('cidade')}</th>								
+						    	</thead>
+								<tbody>
+								</tbody>
+							</table>							
+						</div>
+						
+						<a id="btnAddCidade" class="button azul" style="margin-top:15px">Adicionar</a>
+						
+						<table id="tblRegioes" class="datatable">
+					    	<thead>
+								<th scope="col">${i18n.get('estado')}</th>
+								<th scope="col">${i18n.get('cidade')}</th>
+								<th scope="col">${i18n.get('acoes')}</th>
+					    	</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</fieldset>
+					<a id="btnNovaRegiao" class="button azul">${i18n.get('cadastrar')}</a>
+				</div>
+				
+			</div>
+		</form>
+		
+    	<div class="lista-de-exibicao" id="divRegioesCadastradas">
+
+    		<div class="content">
+	    		<ul>
+	    			<li>
+					    <table id="tblRegioesCadastradas" class="datatable">
+					    	<thead>
+								<th scope="col">${i18n.get('nome')}</th>
+								<th scope="col">${i18n.get('acoes')}</th>
+					    	</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</li>
+				</ul>
+			</div>
+			
+		</div>
+		
+		
+	</template>
+
+	<script>
+		<![CDATA[
+			var data = new Array();
+			$('#tblRegioes').datatable();
+			$('#tblCidades').datatable();
+			
+			$('#ckEnviarEmail').attr('checked', true);
+			$('#ckEnviarSMS').attr('checked', true);
+			
+			$('#content-info').html('');
+			$('#frmNovaRegiao').form({ liquid: true });
+			$('#frmNovaRegiao [title]').tipsy({trigger: 'focus', gravity: 'w', fade: true});
+	
+			$('input:text').setMask();
+			$('#tblRegioesCadastradas').datatable();
+			$('#tblCidades').datatable();
+			$('#tblCidades').hide();
+			$('#btnAddCidade').hide();
+			
+			
+			var regioes = this.regioes;
+			var cidadesGrid = [];
+			
+			$('#ckSelecionarTodos').click(function() {
+				if ($('#ckSelecionarTodos').is(':checked'))
+					$('.selecionado').attr('checked',true);
+				else
+					$('.selecionado').attr('checked',false);
+			});
+			
+			$('#btnNovaRegiao').click(function() {
+				if(utils.validate('#frmNovaRegiao')) {
+					var regiao = {nome: $('#txtNomeRegiao').val()};
+					var enviarEmail = $("#ckEnviarEmail").is(":checked");
+					var enviarSMS = $("#ckEnviarSMS").is(":checked");
+					
+					var cidades = [];
+					for (var i in data) {
+						cidades[i] = parseInt(data[i].idCidade);
+					}
+					
+					$.postJSON("../sidi/regioes/salvarRegiao", [regiao, cidades, enviarEmail, enviarSMS], function() {
+						$('.message').message(i18n.get('sucesso-cadastrar-regiao'), 'success', true);
+						$('html, body').animate({scrollTop:0}, 'fast');
+						utils.clear($('#frmNovaRegiao'));
+						var data = {
+							path : [ '/sidi/regioes/buscarRegioes' ],
+							arg : []
+						}
+						$.getJSON("../sidi", data, function(json) {
+							var todasRegioes = json[0];
+							$.holy("../templates/cadastros/regioes/cadastro-regioes.xml", {
+								regioes : todasRegioes
+							});
+							
+							$('.message').message(i18n.get('regiao-criada-sucesso'), 'success', true);
+						});
+					});
+				}
+			});
+			
+			$(document).ready(function(){
+				$('#btnListaDeRegioes').click();			
+				$.getJSON("../sidi/regioes/buscarRegioes",function(json) {
+					$.holy("../templates/cadastros/regioes/regioes-cadastradas.xml", {'regioes':regioes});
+				});
+			});
+			
+			$('#btnCadastrarRegiao').click(function(){
+				$('#btnListaDeRegioes').removeClass('selected');
+				$('#divNovaRegiao').show();
+				$('#divRegioesCadastradas').hide();
+				$('#btnCadastrarRegiao').addClass('selected');
+				$('#frmNovaRegiao').form();
+				$('#filtroRegioes').hide();
+			});
+			
+			$('#btnListaDeRegioes').click(function(){
+				$('#btnListaDeRegioes').addClass('selected');
+				$('#btnCadastrarRegiao').removeClass('selected');
+				$('#divNovaRegiao').hide();
+				$('#divRegioesCadastradas').show();
+				$('#filtroRegioes').show();
+			});
+			
+			$("#sltEstado").change(function() {
+				var estado = $("#sltEstado option:selected");
+				var arg = {arg: estado.val()};
+				carregarCombo("../sidi/regioes/buscarCidades", arg);
+			});
+			
+			function carregarCombo(url, arg) {
+				$("#tblCidades tbody").html("");
+				$.getJSON(url, arg, function(result) {					
+					cidadesGrid = result;
+					
+					$(result).each(function() {
+						
+						var linha = '<tr><td><input type="checkbox" id="ckSelect_'+ this.id +'" class="selecionado"/></td><td>' + this.nome + '</td></tr>';
+				
+						$("#tblCidades tbody:last").append(linha);
+					});
+					
+					$('#tblCidades').show();
+					$('#btnAddCidade').show();
+				});
+			}
+			
+			$("#btnAddCidade").click(function() {
+				var estado = estado = $("#sltEstado option:selected");
+				
+				$.each(cidadesGrid, function(index, elemento){
+					if($('#ckSelect_' + elemento.id).is(':checked')){
+						var tupla = criarTupla(estado, elemento);
+						
+						if (duplicado(tupla)) {
+							$('.message').message(i18n.get('cidade-ja-existe-regiao'), 'error', true);
+						} else {
+							data.push(tupla);
+							adicionarTuplaTabela(tupla);
+						}
+					}
+				});
+			});			
+			
+			function criarTupla(estado, cidade) {
+				var tupla = {
+					idCidade: cidade.id,
+					nmCidade: cidade.nome,
+					uf: estado.val(),
+					nmEstado: estado.text()
+				}
+				return tupla;
+			}
+			
+			function adicionarTuplaTabela(tupla) {
+				var linha = '<tr><td>' + tupla.nmEstado + '</td><td>' + tupla.nmCidade + '</td><td class="action">' 
+					+ '<a href="javascript:void(0)" class="cancel ttip" style="width: 12px; height: 12px;" id="remover_' + tupla.idCidade + '">'
+					+ i18n.get("excluir") + '</a></td></tr>';
+				
+				$("#tblRegioes tbody:last").append(linha);
+				$("#remover_" + tupla.idCidade).click(function() {
+					var index = dataIndexOf(tupla);
+					data.splice(index, 1);
+					$(this).parent().parent().remove();
+				});				
+			}
+			
+			function dataIndexOf(tupla) {
+				var id;
+				for (var i in data) {
+					id = "remover_" + data[i].idCidade;
+					if (id == ("remover_" + tupla.idCidade)) {
+						return i;
+					}
+				}
+				return -1;
+			}
+			
+			function duplicado(tupla) {
+				for (var i in data) {
+					if (data[i].idCidade == tupla.idCidade) {
+						return true;
+					}
+				}
+				return false;
+			}
+			
+			$("#btnTodos").click(function(){
+			  $.getJSON("../sidi/regioes/buscarRegioes",function(json) {
+				$.holy("../templates/cadastros/regioes/regioes-cadastradas.xml", {'regioes':json});
+			  });
+			  $('.txt_nome').val('');
+			});
+			
+			$("#btnFiltrar").click(function(){
+			  var nome = $('.txt_nome').val();
+			  $.postJSON("../sidi/regioes/buscarRegioesPorNome",[nome],function(json) {
+				$.holy("../templates/cadastros/regioes/regioes-cadastradas.xml", {'regioes':json});
+			  });
+			});
+		]]>
+	</script>
+</engine>

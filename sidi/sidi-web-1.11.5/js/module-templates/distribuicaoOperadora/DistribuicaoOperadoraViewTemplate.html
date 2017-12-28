@@ -1,0 +1,65 @@
+{if controller.distribuicao.temAlteracao()}
+<div class="topo-abas">
+	<table class="abas">
+		<tbody>
+			<tr>
+				<td class="selected pedido"><a href="javascript:void(0);">${i18n.get('alteracao-seu-pedido')}
+					{if controller.distribuicao.isRejeitado()} - ${i18n.get('status-rejeitado')}{/if}</a>
+				</td>
+				<td class="original"><a href="javascript:void(0);">${i18n.get('alteracao-original')}</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+{/if}
+
+<div class="criterios">
+	<span>${i18n.get('criterios-distribuicao')}:</span> ${controller.distribuicao.getCriteriosDistribuicao()}
+</div>
+<div class="criterios">
+	<span>${i18n.get('numero-canais-ppv-disponivel')}:</span> ${controller.distribuicao.getNumeroPPV()}
+</div>
+
+<div class="distribuicoes pedido">
+	<div class="legenda">
+		<ul>
+			<li>
+				<div class="aberto-fechado box"></div> <span>${i18n.get('ttip-aberto-fechado')}</span>
+				<div class="clear"></div></li>
+			<li>
+				<div class="ppv-pendente-disponivel box"></div> <span>${i18n.get('ttip-ppv-pendente-disponivel')}</span>
+				<div class="clear"></div></li>
+			<li>
+				<div class="ppv-pendente-selecionado box"></div> <span>${i18n.get('ttip-ppv-pendente-selecionado')}</span>
+				<div class="clear"></div></li>
+			<li>
+				<div class="ppv-pronto-disponivel box"></div> <span>${i18n.get('ttip-ppv-pronto-disponivel')}</span>
+				<div class="clear"></div></li>
+			<li>
+				<div class="ppv-pronto-selecionado box"></div> <span>${i18n.get('ttip-ppv-pronto-selecionado')}</span>
+				<div class="clear"></div></li>
+		</ul>
+	</div>
+	<div class="topo clear">
+		<div class="acoes">
+			<a id="btnDownloadDistribuicao" class="acao selected"
+				href="../sidi/planilha?data=${controller.horario}&operadora=${controller.operadoraId}" target="_blank">${i18n.get('download')}</a>
+			{if controller.isPermitidoGravar()}
+			<a class="acao selected btnGravarAlteracoes" href="javascript:void(0);" title="${i18n.get('alteracao-gravar-ttip')}">${i18n.get('gravar-alteracoes')}</a>
+			{/if}
+			{if controller.isPermitidoFinalizar()}
+			<a class="btnFinalizar acao selected" href="javascript:void(0);">${i18n.get('finalizar')}</a>
+			{/if}
+			{if controller.isPermitidoAlterarCanais()}
+			<a class="btnAlterarCanais acao selected" href="javascript:void(0);">${i18n.get('alterar-canais-ppv')}</a>
+			{/if}
+		</div>
+	</div>
+</div>
+<div style="display: none;" class="distribuicoes original">
+	<ul class="alteracao-operadora ppv-pronto disponivel-alteracao">
+	</ul>
+</div>
+<div id="popupJustificativa"></div>
+<div id="popupFinalizar"></div>

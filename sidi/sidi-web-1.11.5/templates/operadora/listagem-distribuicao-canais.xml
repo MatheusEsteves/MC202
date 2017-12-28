@@ -1,0 +1,82 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0">
+	<template selector=".distribuicoes > ul.undone">
+		{for dist in original.distribuicoes}
+			{var canal = dist.canal}
+			{if canal.ppv}
+				{var distPrincipal =  dist}
+				{if !defined('distribuicaoOriginal')}
+					{if alteracao.distribuicoes}
+						{var distAlterada = distribuicao.buscarDistribuicao(alteracao.distribuicoes, canal, horarioSelecionado)}
+					{else}
+						{var distAlterada = null}
+					{/if}
+
+					{if alteracao.alteracao}
+						{var distPrincipal =  distAlterada}
+					{/if}
+				{/if}
+				{if dist.evento}
+					{var distribuicaoAux = distribuicao.buscarDistribuicaoPrincipal(original.principais, canal, dist.evento)}
+					<![CDATA[
+					{if distribuicaoAux && distPrincipal}
+					]]>
+						{eval}
+							distPrincipal['dataInicioTransmissao'] = distribuicaoAux.dataInicioTransmissao;
+							distPrincipal['dataTerminoTransmissao'] = distribuicaoAux.dataTerminoTransmissao; 
+						{/eval}
+					{/if}
+				{/if}
+			{/if}
+			<li canal="${canal.id}" class="{if canal.ppv}disponivel {if distPrincipal || defined('distribuicaoOriginal')} selecionado{/if}{/if}">
+				<div class="canal">
+					<h6 style="background-image: url('../imagens/canal?id=${canal.id}')">
+					<![CDATA[
+						${canal.nome} 
+						{if canal.ppv}
+							{if !defined('distribuicaoOriginal') && dist.numeroCanal} - #${dist.numeroCanal}{/if}
+							{if distPrincipal != null && distPrincipal.dataInicioTransmissao && distPrincipal.dataTerminoTransmissao}
+								<p>
+									${i18n.get('sinal')} ${date.dateToHourString(distPrincipal.dataInicioTransmissao)} - ${date.dateToHourString(distPrincipal.dataTerminoTransmissao)}
+								</p>
+							{/if}
+						{/if}
+					]]>
+					</h6>
+					<div class="jogo-container">
+					<![CDATA[
+						{if (dist.alternativo && dist.alternativo != '') || (dist.evento && dist.evento.tipoEvento != 'JOGO')}
+					]]>
+							<div class="jogo naoVazio programa">
+								<span>${dist.alternativo || dist.evento.nome}</span>
+							</div>
+						{else}
+							<div class="jogo">
+								<![CDATA[
+								<div class="torneio" title="${dist.evento.fase.campeonato.nome && dist.evento.fase.campeonato.nome.length >= 18 ? dist.evento.fase.campeonato.nome : ''}">
+									${utils.reduzirTamanho(dist.evento.fase.campeonato.nome, 18)}
+								</div>
+								]]>
+								<div class="confronto">
+									<span class="time">
+										<div class="escudo" title="${dist.evento.mandante.nome}" style="background-image: url('${dist.evento.mandante.urlBrasao}')"></div>
+										${dist.evento.mandante.apelido}
+									</span>
+									<span class="versus">X</span>
+									<span class="time">
+										<div class="escudo" title="${dist.evento.visitante.nome}" style="background-image: url('${dist.evento.visitante.urlBrasao}')"></div>
+										${dist.evento.visitante.apelido}
+									</span>
+								</div>
+								<div class="local" title="{if dist.evento.estadio != null}${dist.evento.estadio.nomePopular + (dist.evento.estadio.cidade.estado ? ' / ' + dist.evento.estadio.cidade.estado : '')}{/if}" >
+									{if dist.evento.estadio != null}
+										${utils.reduzirTamanho(dist.evento.estadio.nomePopular + (dist.evento.estadio.cidade.estado ? ' / ' + dist.evento.estadio.cidade.estado : ''), 18)}
+									{/if}
+								</div>
+							</div>
+						{/if}
+					</div>
+				</div>
+			</li>
+		{/for}
+	</template>
+</engine>

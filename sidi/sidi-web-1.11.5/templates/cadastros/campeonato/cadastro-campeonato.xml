@@ -1,0 +1,287 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0">
+
+	<template selector="#content-details">
+		<div class="topo" id="topo">
+	      <div class="titulo">${i18n.get('cadastro-de-campeonatos')}</div>
+	      <div class="separador"></div>
+	      <div class="acoes">
+	        <a href="javascript:void(0)" id="btnListarCampeonatos" class="acao" >${i18n.get('lista-de-campeonatos')}</a>
+	        {if sidi.possuiAutorizacao('GERENCIAR_CAMPEONATOS')}
+	        	<a href="javascript:void(0)" id="btnCadastroCampeonato" class="acao" >${i18n.get('novo-campeonato')}</a>
+	        {/if}
+	        {if sidi.possuiAutorizacao('GERENCIAR_CAMPEONATOS')}
+	        	<a href="javascript:void(0)" id="btnImportarCampeonato" class="acao" >${i18n.get('importar-campeonato')}</a>
+	        {/if}
+	      </div>
+	    </div>
+	    
+	    <div id = "filtroCampeonatos">
+		      <div class = "filtro">
+		        <div class = "tooltip">
+		          <div class = "tooltiptext">${i18n.get('selecionar-ano')}</div>
+		          <select id="sltCampeonatoFiltro" class = "year_selector">
+				    <option>${i18n.get('todos')}</option>
+			      </select>
+			    </div>
+		      </div>
+	    </div>
+	
+		<div id="divNovoCampeonato" class="lista-de-exibicao">
+			<div class="content">
+				<form id="frmNovoCampeonato">
+					<fieldset>
+						<ul>
+							<li class="required">
+								<label for="txtNome"><span class="required">*</span>${i18n.get('nome-campeonato')}</label>
+								<input type="text" id="txtNomeCampeonato"
+									title="${i18n.get('informe-campeonato-nome')}"></input>
+							</li>
+							<li class="required">
+								<label for="txtDataInicio"><span class="required">*</span>${i18n.get('inicio')} </label>
+								<input type="text" id="txtDataInicio" title="${i18n.get('informe-data-inicio')}"
+									alt="date" class="data" />
+							</li>
+							<li class="required">
+								<label for="txtDataFim"><span class="required">*</span>${i18n.get('fim')} </label>
+								<input type="text" id="txtDataFim" title="${i18n.get('informe-data-fim')}"
+									alt="date" class="data" />
+							</li>
+							<li class="required">
+								<label for="sltTipo"><span class="required">*</span>${i18n.get('tipo-campeonato')}</label>
+								<select id="sltTipo" title="${i18n.get('informe-tipo')}" style="width: 210px;">
+									<option></option>
+									<option value="ESTADUAL">Estadual</option>
+									<option value="NACIONAL">Nacional</option>
+								</select>
+							</li>
+							<li>
+								<label for="txtPeso">${i18n.get('peso')}</label>
+								<input type="text" id="txtPeso" maxlength="6" class="numeric"
+									title="${i18n.get('informe-peso')}"></input>
+							</li>
+						</ul>
+						<div class="clearfix">${i18n.get('ajuda-campeonato')}</div>
+						<ul class="clearfix">
+							<li >
+								<label for="txtUrlJson">${i18n.get('json-campeonato')}</label>
+								<input type="text" id="txtUrlJson" title="${i18n.get('informe-json')}" class="url"></input>
+							</li>
+						</ul>
+
+					<div id="divFase" class="lista-de-jogos clearfix">
+							<ul>
+								<li>
+									<label for="txtFase" class="required">
+										<span style="display:none" id="spanRequired" class="required">*</span>${i18n.get('fase')}:</label>
+									<input type="text" maxlength="30" id="txtFase"></input>
+									<img title="${i18n.get('insere-fase-tabela')}" id="imgAdicionar" src="../images/adicionar.png"/>
+								</li>
+							</ul>
+							<table id="tblListaDeFases" class="small-table">
+								<thead>
+									<tr>
+										<th scope="col">${i18n.get('nome')}</th>
+										<th scope="col">${i18n.get('peso')}</th>
+										<th scope="col">${i18n.get('inicio')}</th>
+										<th scope="col">${i18n.get('fim')}</th>
+										<th scope="col">${i18n.get('acoes')}</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+					</div>
+				</fieldset>
+
+				<br></br>
+				<a id="btnNovoCampeonato" class="button azul">${i18n.get('cadastrar')}</a>
+				</form>
+			</div>
+		</div>
+		
+		<div class="lista-de-exibicao">
+		<table id="tblCampeonatosCadastrados" style="display: none;">
+			<thead>
+				<tr>
+					<th scope="col">${i18n.get('campeonato')}</th>
+					<th scope="col">${i18n.get('inicio')}</th>
+					<th scope="col">${i18n.get('fim')}</th>
+					<th scope="col">${i18n.get('peso')}</th>
+					<th scope="col">${i18n.get('apagado')}</th>
+					<th scope="col">${i18n.get('acoes')}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td colspan="4">${i18n.get('busque-jogos')}</td>
+				</tr>
+			</tbody>
+		</table>
+		</div>
+	</template>
+
+	<script>
+	<![CDATA[
+		$('#content-info').html('');
+		$('#tglNovoCampeonato').togglePanel();
+		$('#frmNovoCampeonato[title]').tipsy({trigger:'focus', gravity: 'w', fade: true});		
+		$('#frmNovoCampeonato').form({ liquid: true });
+		
+		
+		$('#tglFiltroCampeonatos').togglePanel();		
+		$('#frmFiltroCampeonatos').form({liquid:true});
+		$('#frmFiltroCampeonatos [title]').tipsy({trigger: 'focus', gravity:'w',fade: true});
+		
+		$('#tblCampeonatosCadastrados').datatable();
+
+		$('input:text').setMask();
+		$('.data').datepicker();
+		
+		$(document).on('input', '.numeric', function() {
+		    this.value = this.value.replace(/[^\d\.\-]/g,'');
+		});
+		
+		$('#btnNovoCampeonato').click(function() {
+			if(utils.validate('#frmNovoCampeonato')) {
+
+				var campeonato = {
+						'nome':$('#txtNomeCampeonato').val(),
+						'tipoCampeonato':$('#sltTipo').val(),
+						'dataInicio':date.stringToDate($('#txtDataInicio').val()).getTime(),
+						'dataFim':date.stringToDate($('#txtDataFim').val()).getTime(),
+						'urlJson':$('#txtUrlJson').val(),
+						'peso': Number.parseFloat($('#txtPeso').val()),
+						'campeonatoSlug': $('#txtSlugCampeonato').val(),
+						'edicaoSlug': $('#txtSlugEdicao').val() };
+
+				var fases = [];
+				$("#tblListaDeFases tbody tr").each(function() {
+					
+					var fase = { 
+						nome: $(this).find('.nomeFase').text(),
+						peso: $(this).find('.pesoFase').val() ? Number.parseFloat($(this).find('.pesoFase').val()) : 0.0,
+						dataInicio: $(this).find('.inicio').val() != "" ? date.stringToDate($(this).find('.inicio').val()).getTime() : null,
+						dataFim: $(this).find('.fim').val() != "" ? date.stringToDate($(this).find('.fim').val()).getTime() : null
+					};
+				
+					fases.push(fase);
+				});
+				
+				if (fases.length == 0 && !$('#txtUrlJson').val()) {
+					$('.message').message(i18n.get('fase-obrigatoria'), 'error', true);
+				} else {
+					$.ajax({
+						url: "../sidi/campeonatos/novo",
+						type: 'POST',
+						dataType: 'json',
+						data: {arg: [ JSON.stringify(campeonato), JSON.stringify(fases) ]},
+						success: function(json) {
+							$('.message').message(i18n.get('sucesso-cadastrar-campeonato'), 'success', true);
+							$(window).hashchange();
+						}
+					});
+				}
+			}
+		});
+
+		$('#tglNovoCampeonato h3 span').click();
+
+		var json = this;
+		
+		$(document).ready(function(){
+			$('#btnListarCampeonatos').click();
+			$.getJSON("../sidi/campeonatos/buscarCampeonatosAtivos",function(json) {
+				$.holy("../templates/cadastros/campeonato/campeonatos-cadastrados.xml",
+					{'campeonatosCadastrados' : json});
+			});
+		});
+		
+		$('#btnCadastroCampeonato').click(function(){
+			$('#btnCadastroCampeonato').addClass('selected');
+			$('#divNovoCampeonato').show();
+			$('#frmNovoCampeonato').form({ liquid: true });
+			$('#btnListarCampeonatos').removeClass('selected');
+			$('#tblCampeonatosCadastrados').hide();
+			$('#filtroCampeonatos').hide();
+		});
+		
+		$('#btnListarCampeonatos').click(function(){
+			$('#btnCadastroCampeonato').removeClass('selected');
+			$('#divNovoCampeonato').hide();
+			$('#btnListarCampeonatos').addClass('selected');
+			$('#tblCampeonatosCadastrados').show();
+			$('#filtroCampeonatos').show();
+		});
+		
+		$('#btnImportarCampeonato').click(function(){
+			$.getJSON("../sidi/campeonatos/importarCampeonatos", function(listaCampeonatos) {				
+ 				$.holy("../templates/cadastros/campeonato/listar-campeonatos-importados.xml", { listaCampeonatos : listaCampeonatos}); 									
+			});
+			$('#filtroCampeonatos').hide();
+		});
+
+		$('#imgAdicionar').click(function() {
+			var nomeFase = $('#txtFase').val();
+			
+			if (nomeFase.trim().length > 0) { 
+
+				var tableRow = $("#tblListaDeFases tbody tr td").filter(function() {
+				    return $(this).text() == nomeFase;
+				}).closest("tr");
+				
+				if (tableRow.children().size() > 0) {
+					$('.message').message(i18n.get('fase-ja-existe'), 'error', true);
+				} else {
+					var linhaFase = '<tr><td class="nomeFase">' + nomeFase + 
+						'</td><td><input class="pesoFase numeric" maxlength="6" style="width:80px"/></td>' +
+						'<td><input type="text" id="inicio_'+ nomeFase.replace(" ", "") +'" alt="date" class="data inicio" style="width:80px" /> </td>' +
+						'<td><input type="text" id="fim_'+ nomeFase.replace(" ", "") +'" alt="date" class="data fim" style="width:80px"/></td>' +
+						'<td class="action"><a href="javascript:void(0)" class="cancel ttip" id="remover' + nomeFase.replace(" ", "") +  '">' + i18n.get("excluir") + '</a></td></tr>';
+
+					$("#tblListaDeFases tbody:last").append(linhaFase);
+					$('#txtFase').val('');
+					
+					$('#remover'+ nomeFase.replace(" ", "")).click(function() {
+						$(this).parent().parent().remove()
+					});
+					
+					$('#inicio_'+ nomeFase.replace(" ", "")).datepicker();
+					$('#fim_'+ nomeFase.replace(" ", "")).datepicker();
+				}
+			}
+		});
+		
+		var today = new Date();
+		var currentYear = today.getFullYear();
+		var options = $("#sltCampeonatoFiltro");
+		var year;
+		for (year = currentYear; year >= 2000; year--)
+		  options.append(new Option(year));
+		  
+		$("#sltCampeonatoFiltro").click(function(){
+		  $(".tooltiptext").hide();
+		});
+		
+		$("#sltCampeonatoFiltro").hover(function(){
+		  $(".tooltiptext").show();
+		});
+		
+		$('#sltCampeonatoFiltro').change(function(){
+		    var textoSelecionado = $("#sltCampeonatoFiltro").val();
+		    if (textoSelecionado == "Todos"){
+		      $.getJSON("../sidi/campeonatos/buscarCampeonatosAtivos",function(json) {
+				$.holy("../templates/cadastros/campeonato/campeonatos-cadastrados.xml",
+					{'campeonatosCadastrados' : json});
+			  });
+			}
+			else{
+		      var anoSelecionado = parseInt($("#sltCampeonatoFiltro").val());
+			  $.postJSON("../sidi/campeonatos/buscarCampeonatosAtivosPorAno",[anoSelecionado],function(json) {
+				$.holy("../templates/cadastros/campeonato/campeonatos-cadastrados.xml",
+					{'campeonatosCadastrados' : json});
+			  });
+		    }
+	    });
+	]]>
+	</script>
+</engine>

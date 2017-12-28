@@ -1,0 +1,46 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+
+	<template selector="table#tblPerfisCadastrados tbody">
+	{for perfil in perfis}
+			<tr>
+	          	<td>${perfil.nome}</td>
+				<td>
+					<a href="javascript:void(0)" id="alterar_perfil_${perfil.id}" class="edit ttip" original-title="${i18n.get('alterar')}">Edit</a>
+					<a href="javascript:void(0)" id="apagar_perfil_${perfil.id}" class="delete ttip" original-title="${i18n.get('apagar')}">Delete</a>
+				</td>
+          	</tr>
+	{forelse}
+		<tr>
+			<td colspan="2">${i18n.get('nenhum-registro-encontrado')}</td>
+		</tr>
+	{/for}
+	
+	</template>
+
+	<script>
+		<![CDATA[
+	
+		$('.ttip').tipsy();
+		
+		var perfis = this.perfis;
+		var funcionalidades = this.funcionalidades;
+		
+		$.each(perfis, function(idx, perfil){
+			$('#alterar_perfil_' + perfil.id).click(function(){
+				$.getJSON("../sidi/perfil/getFuncionalidadesDoPerfil", {arg : [JSON.stringify(perfil)]}, function(resultado){					
+					perfil.funcionalidades = resultado;
+					
+					$.holy("../templates/cadastros/perfil/alterar-perfil.xml",{'perfil' : perfil,'funcionalidades':funcionalidades});
+				});
+			});
+		});
+		
+		$.each(perfis, function(idx, perfil){
+			$('#apagar_perfil_' + perfil.id).click(function(){
+				$.holy("../templates/cadastros/perfil/apagar-perfil.xml", {'perfil':perfil});
+			});
+		});
+		]]>
+	</script>
+
+</engine>

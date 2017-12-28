@@ -1,0 +1,238 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector="table#tblListaDeUsuarios tbody">
+	{for usuario in usuarios}
+		<tr id = "${usuario.id}">
+		    <td>
+		      <input type="checkbox" id="chk_${usuario.id}"></input>
+		    </td>
+			<td id="loginUsuario_${usuario.id}">${usuario.login}</td>
+			<td id="emailUsuario_${usuario.id}">${usuario.email}</td>
+			<td id="telefoneUsuario_${usuario.id}">${usuario.telefone}</td>
+			<td id="perfilUsuario_${usuario.id}">${usuario.perfil.nome}</td>
+			<td class="action">
+				<a href="javascript:void(0)" class="edit ttip" id="editar_usuario_${usuario.id}" title="${i18n.get('alterar')}">${i18n.get('alterar')}</a>
+				<a href="javascript:void(0)" class="delete ttip" id="apagar_usuario_${usuario.id}" value="${usuario.id}" title="${i18n.get('excluir')}">${i18n.get('excluir')}</a>
+			</td>
+		</tr>
+	{forelse}
+		<tr>
+			<td colspan="9">${i18n.get('nenhum-registro-encontrado')}</td>
+		</tr>
+	{/for}
+	</template>
+	
+	<script>
+	 <![CDATA[
+	    var quantidadeRegistrosPorParte = this.quantidadeRegistrosPorParte
+	    linhaInicial = this.linhaInicial;
+		linhaFinal = this.linhaFinal;
+		nome = this.nome;
+	    buscouTodos = this.buscouTodos;
+		var callback = this.callback;
+	    buscarTodos = this.buscarTodos;
+	
+	    $('#popup').xundialog();
+	    var usuarioLogado = {};
+	
+		$('a.btaction').tipsy({trigger: 'focus', gravity: 'w', fade: true});
+		$('.ttip').tipsy();
+		usuarios = this.usuarios;
+		var perfis = this.perfis;
+				
+		if (usuarios.length > 0){
+	      $("#col_todos").show();
+	      $("#btnExcluir").show();
+	    }
+	    else{
+	      $("#col_todos").hide();
+	      $("#btnExcluir").hide();
+	    }
+	    
+	    var verificarUsuarioLogado = function(idUsuarioSelecionado,idUsuarioLogado,usuariosSemEvento,idx,usuarioSemEvento,atualizaUsuarios){
+	      if (idUsuarioSelecionado != usuarioLogado.id)
+		    $.holy("../templates/cadastros/usuario/apagar-usuario.xml",{
+		      'usuarios':usuariosSemEvento,
+		      'idUsuario':idx,
+			  'usuario' : usuarioSemEvento, 
+		      'callback' : atualizaUsuarios
+		    });
+		  else{
+		    $('.message').html('');
+			$('.message').message(i18n.get('impossivel-apagar-usuarios-selecionados'), 'error', true);
+		  }
+	    };
+	    
+	    var verificarUsuarioLogadoEmLista = function(){
+	      var usuariosSelecionados = [];
+		  var idsUsuariosSelecionados = [];
+	    
+	      var isUsuarioLogado = false;
+		  $.each(usuarios,function(idx,usuario){
+			if ($('#chk_'+usuario.id).attr("checked") == "checked"){
+			  if (usuario.id == usuarioLogado.id){
+			    isUsuarioLogado = true;
+			  }
+			  else{
+			    usuariosSelecionados.push(usuario);   
+			    idsUsuariosSelecionados.push(idx);
+			  }
+			}
+		  });
+			 
+	      if (!isUsuarioLogado){
+			if (usuariosSelecionados.length > 0){
+			  $.holy("../templates/cadastros/usuario/apagar-usuarios-selecionados.xml",{
+				'usuarios':usuarios,
+				'usuariosSelecionados' : usuariosSelecionados,
+				'idsUsuariosSelecionados':idsUsuariosSelecionados,
+				'callback' : atualizaUsuarios
+			  });
+			}
+			else{
+			  $('.message').html('');
+		      $('.message').message(i18n.get('nenhum-usuario-selecionado'), 'error', true);
+			} 
+		  }
+		  else{
+			$('.message').html('');
+			$('.message').message(i18n.get('impossivel-apagar-usuarios-selecionados'), 'error', true);
+		  }
+	    };
+	    
+	    var aplicarEventos = function(){
+	      $.each(usuarios, function(idx, usuario){
+	        $('#editar_usuario_' + usuario.id).click(function(){
+				$.holy("../templates/cadastros/usuario/alterar-usuario.xml",{'usuarios':usuarios, 'usuario' : usuario,'perfis': perfis,'idUsuario':idx, 'callback' : atualizaUsuarios});
+			});
+		    
+			$('#apagar_usuario_' + usuario.id).click(function(){
+			    var idUsuarioSelecionado = parseInt((this.id).replace('apagar_usuario_',''));
+			    
+			    if ($.isEmptyObject(usuarioLogado)){
+			      $.getJSON("../sidi/usuario/getUsuarioLogado",function(usuarioLogadoBuscado){
+		            usuarioLogado = usuarioLogadoBuscado;
+		            verificarUsuarioLogado(idUsuarioSelecionado,usuarioLogado.id,usuarios,idx,usuario,atualizaUsuarios);
+		          });
+		        }
+		        else{
+		          verificarUsuarioLogado(idUsuarioSelecionado,usuarioLogado.id,usuarios,idx,usuario,atualizaUsuarios);
+		        }
+			});
+	      });
+	    };
+		
+		var atualizaUsuarios = function (usuariosAtualizados,quantidadeUsuariosRemovidos) {
+		  this.usuarios = usuariosAtualizados;
+		  usuarios = usuariosAtualizados;
+		  linhaFinal -= quantidadeUsuariosRemovidos;
+		  callback(usuarios,linhaFinal);
+		};
+        
+        aplicarEventos();
+		
+	    $("#btnExcluir").unbind('click');
+		$("#btnExcluir").click(function(){
+		  if ($.isEmptyObject(usuarioLogado)){
+		    $.getJSON("../sidi/usuario/getUsuarioLogado",function(usuarioLogadoBuscado){
+		      usuarioLogado = usuarioLogadoBuscado;
+		      verificarUsuarioLogadoEmLista();
+		    });
+		  }
+		  else{
+		    verificarUsuarioLogadoEmLista();
+		  }
+		});
+		
+		var adicionarUsuariosNaTabela = function(novosUsuarios){
+		  var table = $("#tblListaDeUsuarios tbody:last");
+		  $.each(novosUsuarios, function(idx, usuario){
+		    var novaLinha = 
+		      "<tr id = '" + usuario.id + "'>"+
+		      "<td><input type = 'checkbox' id = 'chk_" + usuario.id + "'></input></td>"+
+		      "<td id = 'loginUsuario_" + usuario.id + "'>" + usuario.login + "</td>";
+		     
+		    novaLinha += "<td id = 'emailUsuario_" + usuario.id + "'>" + (usuario.email != null ? usuario.email : '') + "</td>";
+		    novaLinha += "<td id = 'telefoneUsuario_" + usuario.id + "'>" + (usuario.telefone != null ? usuario.telefone : '') + "</td>";
+		      
+			novaLinha += "<td id = 'perfilUsuario_" + usuario.id + "'>" + usuario.perfil.nome + "</td>";
+		    novaLinha += "<td class = 'action'>";
+	        novaLinha += "<a href='javascript:void(0)' class='edit ttip' id='editar_usuario_" + usuario.id + "'></a>"+
+	                     "<a href='javascript:void(0)' class='delete ttip' id='apagar_usuario_" + usuario.id +"' value = '" + usuario.id +"'></a>";
+		    novaLinha += "</td>";
+		    novaLinha += "</tr>";
+		    
+		    table.append(novaLinha);
+		    
+		    $('#editar_usuario_' + usuario.id).click(function(){
+				$.holy("../templates/cadastros/usuario/alterar-usuario.xml",{'usuarios':usuarios, 'usuario' : usuario,'perfis': perfis,'idUsuario':idx, 'callback' : atualizaUsuarios});
+			});
+		    
+			$('#apagar_usuario_' + usuario.id).click(function(){
+			    var idUsuarioSelecionado = parseInt((this.id).replace('apagar_usuario_',''));    
+			    
+			    if ($.isEmptyObject(usuarioLogado)){
+			      $.getJSON("../sidi/usuario/getUsuarioLogado",function(usuarioLogadoBuscado){
+		            usuarioLogado = usuarioLogadoBuscado;
+		            verificarUsuarioLogado(idUsuarioSelecionado,usuarioLogado.id,usuarios,idx,usuario,atualizaUsuarios);
+		          });
+		        }
+		        else{
+		          verificarUsuarioLogado(idUsuarioSelecionado,usuarioLogado.id,usuarios,idx,usuario,atualizaUsuarios);
+		        }
+			});
+		  });
+		};
+		
+		$(window).unbind('scroll');
+		$(window).scroll(function(event){
+		  if (!buscouTodos){
+			  var scrollTop = $(window).scrollTop();
+		      var documentSize = $(document).height();
+		      var sizeWindow = $(window).height();
+		      
+			  if (scrollTop >= (documentSize - sizeWindow)){
+			    linhaInicial = linhaFinal + 1;
+			    linhaFinal += quantidadeRegistrosPorParte;
+		
+				if (buscarTodos){ 
+				    $.postJSON("../sidi/usuario/buscarParteUsuarios",[linhaInicial,linhaFinal],function(novosUsuarios) {
+				      if (novosUsuarios.length > 0){ 
+				        usuarios = usuarios.concat(novosUsuarios);
+				        callback(usuarios,linhaFinal);
+				        adicionarUsuariosNaTabela(novosUsuarios);
+				        
+				        $.getJSON("../sidi/usuario/getQuantidadeUsuariosAtivos",function(quantidadeUsuarios){
+				          if (quantidadeUsuarios == usuarios.length){
+				            buscouTodos = true;
+				          }
+				          else
+				            buscouTodos = false;
+				        });
+				      }
+				    });
+				}
+			    else
+			      if (nome != null)
+			        if (nome.trim() != ""){
+					    $.postJSON("../sidi/usuario/buscarParteUsuariosPorNome",[nome,linhaInicial,linhaFinal],function(novosUsuarios) {
+					      if (novosUsuarios.length > 0){
+					        usuarios = usuarios.concat(novosUsuarios);
+					        callback(usuarios,linhaFinal);
+					        adicionarUsuariosNaTabela(novosUsuarios);
+					        
+					        $.postJSON("../sidi/usuario/getQuantidadeUsuariosAtivosPorNome",[nome],function(quantidadeUsuarios){
+					          if (quantidadeUsuarios == usuarios.length){
+					            buscouTodos = true;
+					          }
+					          else
+					            buscouTodos = false;
+					        });  
+					      }
+					    });
+				}
+			  }
+		  }
+		});
+	  ]]>
+	</script>
+</engine>

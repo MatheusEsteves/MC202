@@ -1,0 +1,99 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0">
+	<template selector="#popupFinalizar">
+		<h3>${i18n.get('finalizar-distribuicao-operadora')}</h3>
+		<form id="frmFinalizar">
+			<ul class="message"/>
+			<div class="listacanais">
+				${i18n.get('informe-numeros-canais')}
+				<fieldset>
+					<ul>
+						{var ppv = 0}
+						{for dist in distribuicoes}
+						<li class="required">
+							{if dist.canal.ppv}
+								{eval}ppv++{/eval}
+								<label>${dist.canal.nome}</label>
+								<label title="${dist.evento.descricaoEvento}" class="evento">${utils.trim(dist.evento.descricaoEvento, 25)}</label>
+								<input type="text" class="numerocanal" distribuicaoId="${dist.id}" value=""/>
+							{/if}
+						</li>
+						{/for}
+						{if ppv == 0}
+						<li>
+							${i18n.get('nenhum-canal-ppc')}
+						</li>
+						{/if}
+					</ul>
+				</fieldset>
+			</div>
+			<div class="topo">
+				<div class="acoes">
+					<a id="btnCancelar" class="acao selected" href="#">${i18n.get('cancelar')}</a>
+					<a id="btConfirmar" class="acao selected" href="#">${i18n.get('finalizar')}</a>
+				</div>
+			</div>
+		</form>
+	</template>
+
+	<script>
+		var dists = this.distribuicoes;
+		var alteracaoId = this.alteracaoId;
+		
+		$('#frmFinalizar').form();
+
+		$(".numerocanal").setMask('999999999');
+
+		$("#btConfirmar").click(function() {
+
+			var ok = true;
+
+			var canais = [];
+			var ids = [];
+			$(".numerocanal").each(function() {
+				var value = parseInt($(this).val());
+				var id = parseInt($(this).attr("distribuicaoId"));
+
+				if (isNaN(value)) {
+					ok = false;
+				}
+
+				canais.push(value);
+				ids.push(id);
+			});
+
+			if (!ok) {
+				$('#frmFinalizar .message').message(i18n.get('informe-todos-numeros-canais'), 'error', true);
+			} else {
+				$.postJSON("../sidi/distribuicao-operadora/finalizaOperacoes", 
+					[alteracaoId, dists, canais, ids], function(resultado) {
+					$("#btnGravarAlteracoes").remove();
+					$("#btnFinalizar").remove();
+
+					$('.message').message(i18n.get('distribuicoes-finalizadas-com-sucesso'), 'success', true);
+					$("#popupFinalizar").xundialog();
+					$('html, body').animate({scrollTop:0}, 'fast');
+					$(window).hashchange();
+				});
+			}
+	
+			return false;
+		});
+
+		$("#btnCancelar").click(function() {
+			$("#popupFinalizar").xundialog();
+			return false;
+		});
+
+		$("#popupFinalizar").xdialog({
+			overlay: '#23557E',
+			alpha: '3'
+		});
+		
+		$.each(dists, function(idx, dist) {
+			if (dist.numeroCanal != null) {
+				$('input[distribuicaoid=' + dist.id + ']').val(dist.numeroCanal);
+			}
+		});
+	</script>
+
+</engine>

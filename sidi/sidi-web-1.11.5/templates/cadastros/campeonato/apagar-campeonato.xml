@@ -1,0 +1,52 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector="#popup">
+		<h4>${i18n.get('apagar-campeonato')}</h4>
+		<p style="margin: 15px 0;">${i18n.get('confirmacao-apagar-campeonato')}</p>
+		<a id="btnRealizarExclusao" class="button azul">${i18n.get('confirmar')}</a>
+		<a id="btnCancelarEdicao" class="button azul">${i18n.get('cancelar')}</a>
+	</template>
+
+	<script>
+		$("#popup").xdialog({
+			overlay: '#23557E',
+			alpha: '3',
+			width: '300'
+		});
+	
+		var campeonato = this.campeonatoJson;
+		
+		$('#btnRealizarExclusao').click(function(){
+				var path = [
+					'/sidi/campeonatos/apagarCampeonato',
+					'/sidi/campeonatos/buscarCampeonatosAtivos'
+				];
+				var arg = [
+					JSON.stringify(campeonato),
+					null
+				];
+				$.ajax({
+					url: '../sidi',
+					type: 'POST',
+					dataType: 'json',
+					data: {arg: arg, path : path},
+					success: function(json) {
+						var sucesso = json[0];
+						if (sucesso) {
+		                		$('.message').message(i18n.get('sucesso-apagar-campeonato'), 'success', true);
+						} else {
+		                		$('.message').message(i18n.get('processo-erro'), 'error', true);
+						}
+						$.holy("../templates/cadastros/campeonato/campeonatos-cadastrados.xml",
+							{'campeonatosCadastrados' : json[1]});
+						$('html, body').animate({scrollTop:0}, 'fast');
+					}
+				});
+				$('#popup').xundialog();
+		});
+		
+		$('#btnCancelarEdicao').click(function(){
+			$('#popup').xundialog();
+		});
+	</script>
+
+</engine>

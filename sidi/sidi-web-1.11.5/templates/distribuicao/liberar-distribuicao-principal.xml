@@ -1,0 +1,112 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+
+	<template selector="#content-info">
+		<div class="topo">
+			<div class="titulo">${i18n.get('menu.liberar-distribuicao-principal')}</div>
+			<div class="separador"></div>
+		</div>
+		
+		<form class="filtro">
+			<div class="data data-selecionada seletor-de-data">
+				<label for="dataEventos">${i18n.get('jogos-dia')} </label>
+				<input type="text" id="dataEventos" alt="date" class="data"/>
+			</div>
+			
+			<div class="clear"/>
+		</form>
+
+		<div class="filtro" id="div-filtro" style="display:none;">
+			<label for="filtroEstado">${i18n.get('uf')}</label>
+			<select id="filtroEstado" class="filtro-operadora-novo">
+				<option value="">${i18n.get('todos')}</option>
+				{for estado in distribuicaoJson.estados}
+					<option value="uf_${estado}">${estado}</option>
+				{/for}
+			</select>
+			<label for="filtroHeadendOperadora">${i18n.get('headend')}</label>
+			<select id="filtroHeadendOperadora" name="headend"  class="filtro-operadora-novo">
+				<option value="">${i18n.get('todos')}</option>
+				{for headEnd in distribuicaoJson.headEnds}
+				<option value="headend_${headEnd.id}">${headEnd.nome}</option>
+				{/for}
+			</select>
+			<label for="filtroRegiao">${i18n.get('regiao')}</label>
+			<select id="filtroRegiao" name="regiao" class="filtro-operadora-novo">
+				<option value="">${i18n.get('todas')}</option>
+				{for regiao in distribuicaoJson.regioes}
+				<option value="regiao_${regiao.id}">${regiao.nome}</option>
+				{/for}
+			</select>
+
+			<label for="filtroConflito">
+				<input id='filtroConflito' class="filtro-operadora-novo" type="checkbox" value="conflito"/>
+				${i18n.get('emconflito')}
+			</label>
+
+			<div class="checkbox-picker" id="btnSeletorColuna">
+                <span class="titulo">${i18n.get('selecionar-colunas')}</span>
+            </div>
+			{var numCanais = new Array(distribuicaoJson.numeroPPV + 1)}
+			{eval}$.each(numCanais, function(idx) {numCanais[idx] = idx});{/eval}
+			<div class="checkbox-picker" id="seletorNumeroPPV" data-selecao="{for numeroPPV in numCanais}${numeroPPV},{/for}">
+				<span type="titulo">${i18n.get('numero-PPV-disponivel')}</span>
+			</div>
+		</div>
+
+		<div id="jogosDialog" class="dialog" style="display: none;">
+			<h4>${i18n.get('selecione-jogo')}:</h4>
+			<div class="jogosList"></div>
+		</div>
+
+	</template>
+	
+	<template selector="#content-details">
+		<div class="principal" style=""></div>
+	</template>
+	
+	<script>
+		<![CDATA[
+		$('#dataEventos').change(function() {
+			var dataSelecionada = $(this).val();
+			dataSelecionada = dataSelecionada ? date.stringToDate(dataSelecionada).getTime() : null;
+			location.hash = 'distribuicao/liberacao/principal/' + dataSelecionada;
+		});
+
+		$("input:text").setMask();
+		$("#dataEventos").datepicker();
+		
+		if (this.data)
+			$('#dataEventos').datepicker('setDate' , new Date(this.data));
+
+
+		$('#distribuicao-principal-aba').click(function(){
+			$(this).addClass('selected');
+			$('#content-details .principal').show();
+
+			$('#distribuicao-operadora-aba').removeClass('selected');
+			$('#content-details .operadoras, #div-filtro').hide();
+		});
+
+		$('.filtro-operadora-novo').change(function() {
+			$.pushLoading();
+			setTimeout(distribuicaoOperadoraTemplate.aplicarFiltros, 0);
+		});
+
+		var distribuicaoJson = this.distribuicaoJson;
+		$("#btnSeletorColuna").click(function() {
+			distribuicaoOperadoraTemplate.abrePopUpColunas(distribuicaoJson.canais);
+		});
+
+		$("#seletorNumeroPPV").click(function() {
+			$.holy("../templates/distribuicao/seletor-numero-canais-ppv.xml", {'numeroPPV' : distribuicaoJson.numeroPPV});
+		});
+
+		$('#filtroHorario').change(function() {
+			var parametro = $(this).find('option:selected').attr("horario");
+			$.holy("../templates/distribuicao/confirmar-alteracao-horario-distribuicao-novo.xml",
+				 {'horario':parametro, 'distribuicaoJson' : distribuicaoJson });
+		});
+
+		]]>
+	</script>
+</engine>

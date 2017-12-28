@@ -1,0 +1,50 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+    <template selector="#popup">
+    <ul id="dialogMessages" class="message"></ul>
+    <h4>${i18n.get('selecione-canais')}:</h4>
+    
+    <ul class="display-canais-mosaico">
+    {for idx in indices}
+      {if canais(idx)}
+        <li data-indice="${idx}" 
+            data-id="seleciona-canal-${canais(idx).id}" 
+            data-canal-id="${canais(idx).id}" 
+            data-canal-nome="${canais(idx).nome}">
+          <div class="canal">
+            <img class="icone-mosaico" src="../imagens/canal?id=${canais(idx).id}" title="${canais(idx).nome}"/>${canais(idx).nome}
+	      </div>
+        </li>
+      {else}
+        <li data-indice="${idx}"><div class="canal"></div></li>
+      {/if}
+    {/for}
+    </ul>
+    <div class="seleciona-canal-mosaico">
+      <p class="subtitulo-canal-mosaico">${i18n.get('selecione-canal')}:</p>
+      <ul class="seleciona-canal-list">
+        <li>
+          <input id="seleciona-canal-empty" name="canal" type="radio" value="">
+          </input><label for="seleciona-canal-empty">Nenhum</label>
+        </li>
+        {for c in distribuicao.canais}
+          {if c.id != canal.id}
+            {if c.tipoCanal == 'FECHADO' || c.tipoCanal == 'PPV' || c.tipoCanal == 'PPV_SD' || c.tipoCanal == 'PPV_HD'}
+            <li>
+              <input id="seleciona-canal-${c.id}" name="canal" type="radio" value="${c.nome}">
+              </input><label for="seleciona-canal-${c.id}">${c.nome}</label>
+            </li>
+            {/if}
+	      {/if}
+	    {/for}
+	  </ul>
+    </div>
+    
+    <form class="forms">
+       <div class="buttons right">
+           <input id="btnCancelar-editar-mosaico" class="buttons" value="Cancelar" type="button"/>
+           <input id="btnOK-editar-mosaico" class="buttons" value="OK" type="button"/>
+       </div>
+    </form>
+   
+    </template>
+</engine>

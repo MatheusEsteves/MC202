@@ -1,0 +1,222 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector="#content-info">
+		<div id="topo" class="topo">
+			<div class="titulo">
+				<h3>${i18n.get('configuracao-campeonato')} {if campeonato} - ${campeonato.nome}{/if}</h3>	
+			</div>
+			<div class="separador"></div>
+		</div>
+	</template>
+	
+	<template selector="#content-details">
+		<form id="formConfigCampeonato">
+			<fieldset>
+				<div id="picklistClube" class="picklistDiv">
+					<h2 class="tituloPickList">Clubes</h2>
+					<div class="titulosPickList">
+	    				<div class="fst-title">
+	        				<h3>${i18n.get('disponiveis')}</h3>
+	    				</div>
+	    				<div class="scnd-title">
+	        				<h3>${i18n.get('selecionados')}</h3>
+	    				</div>
+	    				<br class="clear" />
+					</div>
+					<select>
+						{for clube in clubes}
+							<option value="${clube.id}">${clube.apelido}</option>
+						{/for}
+					</select>
+					
+					<select id="listaClubes">
+						{for clubeRelacionado in clubesRelacionados}
+							<option value="${clubeRelacionado.id}">${clubeRelacionado.apelido}</option>
+						{/for}
+					</select>
+					<br class="clear"/>
+				</div>
+			
+				<div id="picklistCanal" class="picklistDiv">
+					<h2 class="tituloPickList">Canais</h2>
+					<div class="titulosPickList">
+	    				<div class="fst-title">
+	        				<h3>${i18n.get('disponiveis')}</h3>
+	    				</div>
+	    				<div class="scnd-title">
+	        				<h3>${i18n.get('selecionados')}</h3>
+	    				</div>
+	    				<br class="clear" />
+					</div>
+					<select>
+						{for canal in canais}
+							<option value="${canal.id}">${canal.nome}</option>
+						{/for}
+					</select>
+					
+					<select id="listaCanais">
+						{for canalRelacionado in canaisRelacionados}
+							<option value="${canalRelacionado.id}">${canalRelacionado.nome}</option>
+						{/for}
+					</select>
+					<br class="clear"/>
+				</div>
+				
+				<div class="picklistDiv">
+					<h2 class="tituloPickList">Operadoras</h2>
+					<select id="estados">
+						<option>${i18n.get('todos')}</option>
+						{for estado in estados}
+							<option value="${estado}">${estado}</option>
+						{/for}
+					</select>
+					<input type="button" id="btnFiltrar" value="Filtrar" />
+					<div class="titulosPickList">
+	    				<div class="fst-title">
+	        				<h3>${i18n.get('disponiveis')}</h3>
+	    				</div>
+	    				<div class="scnd-title">
+	        				<h3>${i18n.get('selecionados')}</h3>
+	    				</div>
+	    				<br class="clear" />
+					</div>
+					<div id="picklistOperadora">
+						<select id="selectOperadora">
+							{for operadora in operadoras}
+								<option value="${operadora.id}">${operadora.nome} - ${operadora.headEnd.nome}</option>
+							{/for}
+						</select>
+						
+						<select id="listaOperadoras">
+							{for operadoraRel in operadorasRelacionadas}
+								<option value="${operadoraRel.id}">${operadoraRel.nome} - ${operadoraRel.headEnd.nome}</option>
+							{/for}
+						</select>
+					</div>
+				</div>
+				
+				<div class="buttons picklistDiv">
+					<input type="button" id="btnSalvar" value="Salvar" class="btSave" />
+					<input type="button" id="btnVoltar" value="Voltar" class="btBack" />
+				</div>
+			</fieldset>
+		</form>
+	</template>
+	
+	<script>
+		<![CDATA[
+		$('#formConfigCampeonato').form();
+		$('#picklistClube').picklist();
+		$('#picklistCanal').picklist();
+		$('#picklistOperadora').picklist();
+		
+		var idCampeonato = this.idCamp;
+		var operadorasRelacionadas = this.operadorasRelacionadas;
+		
+		$('#btnSalvar').click(function(){
+			var clubes = [];
+			var operadoras = [];
+			var canais = [];
+			
+			for (var i=0; i < operadorasRelacionadas.length; i++) {
+				operadoras[i] = parseInt(operadorasRelacionadas[i].id);
+			}
+						
+			$('#listaClubes option').each(function(index){
+				clubes[index] = parseInt($(this).val());
+			});
+			
+			$('#listaCanais option').each(function(index){
+				canais[index] = parseInt($(this).val());
+			});
+			
+			$.postJSON('../sidi/distribuicao/relacionarCampeonato', [clubes, operadoras, canais, idCampeonato], function(deuCerto) {
+				if(deuCerto){
+					$('.message').message('Relacionamento feito com sucesso', 'success', true);
+					scroll(0,0);
+				}
+				else{
+					$('.message').message(i18n.get('processo-erro'), 'error', true);
+					scroll(0,0);
+				}
+			});
+		});
+		
+		$('#picklistOperadora button.pr').click(function(){
+			var options = $('#listaOperadoras option');
+			bindOperadora(options);
+		});
+
+		$('#picklistOperadora button.apr').click(function() {
+			var options = $('select#listaOperadoras option');
+			bindOperadora(options);
+		});
+
+		$('#picklistOperadora button.apl').click(function() {
+			var el = $('#selectOperadora option');
+			unbindOperadora(el);
+		});
+		
+		$('#picklistOperadora button.pl').click(function(){
+			var removeOption = $('#selectOperadora option:selected');
+			unbindOperadora(removeOption);
+		});
+		
+		var bindOperadora = function(element) {
+			$(element).each(function(){
+				var id = $(this).val();
+				if (!utils.find(operadorasRelacionadas, id)) {
+					obj = {};
+					obj.id = $(this).val();
+					obj.nome = $(this).text();
+					operadorasRelacionadas.push(obj);
+				}
+			});
+		};
+		
+		var unbindOperadora = function(element) {
+			$(element).each(function(){
+				var operadora = {};
+				operadora.id = $(this).val();
+				operadora.nome = $(this).text();
+	
+				for (var i=0; i<operadorasRelacionadas.length; i++) {
+					toBeRemoved = operadorasRelacionadas[i];
+		
+					if (toBeRemoved.id == operadora.id) {
+						operadorasRelacionadas = utils.remove(operadorasRelacionadas, i);
+					}
+				}
+			});
+		};
+		
+		$('#btnFiltrar').click(function() {
+			var estado = $('#estados option:selected').val();
+			
+			var relacionadas = [];
+			for (var i=0; i < operadorasRelacionadas.length; i++) {
+				relacionadas[i] = parseInt(operadorasRelacionadas[i].id);
+			}
+			
+			var args = [estado, relacionadas];
+				$.postJSON("../sidi/distribuicao/buscarOperadorasPorEstado", args, function(configOperadoraVO){
+				$('#selectOperadora').empty();
+				$('#listaOperadoras').empty();
+				var nome = "";
+				for(var i=0; i < configOperadoraVO.operadorasDisponiveis.length; i++) {
+					operadora = configOperadoraVO.operadorasDisponiveis[i];
+					$('#selectOperadora').append('<option value=' + operadora.id + '>' + operadora.nome + ' ' + (operadora.regiao? operadora.regiao.nome : '') + '</option>');
+				}
+				
+				for (var i=0; i < configOperadoraVO.operadorasRelacionadas.length; i++) {
+					operadoraRelacionada = configOperadoraVO.operadorasRelacionadas[i];
+					$('#listaOperadoras').append('<option value=' + operadoraRelacionada.id + '>' + operadoraRelacionada.nome + ' ' + (operadoraRelacionada.regiao? operadoraRelacionada.regiao.nome : '') + '</option>');
+				}
+			});
+		});
+		
+		$('#btnVoltar').click(function(){
+			window.location = "#campeonatos/consultar";
+		});
+		]]>
+	</script>
+</engine>

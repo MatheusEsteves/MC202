@@ -1,0 +1,95 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector="#popup">
+		<ul class="message mensagemPopup" id="mensagemPopup"></ul>
+		<h4>${i18n.get('alterar-perfil')}</h4>
+		<div>
+			<form id="frmAlterarPerfil" class="lista-de-exibicao">
+				<fieldset>
+					<input type="hidden" value="${perfil.id}" id="idperfil"></input>
+					<ul>
+						<li class="required">
+							<label><span class="required">*</span>${i18n.get('nome')}</label>
+							<input type="text" id="txtAlterarNome" name="nome" value="${perfil.nome}" />
+						</li>
+					</ul>
+					<div id="tglPkPerfisAlteracao" class="lista-de-jogos tglPkList clearfix">
+						<div class="pkPerfisDiv" id="pkPerfisAlteracao">
+							<div class="titulosPickList">
+			    				<div class="fst-title">
+			        				<h3>${i18n.get('disponiveis')}</h3>
+			    				</div>
+			    				<div class="scnd-title">
+			        				<h3>${i18n.get('selecionados')}</h3>
+			    				</div>
+			    				<br class="clear" />
+							</div>
+							<div id="pickListFuncionalidades">
+								<select id="funcDisponiveisAlteracao">
+								{for funcionalidade in funcionalidades}
+									{if $.inArray(funcionalidade, perfil.funcionalidades) == -1}
+									<option>${funcionalidade}</option>
+									{/if}
+								{/for}
+								</select>
+								<select id="funcSelecionadasAlteracao">
+								{for funcionalidade in funcionalidades}
+									{if $.inArray(funcionalidade, perfil.funcionalidades) != -1}
+									<option>${funcionalidade}</option>
+									{/if}
+								{/for}
+								</select>
+							</div>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+		<a id="btnConfirmarAlteracao" class="button azul">${i18n.get('alterar')}</a>
+		<a id="btnCancelarAlteracao" class="button azul">${i18n.get('cancelar')}</a>
+	</template>
+	<script>
+		<![CDATA[
+		$("#popup").xdialog({
+			overlay: '#23557E',
+			alpha: '3',
+			width: 700
+		});
+		var perfil = this.perfil;
+		console.log(perfil);
+
+		$('#tglPkPerfisAlteracao').togglePanel();
+		$('#pkPerfisAlteracao').picklist();
+		$('#frmAlterarPerfil').form();
+
+		$('#btnConfirmarAlteracao').click(function(){
+			var funcs = [];
+			$('#funcSelecionadasAlteracao option').each(function(index){
+				funcs[index] = $(this).val();
+			});
+			$('.mensagemPopup').html('');
+			if(utils.validate($('#frmAlterarPerfil'), 'mensagemPopup') && funcs.length > 0) {
+				var nome = $('#txtAlterarNome').val();
+				var novoPerfil = {
+					'id': perfil.id,
+					'nome' : nome
+				};
+
+				$.postJSON("../sidi/perfil/salvarPerfil",[novoPerfil,funcs],function(){
+					$('.message').message(i18n.get('sucesso-cadastrar-perfil'), 'success');
+					$('html, body').animate({scrollTop:0}, 'fast');
+					utils.clear($('#frmNovoPerfil'));
+					$('#popup').xundialog();
+					$('#btnListaDePerfis').click();
+				});
+			}  else if (funcs.length == 0) {
+				$('.mensagemPopup').message(i18n.get('falha-cadastrar-perfil'), 'error');
+				$('html, body').animate({scrollTop:0}, 'fast');
+			}
+		});
+
+		$('#btnCancelarAlteracao').click(function(){
+			$('#popup').xundialog();
+		});
+		]]>
+	</script>
+</engine>

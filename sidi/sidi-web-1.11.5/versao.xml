@@ -1,0 +1,9 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+
+	<template selector=".versao-globosat">                                                             
+	</template> 
+	<script>
+		var version = '1.11.5';
+		$('.versao-globosat').text(version);
+	</script>                                                                              
+</engine>

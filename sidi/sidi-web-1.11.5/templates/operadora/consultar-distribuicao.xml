@@ -1,0 +1,149 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0">
+
+	<template selector="#content-info">
+		{var horario = horarios.length > 0 ? horarios[0] : null}
+		{if defined('horarioSelecionado')}
+			{var horario = horarioSelecionado}
+		{/if}
+		<div class="topo">
+			<div class="titulo">
+				<span id="operadora-selecionada">
+					${operadora.nome} 
+					<a id="selecionar-operadora" class="edit ttip" title="${i18n.get('selecionar-operadora')}"></a>
+				</span>
+				<select id="operadoras-usuario" style="display: none;"></select>
+			</div>
+			<div class="separador"></div>
+		</div>
+		<div class="filtro">
+			<div class="data data-selecionada seletor-de-data">
+				<label for="dataEventos">${i18n.get('jogos-dia')} </label>
+				<input type="text" value="{if horario}${date.dateToString(horario)}{/if}"
+					id="dataEventos" />
+				<div class="hora">
+					<span title="${i18n.get('selecionar-horario-ttip')}">
+						{if horarios.length > 0}
+							{if horario}
+								${date.dateToHourString(horario)}
+							{/if}
+						{/if}
+					</span>
+					<select id="horaEventos">
+						{for data in horarios}
+							{if data == horario}
+								<option selected="selected">${date.dateToHourString(data)}</option>
+							{else}
+								<option>${date.dateToHourString(data)}</option>
+							{/if}
+						{/for}
+					</select>
+				</div>
+			</div>
+			<div class="status">
+			</div>
+			<div class="clear"/>
+		</div>
+	</template>
+	<template selector="#content-details">
+		{if horarios.length == 0}
+		<div class="filtro">
+			${i18n.get('nenhuma-distribuicao')}
+		</div>
+		{/if}
+	</template>
+
+	<script>
+		$("#dataEventos").datepicker();
+		var json = this;
+
+		$('#dataEventos').change(function() {
+			var dataSelecionada = $(this).val();
+			dataSelecionada = dataSelecionada ? date.stringToDate(dataSelecionada).getTime() : null;
+			
+			$.getJSON("../sidi/distribuicao-operadora/buscarHorariosDisponiveis", {arg : [JSON.stringify(dataSelecionada), json.operadoraId]}, function(resultado) {
+				if (resultado.horarios.length > 0) {
+					location.hash = 'operadora/consultar/' + json.operadoraId + '/' + resultado.horarios[0];
+				} else {
+					location.hash = 'operadora/consultar/' + json.operadoraId + '/' + dataSelecionada;
+				}
+			});
+		});
+
+		$("#horaEventos").change(function() {
+			var horario = $("#horaEventos").val();
+			$(this).hide().closest(".hora").find("span").show().text(horario);
+			
+			var data = consultaOperadora.getDataSelecionada();
+			location.hash = 'operadora/consultar/' + json.operadoraId + '/' + data;
+		});
+
+		if (json.horarios.length > 0) {
+			var data = consultaOperadora.getDataSelecionada();
+			$.getJSON("../sidi/distribuicao-operadora/buscarDistribuicaoOperadora", {arg : [data, json.operadoraId]}, function(resultado){
+				resultado.horarioSelecionado = data;
+				resultado.operadoraId = json.operadoraId;
+				
+				resultado.original.distribuicoes = _.sortBy(resultado.original.distribuicoes, function(item){ return item.canal.numeroDeOrdenacao; });
+				resultado.original.principais 	 = _.sortBy(resultado.original.principais, function(item){ return item.canal.numeroDeOrdenacao; });
+				
+				$.holy("../templates/operadora/listagem-distribuicao.xml", resultado);
+			})
+		}
+
+		var handler = function(){
+			$(this).find("select").show().focus().end().find("span").hide();
+		};
+
+		$(".data-selecionada .hora select").bind('blur', function() {
+			$(this).hide().parent('.hora').find('span').show();
+		});
+
+		$(".data-selecionada .hora").bind('click', handler);
+
+		if (this.horarios.length == 0) {
+			$(".hora span").text('');
+			$(".data-selecionada .hora").unbind('click', handler);	
+		}
+		
+		$.getJSON("../sidi/usuario/buscarOperadorasUsuario", function(operadoras) {
+			if (operadoras.length > 1) {
+				var select = $('#operadoras-usuario');
+				select.html('');
+				$.each(operadoras, function(idx, operadora) {
+					var option = $(document.createElement('option'));
+					option.attr('value', operadora.id);
+					option.text(operadora.nome);
+					
+					if (operadora.id == json.operadoraId) {
+						option.attr('selected', 'selected');
+					}
+					
+					option.appendTo(select);
+				});
+			} else {
+				$('#selecionar-operadora').hide();
+			}
+		});
+		
+		$('#selecionar-operadora').click(function() {
+			$('#operadora-selecionada, #operadoras-usuario').toggle();
+		});
+		
+		$('#operadoras-usuario').blur(function() {
+			$('#operadora-selecionada, #operadoras-usuario').toggle();
+			
+			var data = consultaOperadora.getDataSelecionada();
+			var operadoraId = $(this).val();
+			location.hash = 'operadora/consultar/' + operadoraId + '/' + data;
+		});
+		
+		$('#operadoras-usuario').change(function() {
+			$('#operadora-selecionada, #operadoras-usuario').toggle();
+			
+			var data = consultaOperadora.getDataSelecionada();
+			var operadoraId = $(this).val();
+			location.hash = 'operadora/consultar/' + operadoraId + '/' + data;
+		}); 
+	</script>
+
+</engine>

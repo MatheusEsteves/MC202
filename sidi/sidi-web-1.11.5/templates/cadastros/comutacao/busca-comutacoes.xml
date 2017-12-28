@@ -1,0 +1,39 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector="#content-details">
+		<div id="comutacao-base">
+		</div>
+    	<div class="lista-de-exibicao" id="divComutacoesCadastradas">
+
+    		<div class="content">
+	    		<ul>
+	    			<li>
+					    <table id="tblComutacoesCadastradas" class="datatable">
+					    	<thead>
+								<th scope="col" width = "28%">${i18n.get('nome')}</th>
+								<th scope="col">${i18n.get('data-hora')}</th>
+								<th scope="col">${i18n.get('canal-principal')}</th>
+								<th scope="col">${i18n.get('canal-comutacao')}</th>
+								<th scope="col">${i18n.get('afiliadas-bloqueadas')}</th>
+								<th scope="col">${i18n.get('regioes-bloqueadas')}</th>
+								<th scope="col">Live Admin ID</th>
+								<th scope="col">${i18n.get('acoes')}</th>
+					    	</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</li>
+				</ul>
+			</div>
+			
+		</div>
+	</template>
+
+	<script>
+		<![CDATA[
+			
+			$.getJSON("../sidi/comutacao/buscarComutacoes",function(json) {
+				$.holy("../templates/cadastros/comutacao/comutacoes-cadastradas.xml",{'comutacoes' : json});
+			});
+		]]>
+	</script>
+</engine>

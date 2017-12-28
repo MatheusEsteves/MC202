@@ -1,0 +1,256 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector=".message">
+	</template>
+	
+	<template selector="#content-info">
+		<div class="topo" id="topo">
+	      <div class="titulo">${i18n.get('cadastro-de-operadoras')}</div>
+	      <div class="separador"></div>
+	      <div class="acoes">
+	        <a href="javascript:void(0)" id="btnListaDeOperadoras" class="acao selected">${i18n.get('lista-de-operadoras')}</a>
+	        {if sidi.possuiAutorizacao('GERENCIAR_OPERADORAS')}
+	        <a href="javascript:void(0)" id="btnCadastrarOperadora" class="acao">${i18n.get('nova-operadora')}</a>
+	        {/if}
+	      </div>
+	    </div>
+	</template>
+
+	<template selector="#content-details">
+	   	<div id="filtroJogos">
+	        <div class="filtro">
+				<label for="inputNomeOperadora">${i18n.get('nome-operadora')}: </label>
+				<input type="text" id="inputNomeOperadora" />
+				<label for="sltFiltroEstado">${i18n.get('estado')}: </label>
+				<select id="sltFiltroEstado" name="estado" >
+					<option>${i18n.get('todos')}</option>
+					{for estado in estados}
+						<option>${estado}</option>
+					{/for}
+				</select>
+				<a id="btnFiltrarOperadoras" class="button small">${i18n.get('filtrar')}</a>
+		    </div>
+	    	<div class="lista-de-exibicao">
+			    <table id="divListaDeOperadoras">
+					<thead>
+						<tr>
+							<th scope="col">${i18n.get('nome-operadora')}</th>
+							<th scope="col">${i18n.get('uf')}</th>
+							<th scope="col">${i18n.get('afiliada-tvg')}</th>
+							<th scope="col">${i18n.get('matriz')}</th>
+							<th scope="col">${i18n.get('operadora-num-canais-visiveis')}</th>							
+							<th scope="col">${i18n.get('acoes')}</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td colspan="4">${i18n.get('busque-operadoras')}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	
+		<div id="divNovaOperadora" class="lista-de-exibicao" style="display: none;">
+			<div class="content">
+				<form id="frmNovaOperadora" class="operadoras">
+					<fieldset>
+						<ul>
+							<li class="required">
+								<label for="txtNomeOperadora"><span class="required">*</span>${i18n.get('nome-operadora')}: </label>
+								<input type="text" name="nome" id="txtNomeOperadora"></input>
+							</li>
+							<li>
+								<label for="txtApres">${i18n.get('apresent')}: </label>
+								<input type="text" id="txtApres" name="apres"></input>
+							</li>
+						</ul>
+						<ul>
+							<li>
+								<label for="txtDistanciaCapital">${i18n.get('distancia-capital')}: </label>
+								<input type="text" id="txtDistanciaCapital" name="distanciacapital" alt="integer"></input>
+							</li>
+							<li>
+								<label for="txtAfiliada">${i18n.get('afiliada-tvg')}: </label>
+								<select id="sltAfiliada" name="afiliadatvglobo" >
+									<option></option>
+									{for afiliada in afiliadas}
+									<option value="${afiliada.id}">${afiliada.nome}</option>
+									{/for}
+								</select>
+							</li>
+							<li class="required">
+								<label for="sltEstado"><span class="required">*</span>${i18n.get('estado')}:</label>
+								<select id="sltEstado" name="estado">
+									<option></option>
+									{for estado in estados}
+										<option>${estado}</option>
+									{/for}
+								</select>
+							</li>
+							<li>
+								<label for="sltRegiao">${i18n.get('regiao')}: </label>
+								<select id="sltRegiao" name="regiao">
+									<option></option>
+									{for regiao in regioes}
+										<option value="${regiao.id}">${regiao.nome}</option>
+									{/for}
+								</select>
+							</li>
+							<li class="required">
+								<label for="sltHeadend"><span class="required">*</span>${i18n.get('headend')}: </label>
+								
+								<select id="sltHeadend" name="headEnd">
+									<option></option>
+									{for headend in headends}
+										<option value="${headend.id}">${headend.nome}</option>
+									{/for}
+								</select>
+							</li>
+							<li class="required">
+								<label for="sltMatriz"><span class="required">*</span>${i18n.get('matriz')}: </label>
+								<input type="text" name="matriz" id="txtMatriz" maxlength="20"></input>
+							</li>
+						</ul>
+					</fieldset>
+						<div id="tglPkCanais" class="lista-de-jogos tglPkList">
+							<div class="pkListDiv" id="pkCanais">
+								<h3>
+									<span class="separador-data">${i18n.get('canais-transmitidos')}</span>
+								</h3>
+								<div class="titulosPickList">
+				    				<div class="fst-title">
+				        				<h3>${i18n.get('disponiveis')}</h3>
+				    				</div>
+				    				<div class="scnd-title">
+				        				<h3>${i18n.get('selecionados')}</h3>
+				    				</div>
+				    				<br class="clear" />
+								</div>
+								<div id="picklistOperadora">
+									<select id="selectOperadora">
+										{for canal in canais}
+											<option value="${canal.id}">${canal.nome}</option>
+										{/for}
+									</select>
+									
+									<select id="listaOperadoras">
+									</select>
+								</div>
+							</div>
+						</div>
+				</form>
+				<a id="btnNovaOperadora" class="button azul">${i18n.get('cadastrar')}</a>
+			</div>
+		</div>
+	</template>
+
+	<script>
+		$('#tglPkCanais').togglePanel();
+		$('#frmFiltroOperadoras').form();
+		$('#pkCanais').picklist();
+
+		$('#frmNovaOperadora').form({ liquid: true });
+		$('#frmNovaOperadora [title]').tipsy({trigger: 'focus', gravity: 'w', fade: true});
+
+		$('#frmFiltroJogos').form({ liquid: true });
+		$('#frmFiltroJogos [title]').tipsy({trigger: 'focus', gravity: 'w', fade: true});
+
+		$('input:text').setMask();
+		$('#divListaDeOperadoras').datatable();
+		
+		var canais = this.canais;
+		var regiao = {};
+		var headend = {};
+		var estados = this.estados;
+		var regioes = this.regioes;
+		var headends = this.headends;
+		var afiliadas = this.afiliadas;
+		
+		$('#btnNovaOperadora').click(function(){
+			if(utils.validate('#frmNovaOperadora'))
+			{
+				regiao = null;
+				if ($('#sltRegiao').val()) {
+					regiao = {
+						'id':$('#sltRegiao').val()
+					};
+				}
+				var afiliada = null;
+				if ($('#sltAfiliada').val()) {
+					afiliada = {
+						'id':$('#sltAfiliada').val()
+					};
+				}
+				
+				var headend= {};
+				headend = {
+					'id':$('#sltHeadend').val()
+				};
+				
+				var canais = [];
+				$('#listaOperadoras option').each(function(index){
+					canais[index] = parseInt($(this).val());
+				});
+				
+				var operadora = {};
+				
+				operadora = {
+					'afiliadaTvGlobo':$('#txtAfiliada').val(),
+					'apres':$('#txtApres').val(),
+					'distanciaCapital':$('#txtDistanciaCapital').val(),
+					'estado': $('#sltEstado').val() !== "" ? $('#sltEstado').val() : null,
+					'nome':$('#txtNomeOperadora').val(),
+					'regiao':regiao,
+					'headEnd' : headend,
+					'afiliada':afiliada,
+					'matriz':$('#txtMatriz').val()
+				};
+				
+				$.postJSON('../sidi/operadora/novaOperadora', [operadora, canais], function(){
+					$('.message').message(i18n.get('sucesso-cadastrar-operadora'), 'success', true);
+					utils.clear($('#frmNovaOperadora'));
+					$('#btnListaDeOperadoras').click();
+				});
+			}
+		});
+		
+		var params = {'estados':estados,'regioes':regioes,'headends':headends,'canais':canais, 'afiliadas':afiliadas}
+		$('#btnFiltrarOperadoras').click(function(){
+			var nome = $('#inputNomeOperadora').val();
+			var campeonato = $('#sltFiltroCampeonato').val();
+			var estado = $('#sltFiltroEstado').val();
+			
+			args = [
+				estado ? estado : null,
+				nome
+			];
+			$.postJSON("../sidi/operadora/buscarOperadorasPorEstadoENome",args, function(operadoras){
+				params.operadoras = operadoras;
+				$.holy("../templates/cadastros/operadora/operadoras-cadastradas.xml",params); 
+			});
+		});
+		
+		$(document).ready(function(){
+			$.getJSON("../sidi/operadora/buscarOperadoras",function(operadoras) {
+				params.operadoras = operadoras;
+				$.holy("../templates/cadastros/operadora/operadoras-cadastradas.xml",params); 
+			});
+		});
+		
+		$('#btnCadastrarOperadora').click(function(){
+			$('#btnListaDeOperadoras').removeClass('selected');
+			$('#filtroJogos').hide();
+			$('#divNovaOperadora').show();
+			$('#btnCadastrarOperadora').addClass('selected');
+			$('#frmNovaOperadora').form();
+		});
+		
+		$('#btnListaDeOperadoras').click(function(){
+			$('#btnListaDeOperadoras').addClass('selected');
+			$('#btnCadastrarOperadora').removeClass('selected');
+			$('#filtroJogos').show();
+			$('#divNovaOperadora').hide();
+			$('#btnFiltrarOperadoras').click();
+		});
+	</script>
+</engine>

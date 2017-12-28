@@ -1,0 +1,258 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0">
+	<template selector="#popup">
+		<div id="editar-campeonato">
+			<h4>${i18n.get('alterar-campeonato')}</h4>
+			<form id="frmAlterarCampeonato">
+				<ul class="messagePopUp message"></ul>
+				<fieldset>
+					<legend>${i18n.get('campeonato')}</legend>
+					<input type="hidden" value="${campeonatoJson.id}" id="idCampeonato"></input>
+					<ul>
+						<li class="required">
+							<label for="txtNovoNome"><span class="required">*</span>${i18n.get('nome-campeonato')}:</label>
+							<input type="text" id="txtNovoNome" value="${campeonatoJson.nome}"></input>
+						</li>
+						<li class="required">
+							<label for="txtNovaDataInicio"><span class="required">*</span>${i18n.get('inicio')}:</label>
+							<input type="text" id="txtNovaDataInicio" alt="date" class="data" value="{if campeonatoJson.dataInicio != null}${date.dateToString(campeonatoJson.dataInicio)}{/if}"></input>
+						</li>				
+						<li class="required">
+							<label for="txtNovaDataFim"><span class="required">*</span>${i18n.get('fim')}:</label>
+							<input type="text" id="txtNovaDataFim" alt="date" class="data" value="{if campeonatoJson.dataFim != null}${date.dateToString(campeonatoJson.dataFim)}{/if}"></input>					
+						</li>	
+						<li class="required">
+							<label for="sltNovoTipo"><span class="required">*</span>${i18n.get('tipo-campeonato')}:</label>
+							<select id="sltNovoTipo" title="${i18n.get('informe-tipo')}">
+								<option></option>
+								{if campeonatoJson.tipoCampeonato == 'ESTADUAL'}
+								<option value="ESTADUAL" selected="selected">Estadual</option>
+								<option value="NACIONAL">Nacional</option>
+								{else}
+								<option value="ESTADUAL">Estadual</option>
+								<option value="NACIONAL" selected="selected">Nacional</option>
+								{/if}
+							</select>
+						</li>
+						<li>
+							<label for="txtNovoPeso">${i18n.get('peso')}</label>
+							<input type="text" id="txtNovoPeso" maxlength="6" class="numeric" value="${campeonatoJson.peso}"
+								title="${i18n.get('informe-peso')}"></input>
+						</li>
+					</ul>
+					
+					<div class="clearfix">											
+						<form id="formConfigPeso" class="forms liquidForm">
+							<fieldset>
+								${i18n.get('config-importacao')}							
+								<ul>
+									<li>
+										<label>${i18n.get('slug-campeonato')}</label>
+										<input type="text" id="txtSlugCampeonatoAlt" maxlength="120" title="${i18n.get('informe-slug-campeonato')}"
+											value="${campeonatoJson.campeonatoSlug}"></input>						
+									</li>
+									<li>
+										<label>${i18n.get('edicao-slug')}</label>
+										<input type="text" id="txtSlugEdicaoAlt" maxlength="120" title="${i18n.get('informe-edicao-slug')}"
+											value="${campeonatoJson.edicaoSlug}"></input>
+									</li>
+								</ul>					
+							</fieldset>
+						</form>
+					</div>
+					
+					<div class="clearfix">${i18n.get('ajuda-campeonato')}</div>
+					<ul>
+						<li>
+							<label for="txtNovaUrl">${i18n.get('json-campeonato')}:</label>
+							<input type="text" id="txtNovaUrl" value="${campeonatoJson.urlJson}"></input>
+						</li>
+						<li>
+							<div id="divFase" class="lista-de-jogos lista-de-exibicao">
+								<ul>
+									<li>
+										<label for="txtFaseAlteracao" class="required">
+											<span style="display:none" id="spanRequired" class="required">*</span>${i18n.get('fase')}:</label>
+										<input type="text" maxlength="30" id="txtFaseAlteracao"></input>
+										<img title="${i18n.get('insere-fase-tabela')}" id="imgAdicionarAlteracao" src="../images/adicionar.png"/>
+									</li>
+								</ul>
+								<ul>
+									<li>
+										<table id="tblListaDeFasesAlteracao" class="medium-table tabela-popup" style="width:550px">
+											<thead>
+												<tr>
+													<th scope="col">${i18n.get('nome')}</th>
+													<th scope="col">${i18n.get('peso')}</th>
+													<th scope="col">${i18n.get('inicio')}</th>
+													<th scope="col">${i18n.get('fim')}</th>
+													<th scope="col">${i18n.get('acoes')}</th>
+												</tr>
+											</thead>
+											<tbody>
+											</tbody>
+										</table>
+									</li>									
+								</ul>
+							</div>
+						</li>
+					</ul>
+				</fieldset>
+			</form>
+			<a id="btnRealizarAlteracao" class="button azul">${i18n.get('confirmar')}</a>
+			<a id="btnCancelarAlteracao" class="button azul">${i18n.get('cancelar')}</a>
+		</div>
+	</template>
+
+	<script>
+	<![CDATA[
+		$("#popup").xdialog({
+			overlay: '#23557E',
+			alpha: '3', 
+			width: '620px'
+		});
+		
+		$('input:text').setMask();
+		$('.data').datepicker();
+		var fases = [];
+		
+		$(document).on('input', '.numeric', function() {
+		    this.value = this.value.replace(/[^\d\.\-]/g,'');
+		});
+		
+		$('#frmAlterarCampeonato').form();
+		for (var i = 0; i < this.fasesCampeonato.length; i++) {
+			var fase = this.fasesCampeonato[i];
+			preparaListaDeFase(fase.id, fase.nome, fase.haJogos, fase.peso, fase.dataInicio, fase.dataFim);
+		}
+
+		$('#imgAdicionarAlteracao').click(function() {
+			var nomeFase = $('#txtFaseAlteracao').val();
+			
+			if (nomeFase.trim().length > 0) { 
+				var tableRow = $("#tblListaDeFasesAlteracao tbody tr td").filter(function() {
+				    return $(this).text() == nomeFase;
+				}).closest("tr");
+				
+				if (tableRow.children().size() > 0) {
+					$('.messagePopUp').message(i18n.get('fase-ja-existe'), 'error', true);
+				} else {
+					preparaListaDeFase(null, nomeFase, null, 0);
+					$('#txtFaseAlteracao').val('');
+				}
+			}
+		});
+		
+		function preparaListaDeFase(id, nomeFase, haJogos, peso, dataInicio, dataFim) {
+			var linhaFase = '<tr><td class="nomeFaseAlteracao"><span id="span' + id + '"> ' + nomeFase + '</span>' +
+				'<input type="text" id="edtNomeFase' + id + '" value="' + nomeFase + '" class="hidden"/>' +   
+				'</td><td><input class="pesoFase numeric" style="width:60px" maxlength="6" value="' + (peso ? peso : "") + '"/>' +
+				'<td><input type="text" id="edtInicio_'+ id +'" alt="date" class="data inicio" style="width:80px" value="' + (dataInicio ? date.dateToString(dataInicio) : "") + '"/> </td>' +
+				'<td><input type="text" id="edtFim_'+ id +'" alt="date" class="data fim" style="width:80px" value="' + (dataFim ? date.dateToString(dataFim) : "") + '"/></td>' +				
+				'</td><td class="action"><a href="javascript:void(0)" id="alterarFase' +
+				id + '" original-title="' + i18n.get('alterar') +
+				'" class="edit ttip"></a>&nbsp;<a href="javascript:void(0)" class="cancel ttip" id="removerAlteracao' + id + 
+				'">' + i18n.get("excluir") + '</a></td></tr>';
+
+			$("#tblListaDeFasesAlteracao tbody:last").append(linhaFase);
+			$("#tblListaDeFasesAlteracao tbody tr td.nomeFaseAlteracao:last").data("id-fase", id);
+			$("#tblListaDeFasesAlteracao tbody tr td.nomeFaseAlteracao:last").data("haJogos", haJogos);
+			
+			$('input:text').setMask();
+			$('#edtInicio_'+ id).datepicker();
+			$('#edtFim_'+ id).datepicker();
+
+			$('#removerAlteracao'+ id).click(function() {
+				if (haJogos) {
+					$('.messagePopUp').message(i18n.get('ha-jogos-fase'), 'error', true);
+				} else {
+					var faseVO = {'id' : id,
+								  'apagado' : true,
+								  'idCampeonato' : $("#idCampeonato").val()
+					};
+					fases.push(faseVO);					
+					$(this).parent().parent().remove();
+				}
+			});
+
+			$('#alterarFase'+ id).click(function() {
+				$("#edtNomeFase" + id).removeClass("hidden");
+				$("#span" + id).addClass("hidden");
+				
+				$("#edtNomeFase" + id).focusout(function() {
+					$("#span" + id).text($("#edtNomeFase" + id).val());
+					$("#edtNomeFase" + id).addClass("hidden");
+					$("#span" + id).removeClass("hidden");
+				});
+			});
+		}
+
+		$('#btnRealizarAlteracao').click(function() {
+			$('.message').html('');
+			
+			if (utils.validaFormularioPopUp('#frmAlterarCampeonato', null, '.messagePopUp')) {
+				
+				var campeonato =  { 'id': $("#idCampeonato").val(),
+									'nome':$('#txtNovoNome').val(),
+									'tipoCampeonato':$('#sltNovoTipo').val(),
+									'dataInicio':date.stringToDate($('#txtNovaDataInicio').val()).getTime(),
+									'dataFim':date.stringToDate($('#txtNovaDataFim').val()).getTime(),
+									'urlJson':$('#txtNovaUrl').val(),
+									'peso':Number.parseFloat($('#txtNovoPeso').val()),
+									'campeonatoSlug': $('#txtSlugCampeonatoAlt').val(),
+									'edicaoSlug': $('#txtSlugEdicaoAlt').val()
+				}
+				
+				var tabelaVazia = 1;
+				$("#tblListaDeFasesAlteracao tbody tr").each(function() {
+					var faseVO = {'id' : $(this).find('td.nomeFaseAlteracao span').parent().data("id-fase"),
+								  'nome' : $(this).find('td.nomeFaseAlteracao span').text(),
+								  'apagado' : false,
+								  'idCampeonato' : $("#idCampeonato").val(),
+								  'peso': Number.parseFloat($(this).find('.pesoFase').val()),
+								  'dataInicio': $(this).find('.inicio').val() != "" ? date.stringToDate($(this).find('.inicio').val()).getTime() : null,
+								  'dataFim': $(this).find('.fim').val() != "" ? date.stringToDate($(this).find('.fim').val()).getTime() : null
+								  };
+
+					fases.push(faseVO);
+					tabelaVazia = 0;
+				});
+				
+				if (tabelaVazia == 1) {
+					$('.messagePopUp').message(i18n.get('fase-obrigatoria'), 'error', true);
+				} else {
+
+					$.ajax({
+						url: "../sidi/campeonatos/editar",
+						type: 'POST',
+						dataType: 'json',
+						data: {arg: [ JSON.stringify(campeonato), JSON.stringify(fases) ]},
+						success: function(sucesso) {
+							if (sucesso) {
+			                	$('.message').message(i18n.get('sucesso-alterar-campeonato'), 'success', true);
+			                	$.ajax({
+									url: "../sidi/campeonatos/buscarCampeonatosAtivos",
+									type: 'POST',
+									dataType: 'json',
+									success: function(sucessoBusca) {
+				                		$('#popup').xundialog();
+										$(window).hashchange();
+										$('html, body').animate({scrollTop:0}, 'fast');
+									}
+								});
+	
+							} else {
+			                	$('.messagePopUp').message(i18n.get('processo-erro'), 'error', true);
+							}
+						}
+					});
+				}
+			}
+		});
+		
+		$('#btnCancelarAlteracao').click(function(){
+			$('#popup').xundialog();
+		});
+		]]>
+	</script>
+
+</engine>

@@ -1,0 +1,40 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+
+	<template selector="table#tblRegioesCadastradas tbody">
+	{for regiao in regioes}
+			<tr>
+	          	<td>${regiao.nome}</td>
+				<td>
+					<a href="javascript:void(0)" id="alterar_regiao_${regiao.id}" class="edit ttip" original-title="${i18n.get('alterar')}">Edit</a>
+					<a href="javascript:void(0)" id="apagar_regiao_${regiao.id}" class="delete ttip" original-title="${i18n.get('apagar')}">Delete</a>
+				</td>
+          	</tr>
+	{forelse}
+		<tr>
+			<td colspan="2">${i18n.get('nenhum-registro-encontrado')}</td>
+		</tr>
+	{/for}
+	
+	</template>
+
+	<script>
+		<![CDATA[
+	
+		$('.ttip').tipsy();
+		
+		var regioes = this.regioes;
+		$.each(regioes, function(idx, regiao){
+			$('#alterar_regiao_' + regiao.id).click(function(){
+				$.holy("../templates/cadastros/regioes/alterar-regiao.xml",{'regiao' : regiao});
+			});
+		});
+		
+		$.each(regioes, function(idx, regiao){
+			$('#apagar_regiao_' + regiao.id).click(function(){
+				$.holy("../templates/cadastros/regioes/apagar-regiao.xml", {'regiao':regiao});
+			});
+		});
+		]]>
+	</script>
+
+</engine>

@@ -1,0 +1,353 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector=".message">
+	</template>
+	
+	<template selector="#content-info">
+		<div class="topo" id="topo">
+	      <div class="titulo">${i18n.get('cadastro-de-usuario')}</div>
+	      <div class="separador"></div>
+	      <div class="acoes">
+	        <a href="javascript:void(0)" id="btnListaDeUsuarios" class="acao selected">${i18n.get('lista-de-usuarios')}</a>
+	        <a href="javascript:void(0)" id="btnCadastrarUsuario" class="acao">${i18n.get('novo-usuario')}</a>
+	      </div>
+	    </div>
+	    
+	    <div id = "filtroUsuarios">
+		   <div class = "filtro">
+		     <input type = "text" class = "txt_nome" placeholder="${i18n.get('informe-nome-usuario')}"></input>
+		     <a class = "button small" id = "btnFiltrar">${i18n.get('filtrar')}</a>
+		     <a class = "button small" id = "btnTodos">${i18n.get('todos')}</a>
+		     <a class = "button small" id = "btnExcluir">${i18n.get('excluir-selecionados')}</a>
+		   </div>
+	    </div>
+	</template>
+	<template selector="#content-details">
+		<div id="divLista">
+	    	<div id="divListaDeUsuarios" class="lista-de-exibicao">
+			    <table id="tblListaDeUsuarios">
+					<thead>
+						<tr>
+						    <th scope="col" id = "col_todos">
+						      <input type = "checkbox" id = "chk_todos"></input>
+						    </th>
+							<th scope="col">${i18n.get('login')}</th>
+							<th scope="col">${i18n.get('email')}</th>
+							<th scope="col">${i18n.get('telefone')}</th>
+							<th scope="col">${i18n.get('perfil')}</th>
+							<th scope="col">${i18n.get('acoes')}</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td colspan="4">${i18n.get('busque-usuarios')}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div id="divNovo">
+			<div id="divNovoUsuario" class="lista-de-exibicao" hidden="true">
+				<div class="content">
+					<form id="frmNovoUsuario" class="operadoras">
+						<fieldset>
+							<ul>
+								<li class="required">
+									<label for="txtLoginUsuario"><span class="required">*</span>${i18n.get('login')}: </label>
+									<input type="text" name="login" id="txtLoginUsuario"></input>
+								</li>
+								<li class="required">
+									<label for="txtEmail"><span class="required">*</span>${i18n.get('email')}: </label>
+									<input type="text" id="txtEmail" name="email"></input>
+								</li>
+								<li>
+									<label for="txtTelefone">${i18n.get('telefone')}: </label>
+									<input type="text" id="txtTelefone" name="telefone" maxlength="12" class="numeric"></input>
+								</li>
+							</ul>
+							<ul>
+								<li class="required">
+									<label for="txtSenha"><span class="required">*</span>${i18n.get('senha')}: </label>
+									<input type="password" maxlength="8" id="txtSenha" name="senha"></input>
+								</li>
+								<li class="required">
+									<label for="txtConfirmacaoSenha"><span class="required">*</span>${i18n.get('confirmacao-senha')}: </label>
+									<input type="password" maxlength="8" id="txtConfirmacaoSenha"></input>
+								</li>
+								<li class="required">
+									<label for="sltPerfil"><span class="required">*</span>${i18n.get('perfil')}: </label>
+									<select id="sltPerfil" name="perfil">
+										<option></option>
+										{for perfil in perfis}
+											<option value="${perfil.id}" name="${perfil.nome}">${perfil.nome}</option>
+										{/for}
+									</select>
+								</li>
+							</ul>
+						</fieldset>
+						{if sidi.possuiAutorizacao('GERENCIAR_USUARIO')}
+						<div id="divOperadoras" class="lista-de-jogos lista-de-operadoras">
+							<h3>
+								<span class="separador-data">${i18n.get('operadoras-relacionadas')}</span>
+							</h3>
+							<ul>
+								<li>
+									<label for="sgsOperadoras" class="required"><span style="display:none" id="spanRequired" class="required">*</span>${i18n.get('nome-operadora')}:</label>
+									<input type="text" id="sgsOperadoras" class="ui-autocomplete-input"></input>
+									<img title="${i18n.get('insere-operadora-tabela')}" id="imgAdicionar" src="../images/adicionar.png"/>
+								</li>
+							</ul>
+							<table id="tblListaDeOperadoras" class="small-table">
+								<thead>
+									<tr>
+										<th scope="col">${i18n.get('login')}</th>
+										<th scope="col">${i18n.get('acoes')}</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
+							<br></br>
+							<a id="btnNovoUsuario" class="button azul">${i18n.get('cadastrar')}</a>
+						{/if}
+					</form>
+
+				</div>
+
+			</div>
+		</div>
+	</template>
+
+	<script><![CDATA[
+	    var quantidadeRegistrosPorParte = 20;
+	    linhaInicial = 0;
+	    linhaFinal = 0;
+	    nome = null;
+	    buscarTodos = false;
+	    buscouTodos = false;
+	   
+	    usuarios = [];
+	    var atualizaUsuarios = function(usuariosAtualizados,linhaFinalAtualizada){
+	      usuarios = usuariosAtualizados;
+	      linhaFinal = linhaFinalAtualizada;
+	    };
+	
+	    $("#tblListaDeUsuarios").hide();
+	    $("#btnExcluir").hide();
+	
+		$('#frmFiltroOperadoras').form();
+		$('#pkCanais').picklist();
+
+		$('#frmNovoUsuario, #frmFiltroJogos').form({ liquid: true });
+		$('#frmNovoUsuario [title], #frmFiltroJogos [title]').tipsy({trigger: 'focus', gravity: 'w', fade: true});
+
+		$('input:text').setMask();
+		$('#tblListaDeUsuarios, #tblListaDeOperadoras').datatable();
+		
+		$("#txtTelefone").setMask("(99) 99999-9999");
+
+		$("#divNovo").hide();
+		$("#divLista").show();
+
+		var perfis = this.perfis;
+		var usuario = {};
+
+		$('#imgAdicionar').click(function() {
+			consultaOperadora.adicionaOperadora($('#sgsOperadoras'), $('.message'), usuario);
+		});
+
+		$('#btnNovoUsuario').click(function() {
+			if($("#txtSenha").val() == $('#txtConfirmacaoSenha').val()) {
+				$('.message').html('');
+
+				if(utils.validate('#frmNovoUsuario')) {
+					if (!$("#txtEmail:visible").isEmail()) {
+						$('.message').message(i18n.get('email-invalido'), 'error', true);
+						$('html,body').animate({scrollTop:0},'fast');
+						return;
+					}
+
+					if (!$("input[name=senha]:visible").isValidPassword()) {
+						$('.message').message(i18n.get('senha-invalida'), 'error', true);
+						$('html,body').animate({scrollTop:0},'fast');
+						return;
+					}
+
+					var perfil = {};
+					perfil.id = $('#sltPerfil').val();
+					perfil.nome = $('#sltPerfil option:selected').text();
+					
+					if (perfil.id == $('#sltPerfil option[name="Operadora"]').val() && $('table#tblListaDeOperadoras tbody td').length < 2) {
+						$('.message').message(i18n.get('falha-usuario-operadoras'), 'error', true);
+						return;
+					}
+
+					function vetorOperadorasApenasComNomeId(operadoras) {
+						if (operadoras != null)
+							for (var i = 0; i < operadoras.length; i++) {
+								operadoras[i] = {'id' : operadoras[i].id, 'nome' : operadoras[i].nome};
+							}
+			
+						return operadoras;
+					}
+					
+					usuario = {
+						'login' : $("#txtLoginUsuario").val(),
+						'email' : $("#txtEmail").val(),
+						'telefone' : $("#txtTelefone").val(),
+						'perfil' : perfil,
+						'senha' : $("#txtSenha").val(),
+						'operadoras' : vetorOperadorasApenasComNomeId(usuario.operadoras)
+					};
+         
+					$.postJSON('../sidi/usuario/novoUsuario', usuario, function(){
+					    linhaInicial = 1;
+					    linhaFinal = quantidadeRegistrosPorParte;
+				        buscarTodos = false;
+				        buscouTodos = true;
+
+                        usuarios = [];
+                        nome = null;
+					    $.holy("../templates/cadastros/usuario/usuarios-cadastrados.xml", {
+						  'perfis' : perfis, 
+						  'usuarios': usuarios, 
+						  'quantidadeRegistrosPorParte': quantidadeRegistrosPorParte,
+					      'linhaInicial' : linhaInicial,
+						  'linhaFinal' : linhaFinal,
+						  'nome' : nome,
+						  'callback' : atualizaUsuarios,
+						  'buscarTodos' : true,
+						  'buscouTodos' : buscouTodos
+			           });
+		  
+					   $('#btnListaDeUsuarios').click();
+					   $('#tblListaDeUsuarios').hide();
+	
+					   $('.message').html('');
+					   $('.message').message(i18n.get('sucesso-cadastrar-usuario'), 'success', true);
+	
+					   utils.clear($('#frmNovoUsuario'));
+					   $('#tblListaDeOperadoras tbody').children().remove();
+	
+					   usuario = {};
+				    });
+				}
+			} else {
+				$('.message').message(i18n.get('falha-senhas-incompativeis'), 'error', true);
+			}
+		});
+
+		$('#btnCadastrarUsuario').click(function(){
+			$.holy("../templates/cadastros/usuario/operadoras-relacionadas.xml", {'operadorasRelacionadas' : [], 'usuario' : {}});
+
+			$('#btnListaDeUsuarios').removeClass('selected');
+			$('#btnCadastrarUsuario').addClass('selected');
+
+			$('#divNovoUsuario').attr('hidden',false);
+			$('#divListaDeUsuarios').attr('hidden',true);
+
+			$("#divNovo").show();
+			$("#divLista").hide();
+		});
+
+		$('#btnListaDeUsuarios').click(function(){
+			$('#btnListaDeUsuarios').addClass('selected');
+			$('#btnCadastrarUsuario').removeClass('selected');
+
+			$('#divNovoUsuario').attr('hidden',true);
+			$('#divListaDeUsuarios').attr('hidden',false);
+
+			$("#divNovo").hide();
+			$("#divLista").show();
+		});
+
+		$('#sltPerfil').change(function() {
+			var $this = $(this);
+			if ($this.val() == $this.find('option[name="Operadora"]').val())
+				$("#spanRequired").show();
+			else
+				$("#spanRequired").hide();
+		});
+		
+		consultaOperadora.buscarOperadorasEAutoComplete($('#sgsOperadoras'));
+	
+		$("#btnTodos").click(function(){
+		  linhaInicial = 1;
+		  linhaFinal = quantidadeRegistrosPorParte;
+		  $("#tblListaDeUsuarios").show();
+		  buscarTodos = true;
+		  $.postJSON("../sidi/usuario/buscarParteUsuarios",[linhaInicial,linhaFinal],function(parteUsuarios) {
+		    usuarios = parteUsuarios;
+		    
+		    $.getJSON("../sidi/usuario/getQuantidadeUsuariosAtivos",function(quantidadeUsuarios){
+			  if (quantidadeUsuarios == usuarios.length){
+				 buscouTodos = true;
+		      }
+		      else
+		        buscouTodos = false;
+		        
+		      $.holy("../templates/cadastros/usuario/usuarios-cadastrados.xml", {
+			      'perfis' : perfis, 
+			      'usuarios': usuarios, 
+			      'quantidadeRegistrosPorParte': quantidadeRegistrosPorParte,
+			      'linhaInicial' : linhaInicial,
+			      'linhaFinal' : linhaFinal,
+			      'nome' : nome,
+			      'callback' : atualizaUsuarios,
+			      'buscarTodos' : buscarTodos,
+			      'buscouTodos' : buscouTodos
+		      });
+		    });
+		  });
+		  $(".txt_nome").val("");
+		});
+	
+		$("#btnFiltrar").click(function(){
+		  nome = $(".txt_nome").val();
+		  if (nome.trim() == "")
+		    $('.message').message(i18n.get('informe-nome'),'error',true);
+		  else{
+			  linhaInicial = 1;
+			  linhaFinal = quantidadeRegistrosPorParte;
+			  $("#tblListaDeUsuarios").show();
+			  buscarTodos = false;
+			  $.postJSON("../sidi/usuario/buscarParteUsuariosPorNome",[nome,linhaInicial,linhaFinal],function(parteUsuarios) {
+			    usuarios = parteUsuarios;
+			    
+			    $.postJSON("../sidi/usuario/getQuantidadeUsuariosAtivosPorNome",[nome],function(quantidadeUsuarios){
+			      if (quantidadeUsuarios == usuarios.length){
+					buscouTodos = true;
+				  }
+				  else
+				    buscouTodos = false;
+				    
+				  $.holy("../templates/cadastros/usuario/usuarios-cadastrados.xml", {
+			       'perfis' : perfis, 
+			       'usuarios': usuarios,
+			       'quantidadeRegistrosPorParte': quantidadeRegistrosPorParte,
+			       'linhaInicial' : linhaInicial,
+			       'linhaFinal' : linhaFinal,
+			       'nome' : nome,
+			       'callback' : atualizaUsuarios,
+			       'buscarTodos' : buscarTodos,
+			       'buscouTodos' : buscouTodos
+			      });
+			    }); 
+			  });
+		  }
+		});
+		
+		$("#btnCadastrarUsuario").click(function(){
+		  $("#filtroUsuarios").hide();
+		});
+		
+		$("#btnListaDeUsuarios").click(function(){
+		  $("#filtroUsuarios").show();
+		});
+		
+		$("#chk_todos").click(function(){
+          $('input:checkbox').not(this).prop('checked', this.checked);
+        });
+	]]>
+	</script>
+</engine>

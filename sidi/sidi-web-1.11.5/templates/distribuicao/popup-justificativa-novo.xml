@@ -1,0 +1,110 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector="#popup">
+		<h3>${i18n.get('liberacao-distribuicao')}</h3>
+		<form id="frmJustificativaLiberacao">
+			<ul class='message'/>
+			<fieldset>
+				<legend>${i18n.get('justificativa')}</legend>
+				<ul>
+					<li>
+						<label id="lblTxtJustificativa" for="txtJustificativa" class="require" >${i18n.get('justificativa-da-distribuicao')}</label>
+						<textarea id="txtJustificativa" title="${i18n.get('justificativa-hint')}" maxlength="2500" class="maxlength"></textarea>
+					</li>
+				</ul>
+			</fieldset>
+			<fieldset>
+				<legend>${i18n.get('notificacao-email')}</legend>
+				<ul>
+					<li>
+						<label id="lblNotificacaoEmail">
+							<input type="checkbox" id="enviarEmail" />
+							${i18n.get('enviar-email-distribuicao')}
+						</label>
+					</li>
+				</ul>
+			</fieldset>
+			<fieldset>
+				<legend>${i18n.get('notificacao-sms')}</legend>
+				<ul>
+					<li>
+						<label id="lblNotificacaoSMS">
+							<input type="checkbox" id="enviarSMS" />
+							${i18n.get('enviar-sms-distribuicao')}
+						</label>					
+						<form id="formConfigSMS" class="forms liquidForm">						
+							<ul>
+								<li>
+									<label id="lblTxtMensagemSMS" for="txtMensagemSMS" class="require" >${i18n.get('mensagem-sms')}</label>
+									<textarea id="txtMensagemSMS" maxlength="160" class="maxlength"></textarea>									
+								</li>
+							</ul>				
+						</form>
+					</li>
+				</ul>
+			</fieldset>
+		</form>
+		<a id="btnConfirmarDistribuicao" class="showDialog button azul">${i18n.get('liberar-distribuicao-upper-case')}</a>
+	</template>
+
+	<script>
+		var distribuicaoJson = this.distribuicaoJson;
+
+		$(this).css('z-index',10);
+		$('#enviarEmail').attr('checked', true);
+		var offset = $("#popup").offset().top;
+		$('html, body').animate({
+			scrollTop : offset
+		}, 300);
+
+		$('#frmJustificativaLiberacao').form();
+		$('#frmJustificativaLiberacao [title]').tipsy({trigger: 'focus', gravity: 'w', fade: true});
+		$('#lblTxtJustificativa').width(168);
+		$('#lblNotificacaoEmail').width(333);
+		$('#lblNotificacaoSMS').width(370);
+		
+		$('#lblTxtMensagemSMS').width(168);
+		$('#txtMensagemSMS').width(400);
+		$('#txtMensagemSMS').height(80);
+
+		$("#popup").xdialog({
+			overlay: '#23557E',
+			alpha: '3',
+			width: 650
+		});
+
+		$('.maxlength').each(function() {
+			$(this).charCount({
+				allowed: parseInt($(this).attr('maxlength') || 20),
+				warning: 1,
+				counterText: 'Caracteres restantes: '
+			});
+        });
+
+		var callback = this.callback;
+
+		$('#btnConfirmarDistribuicao').click(function() {
+
+			var justificativa = $("#txtJustificativa").val();
+			var enviarEmail = $("#enviarEmail").is(":checked");
+			var enviarSMS = $("#enviarSMS").is(":checked");
+			var mensagemSMS = $("#txtMensagemSMS").val();
+
+			if (justificativa) {
+				if (enviarSMS) {
+					if (mensagemSMS == "")
+						$('#popup .message').message(i18n.get('campos-obrigatorios'), 'error', true);
+					else {
+						callback(justificativa, enviarEmail, enviarSMS, mensagemSMS);
+						$("#popup").xundialog();						
+					}
+				}
+				else {	
+					callback(justificativa, enviarEmail, enviarSMS, mensagemSMS);
+					$("#popup").xundialog();
+				}
+			} else {
+				$('#popup .message').message(i18n.get('justificativa-obrigatorio'), 'error', true);
+			}
+		});
+	</script>
+</engine>

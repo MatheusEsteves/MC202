@@ -1,0 +1,38 @@
+<div class="canal">
+	<h6 style="background-image: url('../imagens/canal?id=${view.model.get('canal').id}');">
+		${view.model.get('canal').nome}
+		{if view.model.possuiNumeroCanal()}
+			 - #${view.model.getNumeroCanal()}
+		{/if} 
+		{if view.model.possuiDadosTramissao()}
+			<p>
+				${i18n.get('sinal')} ${view.model.getInicioTransmissao()} - ${view.model.getTerminoTransmissao()}
+			</p>
+		{/if} 
+	</h6>
+	<div class="jogo-container">
+		{if view.model.isEventoOuAlternativo()}
+		<div class="jogo naoVazio programa">
+			<span>${view.model.get('descricao')}</span>
+		</div>
+		{else}
+		<div class="jogo">
+			<div class="torneio ttip" title="${view.model.getCampeonatoNome()}">
+				${utils.reduzirTamanho(view.model.getCampeonatoNome())}
+			</div>
+			<div class="confronto">
+				<span class="time">
+					<div style="background-image: url('${view.model.getMandante().urlBrasao}')"
+						class="escudo ttip" title="${view.model.getMandante().nome}"></div>${view.model.getMandante().apelido}</span>
+					<span class="versus">X</span> 
+					<span class="time">
+					<div style="background-image: url('${view.model.getVisitante().urlBrasao}');"
+						class="escudo ttip" title="${view.model.getVisitante().nome}"></div>${view.model.getVisitante().apelido}</span>
+			</div>
+			<div class="local" title="${view.model.getDescricaoEstadio()}" >
+				${utils.reduzirTamanho(view.model.getDescricaoEstadio(), 18)}
+			</div>
+		</div>
+		{/if} 
+	</div>
+</div>

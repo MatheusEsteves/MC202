@@ -1,0 +1,133 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0"
+	cacheable="true">
+	<template selector="#content-details">
+		{if sidi.possuiAutorizacao('CONFIGURACAO_LIVEADMIN')}
+		<h4>${i18n.get('configuracao')}</h4>
+		<form id="formConfigCampeonato">
+			<fieldset>
+				<ul>
+					<li class="required">
+						<label>integrarLiveAdmin</label>
+						{if configuracao.integrarLiveAdmin}
+							<input type="checkbox" id="integrarLiveAdmin" name="integrarLiveAdmin" checked="checked" />
+						{else}
+							<input type="checkbox" id="integrarLiveAdmin" name="integrarLiveAdmin" />
+						{/if}
+					</li>
+					<li class="required">
+						<label><span class="required">*</span>URL Live Admin</label>
+						<input type="text" id="txtUrlLiveAdmin" name="urlLiveAdmin" maxlength="120"  value="${configuracao.urlLiveAdmin}"/>
+					</li>
+					<li class="required">
+						<label><span class="required">*</span>Token Live Admin</label>
+						<input type="text" id="txtTokenLiveAdmin" name="tokenLiveAdmin" maxlength="200"  value="${configuracao.tokenLiveAdmin}"/>
+					</li>
+					<li class="required">
+						<label><span class="required">*</span>Horas de antecedencia de abertura de Sinal no Live Admin</label>
+						<input type="text" id="txtHorasAntecedencia" name="horasAntecedencia" maxlength="2"  value="${configuracao.horasAntecedencia}"/>
+					</li>
+					<li class="required">
+						<label><span class="required">*</span>Horas posteriores de fechamento de Sinal no Live Admin</label>
+						<input type="text" id="txtHorasPosteriores" name="horasPosteriores" maxlength="2"  value="${configuracao.horasPosteriores}"/>
+						<input type="hidden" id="txtId" value="${configuracao.id}"/>
+					</li>
+				</ul>
+				<a id="btnSaveConfig" class="button azul">${i18n.get('cadastrar')}</a>
+			</fieldset>
+		</form>
+		{/if}
+		{if sidi.possuiAutorizacao('CONFIGURACAO_PESO')}
+		<h4 style="margin-top:20px;">${i18n.get('configuracao-peso')}</h4>
+		<div class="content">
+			<form id="formConfigPeso" class="forms liquidForm">
+				<fieldset>
+					<ul>
+						<li class="required">
+							<label><span class="required">*</span>${i18n.get('peso-campeonato')}</label>
+							<input type="text" id="txtPesoCampeonato" maxlength="4" class="numeric" value="${pesoSistema.pesoCampeonato}"
+									title="${i18n.get('informe-peso')}"></input>						
+						</li>
+						<li class="required">
+							<label><span class="required">*</span>${i18n.get('peso-torcida')}</label>
+							<input type="text" id="txtPesoTorcida" maxlength="4" class="numeric" value="${pesoSistema.pesoTorcida}"
+									title="${i18n.get('informe-peso-torcida')}"></input>
+							<input type="hidden" id="txtIdConfigPeso" value="${pesoSistema.id}"/>
+						</li>
+					</ul>					
+				</fieldset>
+				<a id="btnSavePeso" class="button azul">${i18n.get('salvar')}</a>
+			</form>
+		</div>
+		{/if}		
+	</template>
+
+	<script>
+		<![CDATA[
+		
+		var configuracao = this.configuracao;
+		var pesoSistema = this.pesoSistema;
+				
+		$(document).on('input', '.numeric', function() {
+		    this.value = this.value.replace(/[^\d\.\-]/g,'');
+		});
+		
+		$('#formConfigPeso input.numeric').setMask('99.99');
+						
+		$('#btnSaveConfig').click(function(){
+			var config = {
+				id : $('#txtId').val() ? $('#txtId').val() : null,
+				integrarLiveAdmin : new Boolean($('#integrarLiveAdmin').is(":checked")),
+				urlLiveAdmin: $('#txtUrlLiveAdmin').val(),
+				tokenLiveAdmin: $('#txtTokenLiveAdmin').val(),
+				horasAntecedencia: $('#txtHorasAntecedencia').val(),
+				horasPosteriores: $('#txtHorasPosteriores').val()
+			};
+			
+			$.postJSON('../sidi/config/salvarConfiguracao', config, function(deuCerto) {
+				if(deuCerto){
+					$('.message').message('Config salva com sucesso', 'success', true);
+					//location.reload();
+					scroll(0,0);
+				}
+				else{
+					$('.message').message(i18n.get('processo-erro'), 'error', true);
+					scroll(0,0);
+				}
+			});
+		});
+		
+		$('#btnSavePeso').click(function() {
+			
+			if ($('#txtPesoCampeonato').val() == '' || $('#txtPesoTorcida').val() == ''){
+				$('.message').message(i18n.get('informe-peso-erro'), 'error', true);
+				scroll(0,0);
+			} else {
+				var pesoConfig = {
+					id : $('#txtIdConfigPeso').val() ? $('#txtIdConfigPeso').val() : null,
+					pesoCampeonato : parseFloat($('#txtPesoCampeonato').val()),
+					pesoTorcida : parseFloat($('#txtPesoTorcida').val())
+				};
+				
+				$.postJSON('../sidi/peso-sistema/salvaPesoSistema', pesoConfig, function(result) {
+					if (result) {
+						$('.message').message(i18n.get('informe-peso-sucesso'), 'success', true);
+						scroll(0,0);
+						
+						console.info($('#txtIdConfigPeso').val());
+						
+						if ($('#txtIdConfigPeso').val() == ''){
+							$.getJSON("../sidi/peso-sistema/buscarPesoSistema", function(pesoSistema){
+								$('#txtIdConfigPeso').val(pesoSistema.id);
+							});
+						}
+					} else {
+						$('.message').message(i18n.get('informe-peso-erro-salvar'), 'error', true);					
+						scroll(0,0);
+					}
+				});
+			}
+		});
+		
+		]]>
+	</script>
+</engine>

@@ -1,0 +1,289 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0"
+	cacheable="true">
+	<template selector="#visao-geral">
+		<div class="content lista-de-exibicao">
+			<h3 style="margin: 10px 0 20px;">
+				<b>${i18n.get('distribuicao.operadora.erro.numero.canal.info')}</b>
+			</h3>
+			<table id="visao-geral-table" class="table tabular" border="0"
+				cellpadding="0" cellspacing="0">
+				<thead>
+					<tr>
+						<th>${i18n.get('distribuicao.operadora.horario')}</th>
+						{if sidi.possuiAutorizacao('CONSULTAR_DISTRIBUICAO', 'GERENCIAR_DISTRIBUICAO', 'LIBERAR_DISTRIBUICAO_OPERADORAS')}
+							<th>Status</th>
+						{/if}
+						<th>${i18n.get('distribuicao.operadora.canal')}</th>
+						<th>${i18n.get('distribuicao.operadora.estados')}</th>
+						<th>${i18n.get('distribuicao.operadora.evento')}</th>
+						<th>${i18n.get('distribuicao.operadora.campeonato')}</th>
+						<th>${i18n.get('distribuicao.operadora.abrir')}</th>
+						<th>${i18n.get('distribuicao.operadora.fechar')}</th>
+						{if sidi.isOperadora()}
+						  <th>${i18n.get('distribuicao.operadora.canal.num')}</th>
+						{/if}					
+						<th>${i18n.get('distribuicao.operadora.acoes')}</th>
+					</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+			<div class="empty-result">${i18n.get('nenhum-registro-encontrado')}</div>
+		</div>
+	</template>
+	<script>
+	<![CDATA[   
+	        var usuarioLogado = this.usuarioLogado;
+			var distribuicoes = this.distribuicoes;
+			var filtro = this.filtro;
+
+			var getDistribuicoesComEvento = function(dists){
+			  if (usuarioLogado.perfil.nome == "Operadora")
+			    return dists;
+			  else{
+			    var distribuicoesComEvento = [];
+			    for (var i = 0; i < dists.length; i++){
+			      var dist = dists[i];
+				  if (dist.evento){
+				    distribuicoesComEvento.push(dist);
+				  }
+		        }
+		        return distribuicoesComEvento;
+		      }
+			};
+			
+			if($.isEmptyObject(distribuicoes.horariosMap)){
+				$('#visao-geral-table').hide();
+				$('.empty-result').show();
+				return;
+			}
+			$('#visao-geral-table').show();
+			$('.empty-result').hide();
+			
+			var horarios = Object.keys(distribuicoes.horariosMap);
+			
+			var table = $('#visao-geral-table tbody');
+			horarios.sort();
+			for(var i = 0; i<horarios.length ; i++){
+				var horario = horarios[i];
+				var dists = distribuicoes.horariosMap[horario];
+				var canalNome = '';
+				
+				var distribuicoesComEvento = getDistribuicoesComEvento(dists);
+			      
+				for(var j=0; j < distribuicoesComEvento.length ; j++){
+				  var dist = distribuicoesComEvento[j];
+				  var line = $('<tr class="table_line"></tr>');
+				    
+				  line.attr('id','line_'+horario+'_'+j);
+				  if(j==0){
+					addColunaHorario(line, horario,distribuicoesComEvento.length);
+			      }
+			      line = createLine(line, dist, (canalNome === dist.canal.nome), ('line_'+horario+'_'+(j-1)), distribuicoes.operadoraCanalPorMatriz);
+				  canalNome = dist.canal.nome;
+				  table.append(line);
+				}
+			}
+			
+			function openEditEvento(){
+				var line = $(this).parents('tr.table_line');
+				var lineId = line.attr('id');
+				var groups =  /^line_([0-9]+)_([0-9]+)$/.exec(lineId);
+				var horario = groups[1];
+				var index = groups[2];
+				
+				var result = distribuicoes.horariosMap[horario][index];
+				
+				var args = {
+					dia : parseInt(horario),
+					horario : parseInt(horario),
+					canalId : result.canal ? result.canal.id : null
+				};
+			
+				$.postJSON('../sidi/distribuicao-operadora/buscarDistribuicoesPPV', [args],function(dits) {
+					var json = {
+						distsDisponiveis : dits,
+						eventoId: result.evento ? result.evento.id : null,
+						distVO: result,
+						distPrincId : result.distPrincipal ? result.distPrincipal.id : null,
+						confirmCallback:editEvento,
+						removeEvento:removeEvento
+					};
+
+					$.holy("../templates/distribuicao/selecao-jogos-operadora.xml", json);
+				});
+				
+			};
+			
+			function blurCanalNum(){
+				$('.canalNumInput').unbind( "blur" ).blur(function(){
+					var campo = $(this);
+					var matriz = campo.data('matriz');
+					$(campo).parent('td').find('div.feedback img').remove();
+					var canal = Number( $(this).val() );
+					var distOperadoraId = $(this).data('dist-operadora');
+					var line = $(this).parents('tr.table_line');
+					var lineId = line.attr('id');
+					var groups =  /^line_([0-9]+)_([0-9]+)$/.exec(lineId);
+					var horario = groups[1];
+					var index = groups[2];
+	                var distribuicoesComEvento = getDistribuicoesComEvento(distribuicoes.horariosMap[horario]);
+					var distVO = distribuicoesComEvento[index];
+					var lineId = 'line_'+horario+'_'+index;
+					var line = $('#'+lineId);
+					distVO.numCanal = canal;
+					var distPrincipal = distVO.distPrincipal;
+					
+					var editarlineupdistribuicaoPorMatriz = campo.data('editarlineup');
+					if($.isNumeric(canal )) {
+						$.postJSON('../sidi/distribuicao-operadora/alterarNumCanalDistribuicoes', [distPrincipal, canal, matriz,editarlineupdistribuicaoPorMatriz],function() {
+							$(campo).parent('td').find('div.feedback_'+matriz).html('').append('<img src="../images/ok.png"/>');
+						});
+					}				
+				});
+			}
+			
+			blurCanalNum();
+
+			function createLine(line, dist, mesmoCanalAnterior, id, operadoraCanalPorMatriz){
+				var naoTemEvento = !dist.evento;
+				if(naoTemEvento){
+					line.addClass('sem-evento');
+				}else{
+					line.removeClass('sem-evento');
+				}
+				dist.estados.sort();
+				var estados = (dist.evento && dist.todosEstados) ? 'Todos' : dist.estados.join(', ')
+				
+				var actionId = "blocked";
+				var actionMessage = ''
+				if(dist.canal.tipoCanal == 'PPV' || dist.canal.tipoCanal == 'PPV_SD' || dist.canal.tipoCanal == 'PPV_HD' ){
+					if(naoTemEvento){
+						actionId="adicionar";
+						actionMessage = i18n.get('distribuicao.operadora.associar.evento')
+					}else{
+						actionId="editar";
+						actionMessage = i18n.get('distribuicao.operadora.alterar.evento')
+					}
+				}
+				
+				
+				if(sidi.possuiAutorizacao('CONSULTAR_DISTRIBUICAO', 'GERENCIAR_DISTRIBUICAO', 'LIBERAR_DISTRIBUICAO_OPERADORAS')){
+					line.append('<td class="status">'+(dist.status ? dist.status : '-')+'</td>');
+				}
+
+				line.append('<td>' + dist.canal.nome + ((mesmoCanalAnterior) && (dist.canal.tipoCanal ==="FECHADO") ? " - Comutação" : "") + '</td>');
+				line.append('<td class="estado">'+estados+'</td>');
+				line.append('<td class="evento">'+(naoTemEvento ? 'SEM EVENTO' : dist.evento.descricaoEvento)+'</td>');
+				line.append('<td>'+((!naoTemEvento && dist.evento.fase) ? dist.evento.fase.campeonato.nome : '')+'</td>');
+				line.append('<td>'+date.dateToHourString(parseInt(dist.horarioAbertura))+'</td>');
+				line.append('<td>'+date.dateToHourString(parseInt(dist.horarioFechamento))+'</td>');
+
+                var tdNumCanal = ""; 
+                if (sidi.isOperadora()){
+					tdNumCanal += '<td class="canal_num '+actionId+'">';
+					if(actionId !== "editar"){
+						tdNumCanal += '-';
+					} else {
+						tdNumCanal += '<table style = "width:100%">';
+						for(var a in operadoraCanalPorMatriz){
+							var oprCanMatz = operadoraCanalPorMatriz[a];
+
+							if (oprCanMatz.operadoraCanais.length > 0) {														
+								for(var o in oprCanMatz.operadoraCanais){								
+									var oprCanal = oprCanMatz.operadoraCanais[o];
+									
+									var tecnologiasSelecionadas = [];
+									if ($('#cabo').is(':checked'))
+									  tecnologiasSelecionadas.push($('#cabo').val());
+									if ($('#dth').is(':checked'))
+								      tecnologiasSelecionadas.push($('#dth').val());
+								    if ($('#fibra').is(':checked'))
+								      tecnologiasSelecionadas.push($('#fibra').val());
+									
+									if(oprCanal.canais.id === dist.canal.id && tecnologiasSelecionadas.indexOf(oprCanal.operadora.headEnd.tecnologia) != -1){
+										tdNumCanal += '<tr style = "width:100%">';	
+									
+								        var editarlineupdistribuicao = oprCanal.editarlineupdistribuicao;
+										tdNumCanal += '<td style = "width:65%"><div class="nomeMatriz"><span>'+oprCanMatz.matriz+'</span></div></td>';
+										if (editarlineupdistribuicao){
+										  tdNumCanal += 
+										  '<td style = "width:35%"><input type="text" style="width: 25px;" data-matriz="'+oprCanMatz.matriz+'" data-editarlineup="'+editarlineupdistribuicao+'" class="canalNumInput" value=""'
+										  + '" maxlength="3"><div class="feedback_'+oprCanMatz.matriz+'" style="display:inline;"></div></td>';
+									    }
+									    else{
+									      tdNumCanal += 
+										  '<td style = "width:35%"><input type="text" style="width: 25px;" data-matriz="'+oprCanMatz.matriz+'" data-editarlineup="'+editarlineupdistribuicao+'" class="canalNumInput" value="' 
+										  + ((oprCanal.lineUp) ? oprCanal.lineUp : '' ) 
+										  + '" maxlength="3"><div class="feedback_'+oprCanMatz.matriz+'" style="display:inline;"></div></td>';
+									    }
+													  
+									    tdNumCanal += '</tr>';
+									}
+								}
+							}
+						}
+						
+						tdNumCanal += '</table>';
+					}
+					tdNumCanal += '</td>';
+					
+					line.append(tdNumCanal);
+				}
+
+				if (!sidi.temPerfil('Consulta-GSAT')){							
+					line.append('<td class="edit">'+'<a href="javascript:void(0)" class="mudarEvento '+actionId+'">'+ actionMessage+'</a></td>');
+					line.find('.mudarEvento').click(openEditEvento);
+				} else {
+					line.append('<td class="edit"></td>');
+				}
+
+				return line;
+			}
+			
+			function addColunaHorario(line, horario, lineSpan){
+				var cell = $('<td class="hour"></td>');
+				cell.text(date.dateToHourString(parseInt(horario)));
+				cell.attr('rowspan',lineSpan);
+				line.append(cell)
+			}
+			
+			var editEvento = function(distVO, evento, distPrincipal){
+				if(!distVO.evento || distVO.evento.id != evento.id){
+					var horario = evento.data;
+					var index = distribuicoes.horariosMap[horario].indexOf(distVO);
+					var lineId = 'line_'+horario+'_'+index;
+					var line = $('#'+lineId);
+					distVO.evento = evento;
+					distVO.distPrincipal = distPrincipal;
+					$.postJSON('../sidi/distribuicao-operadora/alterarEventoDistribuicoes', [filtro, distVO],function(savedResult) {
+						line.html('');	
+						var dists = distribuicoes.horariosMap[horario];
+						var distribuicoesComEvento = getDistribuicoesComEvento(dists);
+						line = createLine(line, savedResult);
+						blurCanalNum();
+						$('#popup').xundialog();
+					})
+				}
+			}
+			
+			var removeEvento = function(distVO){
+				var horario = distVO.evento.data;
+				var index = distribuicoes.horariosMap[horario].indexOf(distVO);
+				var lineId = 'line_'+horario+'_'+index;
+				var line = $('#'+lineId);
+				
+				$.postJSON('../sidi/distribuicao-operadora/removerEventoDistribuicoes', [filtro, distVO],function(savedResult) {
+					var result = distribuicoes.horariosMap[horario][index];
+					result.evento = null;
+					distribuicoes.horariosMap[horario][index] = savedResult;
+					var dists = distribuicoes.horariosMap[horario];
+					var distribuicoesComEvento = getDistribuicoesComEvento(dists);
+				    line.html('');
+				    line = createLine(line, savedResult);
+					$('#popup').xundialog();
+				})
+			}
+		
+		]]>
+	</script>
+</engine>

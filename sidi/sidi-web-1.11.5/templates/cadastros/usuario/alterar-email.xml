@@ -1,0 +1,49 @@
+<engine xmlns:hl="http://www.holyavenger.org/holyavenger/1.0" cacheable="true">
+	<template selector=".message">
+	</template>
+	
+	<template selector="#content-details">
+		<div class="topo" id="topo">
+	      <div class="titulo">${i18n.get('alterar-email')}</div>
+	      <div class="separador"></div>
+	    </div>
+	    
+	    <div class="content lista-de-exibicao">
+		<form id="frmAlterarDados">
+			<fieldset>
+				<ul>
+					<li class="required">						
+						<label for="txtEmail"><span class="required">*</span>${i18n.get('email')}:</label>
+						<input type="text" name="email" id="txtEmail" value="${usuarioLogado.email}"></input>
+					</li>
+				</ul>
+			</fieldset>
+		</form>
+		<a id="btnConfirmarAlteracao" class="button azul">${i18n.get('confirmar')}</a>
+		</div>
+	</template>
+
+	<script>
+		$('#content-info').html('');
+		$('#frmAlterarDados').form();
+		
+		var usuario = this.usuarioLogado;
+		
+		$("#btnConfirmarAlteracao").click(function(){
+			
+			if(utils.validate($("#frmAlterarDados"))){
+				usuario.email = $("#txtEmail").val();
+				
+				$.getJSON("../sidi/usuario/alterarEmail",{arg: JSON.stringify(usuario)}, function(sucesso){
+					$('#popup').xundialog();
+					$('.message').message(i18n.get('sucesso-alterar-email'), 'success', true);
+				});
+			}else{
+				$('.message').html('');
+				$('.message').message(i18n.get('falha-alterar-email'),'error',true);
+			}
+			
+		});
+	</script>
+
+</engine>
